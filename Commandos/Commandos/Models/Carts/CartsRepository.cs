@@ -21,10 +21,6 @@ namespace Commandos.Models.Carts
                 instance = new CartsRepository();
             return instance;
         }
-        private void AllCarts(List<Cart> carts)
-        {
-            this.carts = carts;
-        }
         public Cart GetCart(string id)
         {
             Cart cart = null;
@@ -50,6 +46,10 @@ namespace Commandos.Models.Carts
             {
                 carts.Add(cart);
             }
+        }
+        public void AddCarts(List<Cart> carts)
+        {
+            this.carts = carts;
         }
         public void DeleteCart(Cart cart)
         {
