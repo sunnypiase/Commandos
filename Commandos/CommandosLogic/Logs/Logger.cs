@@ -1,6 +1,10 @@
-﻿namespace Commandos.Logs
+﻿using Commandos.Logs.InterfacesAndEnums;
+using Commandos.Logs.Loggers;
+using System;
+
+namespace Commandos.Logs
 {
-    internal class Logger : IDisposable
+    public class LogDistributor : ILogger
     {
         #region Props
         private int _exCount = 0;
@@ -11,47 +15,52 @@
         public int ExCount => _exCount;
         public string Path { get => _path; set => _path = value; }
         #endregion
-        #region Ctors
-        static Logger()
+        #region Constructor
+        private LogDistributor()
         {
-            _instance = new Logger();
+            _loggers = new Dictionary<LogType, LoggerBase>();
         }
         #endregion
         #region Methods
-        public void Log(string logLine)
+        public static LogDistributor GetInstance()
         {
-            if (_path == null)
+            if (_instance == null)
             {
-                throw new ArgumentNullException(nameof(logLine));
+                _instance = new LogDistributor();
             }
-            if (File.Exists(_path) == false)
+            return _instance;
+        }
+        public void Add(Log log)
+        {
+            if (!_loggers.ContainsKey(log.Titte))
             {
-                throw new FileNotFoundException(_path);
-            }
-            try
-            {
-                using (StreamWriter sw = new(_path, true))
+                LoggerBase logger = null;
+                switch (log.Titte)
                 {
-                    sw.WriteLine(logLine + GetLogTime());
+                    case LogType.Result:
+                        logger = new ResultLogger("path1"); // set concreate path
+                        break;
+                    case LogType.Exception:
+                        logger = new ExceptionLogger("path2"); // set concreate path
+                        break;
+                    case LogType.System:
+                        logger = new SystemLogger("path3"); // set concreate path
+                        break;
+                    default:
+                        throw new ArgumentException();
                 }
-                _exCount++;
+                _loggers.Add(log.Titte, logger);
             }
-            catch (Exception)
+
+            _loggers[log.Titte].Add(log);
+        }
+        public void Save()
+        {
+            foreach (var item in _loggers)
             {
-
-                throw;
+                item.Value.Save();
             }
-        }
-        private string GetLogTime()
-        {
-            return $"<LogTime: {DateTime.Now:G}>;";
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
         #endregion
-
     }
 }
