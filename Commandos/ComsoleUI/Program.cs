@@ -1,10 +1,10 @@
-﻿using Commandos.Role;
-using Commandos.User;
-using ConsoleUI.Drawers;
-using ConsoleUI.Inputs;
-using ConsoleUI.Menu;
+﻿using Commandos;
+using Commandos.Logs;
+using Commandos.Logs.InterfacesAndEnums;
+using Commandos.Models.Products.MeatProduct;
 
 Console.WriteLine("Hello, World!");
-User user = new User("Alex", Guid.NewGuid(), Roles.Customer);
-MenuDeterminerByRole determiner = new(user);
-MenuProcess menu = new(determiner.GetMenuElements(), new ConsoleDrawer(), new ConsoleInput());
+MeatProductModel _meatProduct = new MeatProductModel();
+LogDistributor distributor = LogDistributor.GetInstance();
+distributor.Add(new Log(LogType.System, "System Log"));
+distributor.Add(new Log(LogType.System, "System Log"));
