@@ -6,14 +6,9 @@ namespace Commandos.Logs
 {
     public class LogDistributor : ILogger
     {
-        #region Props
-        private int _exCount = 0;
-        private string _path;
-
-        private static Logger _instance;
-        public static Logger Instance => _instance is null ? new Logger() : _instance;
-        public int ExCount => _exCount;
-        public string Path { get => _path; set => _path = value; }
+        #region Fields
+        private Dictionary<LogType, LoggerBase> _loggers;
+        private static LogDistributor _instance;
         #endregion
         #region Constructor
         private LogDistributor()
