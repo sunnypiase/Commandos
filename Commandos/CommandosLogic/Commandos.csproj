@@ -13,6 +13,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties files_4config_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
