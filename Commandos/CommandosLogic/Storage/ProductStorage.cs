@@ -108,7 +108,7 @@ namespace Commandos.Storage
 
         #endregion
         #region Methods
-       
+
         public IEnumerable<G> GetAll<G>() where G : T
         {
             foreach (T item in _products)

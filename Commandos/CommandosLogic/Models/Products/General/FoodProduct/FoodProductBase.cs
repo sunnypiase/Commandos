@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace Commandos.Models.Products.General.FoodProduct
 {
-    
+
     [DataContract]
     public abstract class FoodProductBase : ProductBase, IFoodProduct
     {
