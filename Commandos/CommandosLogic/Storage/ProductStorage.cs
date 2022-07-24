@@ -2,180 +2,174 @@
 using Commandos.TxtSerialize;
 using System.Collections;
 using System.Text;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
 
 namespace Commandos.Storage
 {
     [Serializable]
-    public class ProductStorage<T> : IList<T>, IXmlSerializable
+    public class ProductStorage<T> : IEnumerable<(T Product, int Count)>
         where T : class, IProduct
     {
+        [NonSerialized]
+        private static readonly Lazy<ProductStorage<T>> _instance = new();
+        public static ProductStorage<T> Instance => _instance.Value;
 
-        #region Props
-        private static ProductStorage<T> _instance;
-        [XmlIgnore]
-        public static ProductStorage<T> Instance => _instance is null ? _instance = new() : _instance;
-        private List<T> _products;
-        /// <summary>
-        /// перевіряє чи підпадає під задані умови продукт перед його додаванням
-        /// </summary>
+        private readonly List<(T Product, int Count)> _products = new();
+        public List<(T Product, int Count)> GetProducts() => new(_products);
+
+        #region Events
+
         public event Predicate<T>? OnProductPreAddFaceControl;
-        /// <summary>
-        /// у випадку, коли продукт не підпадає під умови додавання викликається ця подія, повинна записувати лог у файл
-        /// </summary>
         public event Action<string>? OnBadProductLogger;
-        public double Pirice => _products.Select(product => product.Price).Sum();
-        public double MaxPrice => _products.Select(product => product.Price).Max();
-        #endregion
-        #region Ctors
-        private ProductStorage()
-        {
-            _products = new();
-        }
 
         #endregion
-        #region IList
-        public T this[int index]
+
+        private ProductStorage() { }
+
+        #region Price
+
+        public double TotalPrice => _products.Select(x => x.Product.Price * x.Count).Sum();
+        public double MaxPrice => _products.Select(x => x.Product.Price).Max();
+        public double MinPrice => _products.Select(x => x.Product.Price).Min();
+
+        #endregion
+
+        #region List wrapper
+
+        public (T Product, int Count) this[int index]
         {
             get => _products[index];
-            set => _products[index] = (T)value.Clone();
+            set => _products[index] = value;
         }
 
         public int Count => _products.Count;
+        public void Clear() => _products.Clear();
 
-        public bool IsReadOnly => false;
-
-        public void Add(T item)
+        public void Add(T product, int countToAdd)
         {
-            if (OnProductPreAddFaceControl?.Invoke(item) ?? true)
+            if (OnProductPreAddFaceControl?.Invoke(product) ?? true)
             {
-                _products.Add((T)item.Clone());
+                bool isInStorage = false;
+                for (int i = 0; i < _products.Count; i++)
+                {
+                    if (product.Equals(_products[i].Product))
+                    {
+                        _products[i] = (product, _products[i].Count + countToAdd);
+                        isInStorage = true;
+                        break;
+                    }
+                }
+                if (!isInStorage)
+                {
+                    _products.Add((product, countToAdd));
+                }
             }
             else
             {
-                OnBadProductLogger?.Invoke(new TxtSerializer().Serialize(item) + "<Describe : Продукт не підпадає під умови додавання>;");
+                OnBadProductLogger?.Invoke(new TxtSerializer().Serialize(product) + "<Describe : Продукт не підпадає під умови додавання>;");
             }
         }
-
-        public void Clear()
+        public void Remove(T product, int countToRemove)
         {
-            _products.Clear();
-        }
-
-        public bool Contains(T item)
-        {
-            return _products.Contains(item);
-        }
-
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            _products.CopyTo(array, arrayIndex);
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return _products.GetEnumerator();
-        }
-
-        public int IndexOf(T item)
-        {
-            return _products.IndexOf(item);
-        }
-
-        public void Insert(int index, T item)
-        {
-            if (OnProductPreAddFaceControl?.Invoke(item) ?? true)
+            for (int i = 0; i < _products.Count; i++)
             {
-                _products.Insert(index, (T)item.Clone());
-            }
-            else
-            {
-                OnBadProductLogger?.Invoke(new TxtSerializer().Serialize(item) + "<Describe : Продукт не підпадає під умови додавання>;");
+                if (product.Equals(_products[i].Product))
+                {
+                    var (prod, countInStorage) = _products[i];
+
+                    if (countInStorage > countToRemove)
+                    {
+                        _products[i] = (prod, countInStorage - countToRemove);
+                    }
+                    else
+                    {
+                        _products.RemoveAt(i);
+                    }
+                    return;
+                }
             }
         }
-
-        public bool Remove(T item)
+        public bool Contains(T product)
         {
-            return (_products.Remove(item));
+            foreach (var p in _products)
+            {
+                if (product.Equals(p.Product))
+                    return true;
+            }
+            return false;
         }
-
+        public int IndexOf(T product)
+        {
+            var itemInProducts = _products.FirstOrDefault(x => x.Product == product);
+            return _products.IndexOf(itemInProducts);
+        }
         public void RemoveAt(int index)
         {
             _products.RemoveAt(index);
         }
 
         #endregion
+
         #region Methods
 
-        public IEnumerable<G> GetAll<G>() where G : T
+        public IEnumerable<(T Product, int Count)> GetAll()
         {
-            foreach (T item in _products)
+            foreach (var p in _products)
             {
-                if (item is G result)
-                {
-                    yield return result;
-                }
+                yield return p;
             }
         }
-        public IEnumerable<G> GetAll<G>(Predicate<G> predicate) where G : T
+        public IEnumerable<(T Product, int Count)> GetAll(Type productType)
         {
-            foreach (T item in _products)
+            var productsOfType = _products
+                .Where(x => x.Product.GetType() == productType)
+                .Select(x => x);
+
+            foreach (var p in productsOfType)
             {
-                if (item is G result && predicate(result))
-                {
-                    yield return result;
-                }
+                yield return p;
             }
         }
+        public IEnumerable<(T Product, int Count)> GetAll(Predicate<T> check)
+        {
+            var resProducts = _products
+                .Where(x => check(x.Product))
+                .Select(x => x);
+
+            foreach (var p in resProducts)
+            {
+                yield return p;
+            }
+        }
+
         public void Sort()
         {
             _products.Sort();
         }
-        public void Sort(IComparer<T> comparer)
+        public void Sort(IComparer<(T, int)> comparer)
         {
             _products.Sort(comparer);
         }
 
         #endregion
+
         #region ObjectOverrides
         public override string ToString()
         {
             StringBuilder sb = new();
-            foreach (IProduct product in _products)
+            foreach (var p in _products)
             {
-                sb.AppendLine(product.ToString());
+                sb.AppendLine(p.ToString());
             }
             return sb.ToString();
         }
 
-        public XmlSchema? GetSchema() { return null; }
-        public void ReadXml(XmlReader reader)
-        {
-            reader.ReadStartElement();
-            while (reader.IsStartElement("IProduct"))
-            {
-                Type type = Type.GetType(reader.GetAttribute("AssemblyQualifiedName"));
-                XmlSerializer serial = new XmlSerializer(type);
+        #endregion
 
-                reader.ReadStartElement("IProduct");
-                this.Add((IProduct)serial.Deserialize(reader) as T);
-                reader.ReadEndElement();
-            }
-            reader.ReadEndElement();
-        }
-        public void WriteXml(XmlWriter writer)
+        #region IEnumerable
+
+        public IEnumerator<(T, int)> GetEnumerator()
         {
-            foreach (IProduct product in this)
-            {
-                writer.WriteStartElement("IProduct");
-                writer.WriteAttributeString
-                ("AssemblyQualifiedName", product.GetType().AssemblyQualifiedName);
-                XmlSerializer xmlSerializer = new XmlSerializer(product.GetType());
-                xmlSerializer.Serialize(writer, product);
-                writer.WriteEndElement();
-            }
+            return _products.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -183,9 +177,6 @@ namespace Commandos.Storage
             return GetEnumerator();
         }
 
-
-
         #endregion
-
     }
 }

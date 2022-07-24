@@ -13,11 +13,11 @@ namespace Commandos.Services
         private static readonly Lazy<ProductStorageService> _instance = new();
         public static ProductStorageService Instance => _instance.Value;
 
-        private readonly ProductStorage<(IProduct Product, int Count)> _storage;
+        private readonly ProductStorage<IProduct> _storage;
 
         protected ProductStorageService()
         {
-            _storage = ProductStorage<(IProduct Product, int Count)>.Instance;
+            _storage = ProductStorage<IProduct>.Instance;
         }      
 
         #region Methods
