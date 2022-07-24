@@ -8,16 +8,10 @@ namespace Commandos.Services
 {
     public class PersonStorageService
     {
-        private static PersonStorageService _instance;
+        private readonly static Lazy<PersonStorageService> _instance = new();
+        public static PersonStorageService Instance => _instance.Value;
 
         protected PersonStorageService() { }
-
-        public static PersonStorageService Instance()
-        {
-            if (_instance == null)
-                _instance = new PersonStorageService();
-            return _instance;
-        }
 
         #region Methods
 

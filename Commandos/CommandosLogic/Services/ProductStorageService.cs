@@ -10,32 +10,29 @@ namespace Commandos.Services
 {
     public class ProductStorageService
     {
-        private static ProductStorageService _instance;
+        private static readonly Lazy<ProductStorageService> _instance = new();
+        public static ProductStorageService Instance => _instance.Value;
 
-        private ProductStorage<IProduct> _storage;
+        private readonly ProductStorage<(IProduct Product, int Count)> _storage;
 
         protected ProductStorageService()
         {
-            _storage = ProductStorage<IProduct>.Instance;
-        }
-
-        public static ProductStorageService Instance()
-        {
-            if (_instance == null)
-                _instance = new ProductStorageService();
-            return _instance;
-        }
+            _storage = ProductStorage<(IProduct Product, int Count)>.Instance;
+        }      
 
         #region Methods
 
         public void AddProducts(IEnumerable<(IProduct Product, int Count)> products)
         {
-
+            foreach (var prod in products)
+            {
+                _storage.Add(prod);
+            }
         }
 
         public void AddProduct(IProduct product, int count)
         {
-
+            _storage.Add((product, count));
         }
 
         public IProduct? GetProduct(Guid productId)
