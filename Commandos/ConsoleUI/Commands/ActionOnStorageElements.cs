@@ -5,20 +5,27 @@ using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands
 {
-    public class RevealStorage : ICommand
+    public class ActionOnStorageElements<T> : ICommand
+        where T : ActionOnProductCommand, new()
     {
+        private string title;
+        public ActionOnStorageElements(string _title = "Select product")
+        {
+            title = _title;
+        }
         public ICollection<IMenuElement>? Execute(IUser? user = null)
         {
             ProductStorage<IProduct>? storage = ProductStorage<IProduct>.Instance;
 
             List<IMenuElement> elements = new();
 
-            elements.Add(new InfoElement("Delete some product from storage"));
-            int i = 0;
+            elements.Add(new InfoElement(title));
+            int i = default;
             foreach ((IProduct Product, int Amount) item in storage)
             {
-                elements.Add(new SelectableElement($"{item}", $"{i}", new DeleteFromStorage(i)));
-                i++;
+                T? actionOnProduct = new();
+                actionOnProduct.SetProduct(item.Product);
+                elements.Add(new SelectableElement($"{item}", $"{++i}", actionOnProduct));
             }
             elements.Add(new SelectableElement("back to home", "0", new BackToHome()));
             return elements;
