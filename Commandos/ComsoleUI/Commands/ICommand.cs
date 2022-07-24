@@ -1,8 +1,8 @@
-﻿using ConsoleUI.Drawers;
-using ConsoleUI.Inputs;
+﻿
+
+using Commandos.User;
 using ConsoleUI.Menu;
 using ConsoleUI.Menu.MenuTypes;
-using ConsoleUI.User;
 
 namespace ConsoleUI.Commands
 {
@@ -13,7 +13,7 @@ namespace ConsoleUI.Commands
 
     public class ExitCommand : ICommand
     {
-        List<int> prod = new List<int>();   
+        private List<int> prod = new List<int>();
         public ICollection<IMenuElement>? Execute(IUser? user)
         {
             return null;
@@ -30,7 +30,7 @@ namespace ConsoleUI.Commands
 
     public class AddProductToStorage : ICommand
     {
-        List<int> prod = new List<int>();
+        private List<int> prod = new List<int>();
         public ICollection<IMenuElement>? Execute(IUser? user)
         {
             List<IMenuElement> elements = new();

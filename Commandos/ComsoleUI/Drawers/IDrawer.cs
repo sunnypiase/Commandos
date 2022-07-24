@@ -1,6 +1,4 @@
-﻿using ConsoleUI.Inputs;
-using ConsoleUI.Menu.MenuTypes;
-using System;
+﻿using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Drawers
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -32,7 +28,7 @@ namespace Commandos.Serialize
 
         public void Serialize(T value, Stream stream)
         {
-            var xmlSerializer = new XmlSerializer(typeof(T));
+            XmlSerializer? xmlSerializer = new XmlSerializer(typeof(T));
             xmlSerializer.Serialize(XmlWriter.Create(stream, Settings), value);
         }
     }

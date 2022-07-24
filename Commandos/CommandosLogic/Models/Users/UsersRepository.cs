@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Commandos.User;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace Commandos.Models.Users
@@ -16,35 +13,43 @@ namespace Commandos.Models.Users
         [XmlIgnore]
         private static UsersRepository instance;
 
-        public static UsersRepository GetInstance() => instance is null ? instance = new UsersRepository() : instance;
+        public static UsersRepository GetInstance()
+        {
+            return instance is null ? instance = new UsersRepository() : instance;
+        }
 
-        public List<IUser> AllUsers() => users;
+        public List<IUser> AllUsers()
+        {
+            return users;
+        }
 
         private UsersRepository()
         {
             ReadUsersFromFile();
             if (users is null) // this is a strange error but to avoid such situation we create new list
+            {
                 users = new List<IUser>();
+            }
         }
 
-        public void AddUser(user: IUser)
+        public void AddUser(IUser user)
         {
             users.Add(user);
         }
 
-        public void RemoveUser(user: IUser)
+        public void RemoveUser(IUser user)
         {
             users.Remove(user);
         }
 
         public void ReadUsersFromFile()
         {
-            DownloaderProcessor.GetUserDataSerializer(new XmlSerialization<UsersRepository>).Load(instance);
+            //DownloaderProcessor.GetUserDataSerializer(new XmlSerialization<UsersRepository>).Load(instance);
         }
 
         public void SaveUsersToFile()
         {
-            DownloaderProcessor.GetUserDataSerializer(new XmlSerialization<UsersRepository>).Save(instance);
+            //DownloaderProcessor.GetUserDataSerializer(new XmlSerialization<UsersRepository>).Save(instance);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ConsoleUI.Commands;
-using ConsoleUI.Menu;
 using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.CommandsFactory

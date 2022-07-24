@@ -35,7 +35,9 @@ namespace ConsoleUI.Menu
                 drawer.Draw(elements);
 
                 if (elements == null)
+                {
                     end = true;
+                }
             }
             while (!end);
         }

@@ -1,5 +1,7 @@
 ﻿
-namespace ConsoleUI.User
+using Commandos.Role;
+
+namespace Commandos.User
 {
     public interface IUser
     {

@@ -3,7 +3,7 @@
     public enum DrawPriority
     {
         First,
-        Second, 
+        Second,
         Third
     }
 }

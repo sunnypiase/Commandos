@@ -1,5 +1,4 @@
-﻿using ConsoleUI.Drawers;
-using ConsoleUI.Menu.MenuTypes;
+﻿using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Inputs
 {
@@ -8,7 +7,7 @@ namespace ConsoleUI.Inputs
         public ICollection<IMenuElement>? Choose(ICollection<IMenuElement>? menuElements)
         {
             string? result = Console.ReadLine();
-            var element = menuElements?
+            SelectableElement? element = menuElements?
                     .Where(el => el is SelectableElement)
                     .Select(el => (SelectableElement)el)
                     .Where(el => el.SignToCommand == result)

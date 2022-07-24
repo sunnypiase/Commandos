@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Commandos.Logs
+﻿namespace Commandos.Logs
 {
-    internal class Logger:IDisposable
+    internal class Logger : IDisposable
     {
         #region Props
         private int _exCount = 0;

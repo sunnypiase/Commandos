@@ -1,7 +1,8 @@
-﻿using ConsoleUI.Drawers;
+﻿using Commandos.Role;
+using Commandos.User;
+using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
 using ConsoleUI.Menu;
-using ConsoleUI.User;
 
 Console.WriteLine("Hello, World!");
 User user = new User("Alex", Guid.NewGuid(), Roles.Customer);

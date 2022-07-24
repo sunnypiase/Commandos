@@ -1,7 +1,7 @@
-﻿using ConsoleUI.CommandsFactory;
+﻿using Commandos.Role;
+using Commandos.User;
+using ConsoleUI.CommandsFactory;
 using ConsoleUI.Menu.MenuTypes;
-using ConsoleUI.User;
-using System.Collections;
 
 namespace ConsoleUI.Menu
 {
