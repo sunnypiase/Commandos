@@ -61,5 +61,15 @@ namespace Commandos.Models.Carts
             }
             return sum;
         }
+        public override string ToString()
+        {
+            StringBuilder stringBuilder= new StringBuilder("Товари:\n");
+            foreach(var item in cartProducts)
+            {
+                stringBuilder.AppendLine($"{item.Key.Name} \t{item.Value} x {item.Key.Price} = {item.Value*item.Key.Price:#.00}");
+            }
+            stringBuilder.AppendLine($"Усього : \t{Sum()}");
+            return stringBuilder.ToString();
+        }
     }
 }
