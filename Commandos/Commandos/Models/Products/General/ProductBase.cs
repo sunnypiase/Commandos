@@ -1,9 +1,18 @@
-﻿namespace Commandos.Models.Products.General
+﻿using Commandos.Models.Products.CementProduct;
+using Commandos.Models.Products.DairyProduct;
+using Commandos.Models.Products.MeatProduct;
+using System.Runtime.Serialization;
+
+namespace Commandos.Models.Products.General
 {
-    [Serializable]
+    [KnownType(typeof(CementProductModel))]
+    [KnownType(typeof(DairyProductModel))]
+    [KnownType(typeof(MeatProductModel))]
+    [DataContract]
     public abstract class ProductBase : IProduct
     {
         protected double _price;
+        [DataMember(Name = "Price")]
         public virtual double Price
         {
             get => _price;
@@ -16,7 +25,9 @@
                 _price = value;
             }
         }
+        [DataMember(Name = "Name")]
         public virtual string Name { get; set; }
+        [DataMember(Name = "ID")]
         public Guid ID { get; set; } = new Guid();
         #region Ctors
         protected ProductBase() : this(default, default) { }

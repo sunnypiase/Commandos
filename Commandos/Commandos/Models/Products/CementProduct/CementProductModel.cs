@@ -1,10 +1,13 @@
 ﻿using Commandos.Enums;
 using Commandos.Models.Products.General.IndustrialProduct;
+using System.Runtime.Serialization;
 
 namespace Commandos.Models.Products.CementProduct
 {
+    [DataContract]
     internal class CementProductModel : IndustrialProductBase, ICementProduct
     {
+        [DataMember(Name ="CementBrand")]
         public CementBrand CementBrand { get; set; }
         public CementProductModel() :
             this(default, default, default, default)

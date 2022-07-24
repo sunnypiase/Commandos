@@ -1,9 +1,10 @@
 ﻿
 using Commandos.Models.Products.General.FoodProduct;
+using System.Runtime.Serialization;
 
 namespace Commandos.Models.Products.DairyProduct
 {
-    [Serializable]
+    [DataContract]
     public class DairyProductModel : FoodProductBase, IDairyProduct
     {
         #region Props

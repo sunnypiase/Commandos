@@ -1,14 +1,17 @@
 ﻿using Commandos.Enums;
 using Commandos.Models.Products.General.FoodProduct;
+using System.Runtime.Serialization;
 
 namespace Commandos.Models.Products.MeatProduct
 {
-    [Serializable]
+    [DataContract]
     public class MeatProductModel : FoodProductBase, IMeatProduct
     {
 
         #region Props
+        [DataMember(Name = "MeatSpecies")]
         public MeatSpecies MeatSpeciesProp { get; set; }
+        [DataMember(Name = "MeatCategory")]
         public MeatCategory MeatCategoryProp { get; set; }
 
         #endregion

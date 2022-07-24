@@ -1,28 +1,26 @@
-﻿using Commandos.Models.Products.General;
-using Commandos.TxtSerialize;
-using System.Collections;
-using System.Text;
-using System.Xml;
-using System.Xml.Schema;
+﻿using Commandos.Models.Products.CementProduct;
+using Commandos.Models.Products.DairyProduct;
 using Commandos.Models.Products.General;
+using Commandos.Models.Products.MeatProduct;
 using Commandos.TxtSerialize;
 using System.Collections;
+using System.Runtime.Serialization;
 using System.Text;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
 
 namespace Commandos.Storage
 {
-    [Serializable]
-    public class ProductStorage<T> : IList<(T Product, int Amount)>, IXmlSerializable
+    [KnownType(typeof(CementProductModel))]
+    [KnownType(typeof(DairyProductModel))]
+    [KnownType(typeof(MeatProductModel))]
+    [DataContract]
+    public class ProductStorage<T> : IList<(T Product, int Amount)>
         where T : class, IProduct
     {
 
         #region Props
         private static ProductStorage<T> _instance;
-        [XmlIgnore]
         public static ProductStorage<T> Instance => _instance is null ? _instance = new() : _instance;
+        [DataMember(Name = "Products")]
         private List<(T Product, int Amount)> _products;
         /// <summary>
         /// перевіряє чи підпадає під задані умови продукт перед його додаванням
@@ -149,7 +147,7 @@ namespace Commandos.Storage
         {
             foreach (var item in _products)
             {
-                if (item.Product is G result && predicate(item) )
+                if (item.Product is G result && predicate(item))
                 {
                     yield return (result, item.Amount);
                 }
@@ -176,42 +174,10 @@ namespace Commandos.Storage
             }
             return sb.ToString();
         }
-
-        public XmlSchema? GetSchema() { return null; }
-        public void ReadXml(XmlReader reader)
-        {
-            reader.ReadStartElement();
-            while (reader.IsStartElement("IProduct"))
-            {
-                Type type = Type.GetType(reader.GetAttribute("AssemblyQualifiedName"));
-                XmlSerializer serial = new XmlSerializer(type);
-
-                reader.ReadStartElement("IProduct");
-                this.AddOneProduct((IProduct)serial.Deserialize(reader) as T);
-                reader.ReadEndElement();
-            }
-            reader.ReadEndElement();
-        }
-        public void WriteXml(XmlWriter writer)
-        {
-            foreach (var product in this)
-            {
-                writer.WriteStartElement("IProduct");
-                writer.WriteAttributeString
-                ("AssemblyQualifiedName", product.Item1.GetType().AssemblyQualifiedName);
-                XmlSerializer xmlSerializer = new XmlSerializer(product.Item1.GetType());
-                xmlSerializer.Serialize(writer, product.Item1);
-                writer.WriteEndElement();
-            }
-        }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
-
-
-
         #endregion
 
     }

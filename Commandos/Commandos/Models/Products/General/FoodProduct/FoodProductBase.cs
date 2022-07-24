@@ -1,18 +1,22 @@
-﻿using System.Runtime.Serialization;
+﻿using Commandos.Models.Products.DairyProduct;
+using Commandos.Models.Products.MeatProduct;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace Commandos.Models.Products.General.FoodProduct
 {
-
+    [KnownType(typeof(DairyProductModel))]
+    [KnownType(typeof(MeatProductModel))]
     [DataContract]
     public abstract class FoodProductBase : ProductBase, IFoodProduct
     {
-
         #region Props
 
         protected double _weight;
         protected SortedDictionary<int, int> _daysToExpirationAndPresentOfChange;
+        [DataMember(Name = "ExpirationTime")]
         public virtual DateTime ExpirationTime { get; set; }
+        [DataMember(Name = "Weight")]
         public virtual double Weight
         {
             get => _weight;
