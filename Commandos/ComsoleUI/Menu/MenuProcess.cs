@@ -15,7 +15,7 @@ namespace ConsoleUI.Menu
             menuElements = _menuElements.ToList();
             drawer = _drawer;
             input = _input;
-            //Start();
+            Start();
         }
 
         public void Start()

@@ -4,32 +4,6 @@ using ConsoleUI.Inputs;
 
 namespace ConsoleUI.Menu.MenuTypes
 {
-    public enum DrawPriority
-    {
-        First,
-        Second, 
-        Third
-    }
-
-    public interface IMenuElement
-    {
-        public string Title { get; }
-        public DrawPriority Priority { get; }
-    }
-
-    public class InfoElement : IMenuElement
-    {
-        public string Title { get; }
-        public DrawPriority Priority { get; }
-
-        public InfoElement(string title,
-            DrawPriority priority = DrawPriority.First)
-        {
-            Title = title;
-            Priority = priority;
-        }
-    }
-
     public class SelectableElement : IMenuElement
     {
         private ICommand command;

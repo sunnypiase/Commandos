@@ -9,9 +9,9 @@ namespace ConsoleUI.Menu
     {
         private IElementsFactory commands;
 
-        public MenuDeterminerByRole(IUser user)
+        public MenuDeterminerByRole(IUser? user)
         {
-            switch (user.Role)
+            switch (user?.Role)
             {
                 case Roles.Customer:
                     commands = new CustomerElements();
