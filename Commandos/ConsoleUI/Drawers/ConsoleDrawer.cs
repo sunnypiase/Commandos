@@ -25,5 +25,10 @@ namespace ConsoleUI.Drawers
                 }
             }
         }
+
+        public void Write(string data)
+        {
+            Console.WriteLine(data);
+        }
     }
 }
