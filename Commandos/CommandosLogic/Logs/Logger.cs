@@ -33,13 +33,13 @@ namespace Commandos.Logs
                 switch (log.Titte)
                 {
                     case LogType.Result:
-                        logger = new ResultLogger("path1"); // set concreate path
+                        logger = new ResultLogger("path1"); //TODO set concreate path
                         break;
                     case LogType.Exception:
-                        logger = new ExceptionLogger("path2"); // set concreate path
+                        logger = new ExceptionLogger("path2"); //TODO set concreate path
                         break;
                     case LogType.System:
-                        logger = new SystemLogger("path3"); // set concreate path
+                        logger = new SystemLogger("path3"); //TODO set concreate path
                         break;
                     default:
                         throw new ArgumentException();
