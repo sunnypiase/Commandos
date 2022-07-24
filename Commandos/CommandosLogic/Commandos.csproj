@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Logs\" />
-    <Folder Include="Models\Carts\" />
     <Folder Include="Models\Users\" />
     <Folder Include="Serializations\" />
     <Folder Include="Services\" />
