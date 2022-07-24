@@ -5,12 +5,14 @@ using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands
 {
-    public class ActionOnStorageElements<T> : ICommand
-        where T : ActionOnProductCommand, new()
+    public class ActionOnStorageElements : ICommand
+        
     {
+        private ActionOnProductCommand actionOnProduct;
         private string title;
-        public ActionOnStorageElements(string _title = "Select product")
+        public ActionOnStorageElements(ActionOnProductCommand _actionOnProduct, string _title = "Select product")
         {
+            actionOnProduct = _actionOnProduct;
             title = _title;
         }
         public ICollection<IMenuElement>? Execute(IUser? user = null)
@@ -22,8 +24,7 @@ namespace ConsoleUI.Commands
             elements.Add(new InfoElement(title));
             int i = default;
             foreach ((IProduct Product, int Amount) item in storage)
-            {
-                T? actionOnProduct = new();
+            {                
                 actionOnProduct.SetProduct(item.Product);
                 elements.Add(new SelectableElement($"{item}", $"{++i}", actionOnProduct));
             }
