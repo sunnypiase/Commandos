@@ -4,7 +4,7 @@
     {
         private string check;
         private double sum;
-        private string id;
+        private string id;//TODO Change id to Guid
         private DateTime dateTime;
         public string CheckString { get => check; private set => check = value; }
         public double Sum

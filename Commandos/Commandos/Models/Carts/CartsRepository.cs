@@ -1,6 +1,6 @@
 ﻿namespace Commandos.Models.Carts
 {
-    public class CartsRepository
+    public class CartsRepository//TODO implement IList<Cart>
     {
         private List<Cart> carts;
         private static CartsRepository instance;
