@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Commandos.Models.Users
 {
     [DataContract]
-    internal class UsersRepository
+    public class UsersRepository
     {
         [DataMember]
         private List<IUser> users;

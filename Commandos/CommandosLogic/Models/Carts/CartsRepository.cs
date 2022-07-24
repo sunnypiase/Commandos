@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Commandos.Storage
+namespace Commandos.Models.Carts
 {
     public class CartsRepository
     {
