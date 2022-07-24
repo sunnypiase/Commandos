@@ -32,6 +32,24 @@ namespace Commandos.Models.Users
             }
         }
 
+        public IUser GetPerson(Guid id)
+        {
+            IUser user = users.Find(u => u.Guid == id);
+            if (user is null) // (could not find user)
+                return null;
+            else
+                return user;
+        }
+
+        public void RemovePerson(Guid id)
+        {
+            IUser user = GetPerson(id);
+            if (user is null) // (could not find user)
+                ; // here we should define what to do. Probably, throw an exception
+            else
+                RemoveUser(user);
+        }
+
         public void AddUser(IUser user)
         {
             users.Add(user);
@@ -50,6 +68,27 @@ namespace Commandos.Models.Users
         public void SaveUsersToFile()
         {
             //TODO DownloaderProcessor.GetUserDataSerializer(new XmlSerialization<UsersRepository>).Save(instance);
+        }
+
+        public IRole GetRole(Guid id)
+        {
+            IUser user = GetPerson(id);
+            if (user is null) // (could not find user)
+                return IRole.Unknown;
+            else
+                return user.Role;
+        }
+
+        public bool SetRole(Guid id, IRole role)
+        {
+            IUser user = GetPerson(id);
+            if (user is null) // (could not find user)
+                return false;
+            else
+            {
+                user.Role = role;
+                return true;
+            }
         }
     }
 }
