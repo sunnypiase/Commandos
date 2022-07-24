@@ -6,11 +6,11 @@ namespace Commandos.Serialize
     {
         public IConfiguration AppConfiguration { get; }
         private static Configuration _configurationInstance;
-        private Configuration(ConfigurationBuilder configurationBuilder)
+        private Configuration(IConfigurationBuilder configurationBuilder)
         {
             AppConfiguration = configurationBuilder.Build();
         }
-        public static Configuration GetInstance(ConfigurationBuilder configurationBuilder = null)
+        public static Configuration GetInstance(IConfigurationBuilder configurationBuilder = null)
         {
             if (_configurationInstance == null)
             {

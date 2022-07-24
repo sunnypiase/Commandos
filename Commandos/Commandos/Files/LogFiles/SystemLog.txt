@@ -1,0 +1,2 @@
+<Log Type: System>;<Log Body: System Log>;
+<Log Type: System>;<Log Body: Back to main menu>;

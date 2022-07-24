@@ -7,7 +7,7 @@ namespace Commandos.User
     {
         public string Name { get; }
         public Guid Guid { get; }
-        public Roles Role { get; }
+        public Roles Role { get; set; }
 
         public User(string name, Guid guid, Roles role)
         {
