@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -16,9 +16,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CommandosLogic\Commandos.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Commandos\Commandos.csproj" />
+	</ItemGroup>
 
 </Project>

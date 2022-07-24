@@ -1,4 +1,5 @@
-﻿using Commandos.User;
+﻿using Commandos.Role;
+using Commandos.User;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
@@ -70,16 +71,16 @@ namespace Commandos.Models.Users
             //TODO DownloaderProcessor.GetUserDataSerializer(new XmlSerialization<UsersRepository>).Save(instance);
         }
 
-        public IRole GetRole(Guid id)
+        public Roles GetRole(Guid id)
         {
             IUser user = GetPerson(id);
             if (user is null) // (could not find user)
-                return IRole.Unknown;
+                return Roles.Customer;
             else
                 return user.Role;
         }
 
-        public bool SetRole(Guid id, IRole role)
+        public bool SetRole(Guid id, Roles role)
         {
             IUser user = GetPerson(id);
             if (user is null) // (could not find user)

@@ -23,10 +23,6 @@ namespace Commandos.Logs.Loggers
 
         public virtual void Save()
         {
-            if (!File.Exists(_path))
-            {
-                throw new FileNotFoundException("No such file");
-            }
 
             using (StreamWriter writer = File.AppendText(_path))
             {

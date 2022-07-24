@@ -1,5 +1,7 @@
 ﻿
 
+using Commandos.Logs;
+using Commandos.Logs.InterfacesAndEnums;
 using Commandos.User;
 using ConsoleUI.Menu;
 using ConsoleUI.Menu.MenuTypes;
@@ -23,6 +25,7 @@ namespace ConsoleUI.Commands
     {
         public ICollection<IMenuElement>? Execute(IUser? user)
         {
+            LogDistributor.GetInstance().Add(new Log(LogType.System, "Back to main menu"));
             return new MenuDeterminerByRole(user).GetMenuElements();
         }
     }
