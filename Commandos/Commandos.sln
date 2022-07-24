@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commandos", "Commandos\Commandos.csproj", "{C1E71F27-5032-4EED-ABC6-013601CEE787}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComsoleUI", "ComsoleUI\ComsoleUI.csproj", "{FA34B876-19F4-4616-8729-7D92AD8B08E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commandos", "CommandosLogic\Commandos.csproj", "{681C6D8D-F9BC-4227-89A9-7237F67B39D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C1E71F27-5032-4EED-ABC6-013601CEE787}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1E71F27-5032-4EED-ABC6-013601CEE787}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1E71F27-5032-4EED-ABC6-013601CEE787}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1E71F27-5032-4EED-ABC6-013601CEE787}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA34B876-19F4-4616-8729-7D92AD8B08E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA34B876-19F4-4616-8729-7D92AD8B08E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA34B876-19F4-4616-8729-7D92AD8B08E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA34B876-19F4-4616-8729-7D92AD8B08E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{681C6D8D-F9BC-4227-89A9-7237F67B39D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{681C6D8D-F9BC-4227-89A9-7237F67B39D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{681C6D8D-F9BC-4227-89A9-7237F67B39D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{681C6D8D-F9BC-4227-89A9-7237F67B39D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
