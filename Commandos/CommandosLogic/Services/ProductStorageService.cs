@@ -8,48 +8,43 @@ using System.Threading.Tasks;
 
 namespace Commandos.Services
 {
-    public class ProductStorageService
+    public static class ProductStorageService
     {
-        private static readonly Lazy<ProductStorageService> _instance = new();
-        public static ProductStorageService Instance => _instance.Value;
+        private static ProductStorage<IProduct> _storage;
 
-        private readonly ProductStorage<IProduct> _storage;
-
-        protected ProductStorageService()
+        static ProductStorageService()
         {
             _storage = ProductStorage<IProduct>.Instance;
-        }      
+        }
 
-        #region Methods
-
-        public void AddProducts(IEnumerable<(IProduct Product, int Count)> products)
+        public static void AddProducts(IEnumerable<(IProduct Product, int Count)> products)
         {
-            foreach (var prod in products)
+            foreach (var p in products)
             {
-                _storage.Add(prod);
+                ProductStorage<IProduct>.Instance.Add(p.Product, p.Count);
             }
         }
 
-        public void AddProduct(IProduct product, int count)
+        public static void AddProduct(IProduct product, int count)
         {
-            _storage.Add((product, count));
+            ProductStorage<IProduct>.Instance.Add(product, count);
         }
 
-        public IProduct? GetProduct(Guid productId)
+        public static (IProduct Product, int Count) GetProduct(Guid productId)
         {
-            return null;
+            return _storage.GetProducts().FirstOrDefault(x => x.Product.ID == productId);
         }
 
-        public List<(IProduct Product, int Count)>? GetAllProducts()
+        public static List<(IProduct Product, int Count)>? GetAllProducts()
         {
-            return null;
+            return _storage.GetProducts();
         }
 
-        public void RemoveProduct(Guid productId)
+        public static void RemoveProduct(Guid productId, int count)
         {
-
+            var (product, _) = GetProduct(productId);
+            _storage.Remove(product, count);
         }
 
-        #endregion
     }
 }
