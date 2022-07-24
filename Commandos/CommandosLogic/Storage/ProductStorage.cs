@@ -51,7 +51,7 @@ namespace Commandos.Storage
                 bool isInStorage = false;
                 for (int i = 0; i < _products.Count; i++)
                 {
-                    if (product.Equals(_products[i].Product))
+                    if (_products[i].Product.Equals(product))
                     {
                         _products[i] = (product, _products[i].Count + countToAdd);
                         isInStorage = true;
@@ -72,7 +72,7 @@ namespace Commandos.Storage
         {
             for (int i = 0; i < _products.Count; i++)
             {
-                if (product.Equals(_products[i].Product))
+                if (_products[i].Product.Equals(product))
                 {
                     var (prod, countInStorage) = _products[i];
 
