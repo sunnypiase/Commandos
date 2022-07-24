@@ -90,12 +90,7 @@ namespace Commandos.Storage
         }
         public bool Contains(T product)
         {
-            foreach (var p in _products)
-            {
-                if (product.Equals(p.Product))
-                    return true;
-            }
-            return false;
+            return _products.Select(x => x.Product).Contains(product);
         }
         public int IndexOf(T product)
         {
