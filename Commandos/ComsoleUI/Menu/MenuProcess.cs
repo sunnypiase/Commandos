@@ -12,7 +12,7 @@ namespace ConsoleUI.Menu
 
         public MenuProcess(ICollection<IMenuElement> _menuElements, IDrawer _drawer, IInput _input)
         {
-            menuElements = _menuElements.ToList();
+            menuElements = new(_menuElements.ToList());
             drawer = _drawer;
             input = _input;
             Start();
