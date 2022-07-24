@@ -1,16 +1,18 @@
 ﻿using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
+using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands
 {
     public interface ICommand
     {
-        public void Execute(IDrawer? drawer = null, IInput? input = null);
+        public ICollection<IMenuElement> Execute();
     }
 
-    public class ExitCommand : ICommand
+    public class AddProductCommand : ICommand
     {
-        public void Execute(IDrawer? drawer = null, IInput? input = null)
+        List<int> prod = new List<int>();   
+        public ICollection<IMenuElement> Execute()
         {
             throw new NotImplementedException();
         }

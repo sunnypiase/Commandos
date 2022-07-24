@@ -4,7 +4,7 @@ namespace ConsoleUI.Drawers
 {
     public class ConsoleDrawer : IDrawer
     {
-        public void Draw(ICollection<IMenuElement> elements)
+        public void Draw(ICollection<IMenuElement>? elements)
         {
             IEnumerable<IMenuElement> priorElements = elements.OrderBy(el => el.Priority);
 

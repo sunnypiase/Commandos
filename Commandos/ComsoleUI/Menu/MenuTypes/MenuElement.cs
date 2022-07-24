@@ -46,9 +46,9 @@ namespace ConsoleUI.Menu.MenuTypes
             Priority = priority;
         }
 
-        public void Run(IDrawer drawer, IInput input)
+        public ICollection<IMenuElement>? Run()
         {
-            command.Execute();
+            return command.Execute();
         }
     }
 }

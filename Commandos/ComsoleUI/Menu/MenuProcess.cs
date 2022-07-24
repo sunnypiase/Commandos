@@ -26,20 +26,15 @@ namespace ConsoleUI.Menu
         private void toLoop()
         {
             bool end = false;
+            ICollection<IMenuElement>? elements = menuElements;
+            drawer.Draw(menuElements);
             do
             {
-                drawer.Draw(menuElements);
-                string? result = input.Choose(drawer);
+                elements = input.Choose(elements);
 
-                var menuElement = menuElements
-                    .Where(el => el is SelectableElement)
-                    .Select(el => (SelectableElement)el)
-                    .Where(el => el.SignToCommand == result)
-                    .LastOrDefault();
+                drawer.Draw(elements);
 
-                menuElement?.Run(drawer, input);
-
-                if (menuElement == null || result == "exit")
+                if (elements == null)
                     end = true;
             }
             while (!end);
