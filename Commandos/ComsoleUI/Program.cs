@@ -2,11 +2,14 @@
 using Commandos.Logs;
 using Commandos.Logs.InterfacesAndEnums;
 using Commandos.Models.Products.MeatProduct;
-
+using Commandos.Serialize;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 internal static class Program
 {
     public int Main(string[] args)
     {
+        Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(""));
         Console.WriteLine("Hello, World!");
         MeatProductModel _meatProduct = new MeatProductModel();
         LogDistributor distributor = LogDistributor.GetInstance();
