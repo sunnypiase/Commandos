@@ -10,11 +10,11 @@ namespace ConsoleUI.Commands
     public class WhereStorage<G> : ICommand
         where G : IProduct
     {
-        private Func<G, int, bool> predicate;
+        private Predicate<((G Product, int Amount) element, string inputed)> predicate;
         private string title;
         private IInput input;
         IDrawer drawer;
-        public WhereStorage(Func<G, int, bool> _predicate, string _title, IInput _input, IDrawer _drawer)
+        public WhereStorage(Predicate<((G Product, int Amount) element, string inputed)> _predicate, string _title, IInput _input, IDrawer _drawer)
         {
             predicate = _predicate;
             title = _title;
@@ -24,10 +24,10 @@ namespace ConsoleUI.Commands
 
         public ICollection<IMenuElement>? Execute(IUser? user = null)
         {
-            int num = int.Parse(input.Read(title, drawer));
+            string inputed = input.Read(title, drawer) ;
             var storage = ProductStorage<IProduct>.Instance;
             List<IMenuElement> elements = new();
-            var products = storage.Where(x => x is G && predicate((G)x, num));
+            var products = storage.Where(x => x.Product is G && predicate((((G)x.Product, x.Amount), inputed)));
             foreach (var item in products)
             {
                 elements.Add(new InfoElement($"{item}"));
