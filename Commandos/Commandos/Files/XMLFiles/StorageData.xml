@@ -1,1 +1,24 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+<ProductStorageOfanyType xmlns="http://schemas.datacontract.org/2004/07/Commandos.Storage" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Products xmlns:a="http://schemas.datacontract.org/2004/07/System">
+		<a:ValueTupleOfanyTypeint>
+			<a:Item1 i:type="b:DairyProductModel" xmlns:b="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.DairyProduct">
+				<ID xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General">11c07dda-d08a-4b7c-8a88-f2f2d60864db</ID>
+				<Name xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General">milk</Name>
+				<Price xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General">500</Price>
+				<ExpirationTime xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General.FoodProduct">2022-07-25T00:19:42.5672977+03:00</ExpirationTime>
+				<Weight xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General.FoodProduct">20</Weight>
+			</a:Item1>
+			<a:Item2>2</a:Item2>
+		</a:ValueTupleOfanyTypeint>
+		<a:ValueTupleOfanyTypeint>
+			<a:Item1 i:type="b:DairyProductModel" xmlns:b="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.DairyProduct">
+				<ID xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General">95767bbb-ca7d-4986-93bb-5786f9719e95</ID>
+				<Name xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General">milk1</Name>
+				<Price xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General">5</Price>
+				<ExpirationTime xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General.FoodProduct">2022-07-27T00:19:42.5714268+03:00</ExpirationTime>
+				<Weight xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General.FoodProduct">50</Weight>
+			</a:Item1>
+			<a:Item2>3</a:Item2>
+		</a:ValueTupleOfanyTypeint>
+	</Products>
+</ProductStorageOfanyType>

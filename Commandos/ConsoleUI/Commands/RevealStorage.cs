@@ -9,13 +9,13 @@ namespace ConsoleUI.Commands
     {
         public ICollection<IMenuElement>? Execute(IUser? user = null)
         {
-            var storage = ProductStorage<IProduct>.Instance;
+            ProductStorage<IProduct>? storage = ProductStorage<IProduct>.Instance;
 
             List<IMenuElement> elements = new();
 
             elements.Add(new InfoElement("Delete some product from storage"));
             int i = 0;
-            foreach (var item in storage)
+            foreach ((IProduct Product, int Amount) item in storage)
             {
                 elements.Add(new SelectableElement($"{item}", $"{i}", new DeleteFromStorage(i)));
                 i++;

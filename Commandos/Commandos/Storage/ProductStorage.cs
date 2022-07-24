@@ -135,7 +135,7 @@ namespace Commandos.Storage
 
         public IEnumerable<G> GetAll<G>() where G : T
         {
-            foreach (var item in _products)
+            foreach ((T Product, int Amount) item in _products)
             {
                 if (item.Product is G result)
                 {
@@ -145,7 +145,7 @@ namespace Commandos.Storage
         }
         public IEnumerable<(G Product, int Amount)> GetAll<G>(Predicate<(T Product, int Amount)> predicate) where G : T
         {
-            foreach (var item in _products)
+            foreach ((T Product, int Amount) item in _products)
             {
                 if (item.Product is G result && predicate(item))
                 {
@@ -168,7 +168,7 @@ namespace Commandos.Storage
         public override string ToString()
         {
             StringBuilder sb = new();
-            foreach (var product in _products)
+            foreach ((T Product, int Amount) product in _products)
             {
                 sb.AppendLine(product.Item1.ToString() + $"[{product.Item2} points]");
             }

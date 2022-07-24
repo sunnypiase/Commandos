@@ -11,12 +11,12 @@
         }
         public void Save(T obj)
         {
-            using var fileStream = new FileStream(_serializationPath, FileMode.Truncate);
+            using FileStream? fileStream = new FileStream(_serializationPath, FileMode.Truncate);
             _serializer.Serialize(obj, fileStream);
         }
         public T Load()
         {
-            using var fileStream = new FileStream(_serializationPath, FileMode.Open);
+            using FileStream? fileStream = new FileStream(_serializationPath, FileMode.Open);
             return _serializer.Deserialize(fileStream);
         }
     }

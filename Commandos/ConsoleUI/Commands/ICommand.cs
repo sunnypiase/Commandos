@@ -1,6 +1,4 @@
-﻿
-using Commandos.Models.Products.DairyProduct;
-using Commandos.User;
+﻿using Commandos.User;
 using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands

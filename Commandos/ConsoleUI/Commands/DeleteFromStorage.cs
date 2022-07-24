@@ -15,7 +15,7 @@ namespace ConsoleUI.Commands
 
         public ICollection<IMenuElement>? Execute(IUser? user = null)
         {
-            var storage = ProductStorage<IProduct>.Instance;
+            ProductStorage<IProduct>? storage = ProductStorage<IProduct>.Instance;
             storage.RemoveAt(i);
             List<IMenuElement> elements = new()
             {

@@ -28,7 +28,7 @@ namespace Commandos.Models.Products.General
         [DataMember(Name = "Name")]
         public virtual string Name { get; set; }
         [DataMember(Name = "ID")]
-        public Guid ID { get; set; } = new Guid();
+        public Guid ID { get; set; } = Guid.NewGuid();
         #region Ctors
         protected ProductBase() : this(default, default) { }
         protected ProductBase(string name, double price)

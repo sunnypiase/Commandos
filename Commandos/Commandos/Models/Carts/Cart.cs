@@ -1,17 +1,13 @@
 ﻿using Commandos.Models.Products.General;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Commandos.Models.Carts
 {
     public class Cart
     {
-        string id;
-        Dictionary<IProduct, int> cartProducts;
-        public string Id { get => id; }
+        private string id;
+        private Dictionary<IProduct, int> cartProducts;
+        public string Id => id;
         public Dictionary<IProduct, int> CartProducts { get => cartProducts; private set => cartProducts = value; }
 
         public Cart(string id)
@@ -25,7 +21,11 @@ namespace Commandos.Models.Carts
         }
         public void AddProduct(IProduct product, int count)
         {
-            if (count <= 0) return;
+            if (count <= 0)
+            {
+                return;
+            }
+
             if (CartProducts.ContainsKey(product))
             {
                 CartProducts[product] += count;
@@ -37,8 +37,16 @@ namespace Commandos.Models.Carts
         }
         public void DeleteProduct(IProduct product, int count)
         {
-            if (count <= 0) return;
-            if (!CartProducts.ContainsKey(product)) return;
+            if (count <= 0)
+            {
+                return;
+            }
+
+            if (!CartProducts.ContainsKey(product))
+            {
+                return;
+            }
+
             if (CartProducts[product] > count)
             {
                 CartProducts[product] -= count;
@@ -55,7 +63,7 @@ namespace Commandos.Models.Carts
         public double Sum()
         {
             double sum = 0;
-            foreach (var prod in CartProducts)
+            foreach (KeyValuePair<IProduct, int> prod in CartProducts)
             {
                 sum += prod.Key.Price + prod.Value;
             }
@@ -63,10 +71,10 @@ namespace Commandos.Models.Carts
         }
         public override string ToString()
         {
-            StringBuilder stringBuilder= new StringBuilder("Товари:\n");
-            foreach(var item in cartProducts)
+            StringBuilder stringBuilder = new StringBuilder("Товари:\n");
+            foreach (KeyValuePair<IProduct, int> item in cartProducts)
             {
-                stringBuilder.AppendLine($"{item.Key.Name} \t{item.Value} x {item.Key.Price} = {item.Value*item.Key.Price:#.00}");
+                stringBuilder.AppendLine($"{item.Key.Name} \t{item.Value} x {item.Key.Price} = {item.Value * item.Key.Price:#.00}");
             }
             stringBuilder.AppendLine($"Усього : \t{Sum()}");
             return stringBuilder.ToString();

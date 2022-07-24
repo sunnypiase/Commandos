@@ -6,12 +6,12 @@ namespace Commandos.Serialize
     {
         public void Serialize(T obj, Stream stream)
         {
-            var serializer = new DataContractSerializer(typeof(T));
+            DataContractSerializer? serializer = new DataContractSerializer(typeof(T));
             serializer.WriteObject(stream, obj);
         }
         public T Deserialize(Stream stream)
         {
-            var deserializer = new DataContractSerializer(typeof(T));
+            DataContractSerializer? deserializer = new DataContractSerializer(typeof(T));
             return deserializer.ReadObject(stream) as T; ;
         }
     }

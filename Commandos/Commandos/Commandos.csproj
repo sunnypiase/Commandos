@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Files\JSONFIles\" />
     <Folder Include="Serializations\" />
   </ItemGroup>
 

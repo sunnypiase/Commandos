@@ -1,7 +1,9 @@
 {
-  "UsersPath": "..\\..\\..\\..\\Commandos\\Files\\XMLFiles\\UsersData.xml",
+  "UsersPath": "..\\..\\..\\..\\Commandos\\Files\\JSONFiles\\UsersData.json",
   "StoragePath": "..\\..\\..\\..\\Commandos\\Files\\XMLFiles\\StorageData.xml",
-  "CartsPath": "..\\..\\..\\..\\Commandos\\Files\\XMLFiles\\CartsData.xml",
+  "CartsPath": "..\\..\\..\\..\\Commandos\\Files\\JSONFiles\\CartsData.json",
+
+
   "ResultLog": "..\\..\\..\\..\\Commandos\\Files\\LogFiles\\ResultLog.txt",
   "ExceptionLog": "..\\..\\..\\..\\Commandos\\Files\\LogFiles\\ExceptionLog.txt",
   "SystemLog": "..\\..\\..\\..\\Commandos\\Files\\LogFiles\\SystemLog.txt"

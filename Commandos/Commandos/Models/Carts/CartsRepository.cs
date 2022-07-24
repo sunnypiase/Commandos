@@ -1,15 +1,8 @@
-﻿using Commandos.Models.Carts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Commandos.Models.Carts
+﻿namespace Commandos.Models.Carts
 {
     public class CartsRepository
     {
-        List<Cart> carts;
+        private List<Cart> carts;
         private static CartsRepository instance;
         private CartsRepository()
         {
@@ -18,7 +11,10 @@ namespace Commandos.Models.Carts
         public static CartsRepository GetInstance()
         {
             if (instance == null)
+            {
                 instance = new CartsRepository();
+            }
+
             return instance;
         }
         public Cart GetCart(string id)
@@ -37,7 +33,11 @@ namespace Commandos.Models.Carts
         }
         public void AddCart(Cart cart)
         {
-            if (string.IsNullOrWhiteSpace(cart.Id)) return;
+            if (string.IsNullOrWhiteSpace(cart.Id))
+            {
+                return;
+            }
+
             if (carts.Any(c => c.Id == cart.Id))
             {
                 carts[carts.IndexOf(carts.Find(c => c.Id == cart.Id))] = cart;
@@ -53,7 +53,11 @@ namespace Commandos.Models.Carts
         }
         public void DeleteCart(Cart cart)
         {
-            if (string.IsNullOrWhiteSpace(cart.Id)) return;
+            if (string.IsNullOrWhiteSpace(cart.Id))
+            {
+                return;
+            }
+
             if (carts.Any(c => c.Id == cart.Id))
             {
                 carts.Remove(carts.Find(c => c.Id == cart.Id));

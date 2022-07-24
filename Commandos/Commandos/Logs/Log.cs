@@ -18,7 +18,7 @@ namespace Commandos.Logs
         #region Methods
         public override string ToString()
         {
-            return $"<Log Type: {Titte}>;" +$"<Log Body: {Body}>;";
+            return $"<Log Type: {Titte}>;" + $"<Log Body: {Body}>;";
         }
         #endregion
     }

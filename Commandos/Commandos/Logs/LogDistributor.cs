@@ -1,7 +1,6 @@
 ﻿using Commandos.Logs.InterfacesAndEnums;
 using Commandos.Logs.Loggers;
 using Commandos.Serialize;
-using System;
 
 namespace Commandos.Logs
 {
@@ -52,7 +51,7 @@ namespace Commandos.Logs
         }
         public void Save()
         {
-            foreach (var item in _loggers)
+            foreach (KeyValuePair<LogType, LoggerBase> item in _loggers)
             {
                 item.Value.Save();
             }

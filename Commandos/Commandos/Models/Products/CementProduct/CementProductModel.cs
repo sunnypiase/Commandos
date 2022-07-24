@@ -7,7 +7,7 @@ namespace Commandos.Models.Products.CementProduct
     [DataContract]
     internal class CementProductModel : IndustrialProductBase, ICementProduct
     {
-        [DataMember(Name ="CementBrand")]
+        [DataMember(Name = "CementBrand")]
         public CementBrand CementBrand { get; set; }
         public CementProductModel() :
             this(default, default, default, default)

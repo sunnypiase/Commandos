@@ -1,0 +1,26 @@
+{
+  "Products": [
+    {
+      "Item1": {
+        "__type": "DairyProductModel:#Commandos.Models.Products.DairyProduct",
+        "ID": "fe81f0e2-2665-4c9e-bfe1-8064086e7079",
+        "Name": "milk",
+        "Price": 500,
+        "ExpirationTime": "\/Date(1658697793007+0300)\/",
+        "Weight": 20
+      },
+      "Item2": 2
+    },
+    {
+      "Item1": {
+        "__type": "DairyProductModel:#Commandos.Models.Products.DairyProduct",
+        "ID": "9ed85648-a263-4970-8fff-e1cf77fb5f7b",
+        "Name": "milk1",
+        "Price": 5,
+        "ExpirationTime": "\/Date(1658870593011+0300)\/",
+        "Weight": 50
+      },
+      "Item2": 3
+    }
+  ]
+}

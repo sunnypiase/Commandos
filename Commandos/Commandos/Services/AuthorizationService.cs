@@ -1,6 +1,4 @@
-﻿using Commandos.Models.Users;
-using Commandos.User;
-// using ConsoleUI;
+﻿// using ConsoleUI;
 // ConsoleUI is not visible, so Program class is not visible
 
 namespace Commandos.Services
