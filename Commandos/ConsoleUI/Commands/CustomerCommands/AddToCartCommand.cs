@@ -31,7 +31,7 @@ namespace ConsoleUI.Commands.CustomerCommands
             return new AddToCartCommand(title, input, drawer);
         }
 
-        public override ICollection<IMenuElement>? Execute(IUser? user = null)
+        public override ICollection<IMenuElement>? Execute()
         {
             string inputed = input.Read(title, drawer);
             CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).AddProduct(product,int.Parse(inputed));

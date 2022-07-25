@@ -18,7 +18,6 @@ namespace Commandos.Models.Carts
         [DataMember(Name = "Carts")]
         private List<Cart> carts;
         private static CartsRepository instance;
-        public static CartsRepository Instance => instance is null ? instance = new() : instance;
         #endregion
         #region Ctors
         private CartsRepository()
@@ -98,7 +97,9 @@ namespace Commandos.Models.Carts
         {
             if (carts.Any(c => c.Id == user.Guid))
                 return carts.Find(c => c.Id == user.Guid);
-            return new Cart(user);
+            var tmpCart = new Cart(user);
+            Add (tmpCart);
+            return tmpCart;
         }
         #endregion
         #region ObjectOverrides

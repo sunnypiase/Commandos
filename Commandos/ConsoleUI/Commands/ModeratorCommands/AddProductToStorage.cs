@@ -5,7 +5,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
 {
     public class AddProductToStorage : ICommand
     {
-        public ICollection<IMenuElement>? Execute(IUser? user)
+        public ICollection<IMenuElement>? Execute()
         {
             List<IMenuElement> elements = new();
             elements.Add(new InfoElement("succesful"));

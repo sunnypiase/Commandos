@@ -16,8 +16,15 @@ namespace Commandos.Storage
     public class ProductStorage<T> : IEnumerable<(T Product, int Count)>
         where T : class, IProduct
     {
-        private static readonly Lazy<ProductStorage<T>> _instance = new();
-        public static ProductStorage<T> Instance => _instance.Value;
+        private static ProductStorage<T> _instance ;
+        public static ProductStorage<T> GetInstance(ProductStorage<T> ps = null)
+        {
+            if (_instance is null)
+            {
+                _instance = ps?? new ProductStorage<T>();
+            }
+            return _instance;
+        }
 
         [DataMember(Name = "Products")]
         private readonly List<(T Product, int Count)> _products = new();
@@ -73,6 +80,30 @@ namespace Commandos.Storage
                 OnBadProductLogger?.Invoke(new TxtSerializer().Serialize(product) + "<Describe : Продукт не підпадає під умови додавання>;");
             }
         }
+        public void Add((T product, int countToAdd) element)
+        {
+            if (OnProductPreAddFaceControl?.Invoke(element.product) ?? true)
+            {
+                bool isInStorage = false;
+                for (int i = 0; i < _products.Count; i++)
+                {
+                    if (_products[i].Product.Equals(element.product))
+                    {
+                        _products[i] = (element.product, _products[i].Count + element.countToAdd);
+                        isInStorage = true;
+                        break;
+                    }
+                }
+                if (!isInStorage)
+                {
+                    _products.Add((element.product, element.countToAdd));
+                }
+            }
+            else
+            {
+                OnBadProductLogger?.Invoke(new TxtSerializer().Serialize(element.product) + "<Describe : Продукт не підпадає під умови додавання>;");
+            }
+        }
         public void Remove(T product, int countToRemove)
         {
             for (int i = 0; i < _products.Count; i++)
@@ -99,8 +130,7 @@ namespace Commandos.Storage
         }
         public int IndexOf(T product)
         {
-            var itemInProducts = _products.FirstOrDefault(x => x.Product == product);
-            return _products.IndexOf(itemInProducts);
+            return _products.Select(prod=>prod.Product).ToList().IndexOf(product);
         }
         public void RemoveAt(int index)
         {

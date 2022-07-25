@@ -5,6 +5,6 @@ namespace ConsoleUI.Commands
 {
     public interface ICommand
     {
-        public ICollection<IMenuElement>? Execute(IUser? user = null);
+        public ICollection<IMenuElement>? Execute();
     }
 }

@@ -14,7 +14,7 @@ namespace ConsoleUI.Commands
         protected IProduct product;
 
         public abstract object Clone();
-        public abstract ICollection<IMenuElement>? Execute(IUser? user = null);
+        public abstract ICollection<IMenuElement>? Execute();
         public virtual void  SetProduct(IProduct _product)
         {
             product = _product;

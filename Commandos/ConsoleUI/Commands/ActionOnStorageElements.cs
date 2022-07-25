@@ -15,7 +15,7 @@ namespace ConsoleUI.Commands
             actionOnProduct = _actionOnProduct;
             title = _title;
         }
-        public ICollection<IMenuElement>? Execute(IUser? user = null)
+        public ICollection<IMenuElement>? Execute()
         {
             ProductStorage<IProduct>? storage = ProductStorage<IProduct>.GetInstance();
 

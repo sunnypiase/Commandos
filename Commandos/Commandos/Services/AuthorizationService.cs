@@ -8,13 +8,13 @@ namespace Commandos.Services
     {
         #region Methods
         public IUser? CheckLogin(string nickname)
-            // returns true of users repository contains this nickname
+        // returns true of users repository contains this nickname
         {
             return UsersRepository.GetInstance().GetPersonByName(nickname);
         }
 
         private string EncryptOrDecryptPassword(string password)
-            // in this case, encryption and decryption use the same operation :)
+        // in this case, encryption and decryption use the same operation :)
         {
             string result = "";
             for (int i = 0; i < password.Length; i++)
@@ -23,13 +23,13 @@ namespace Commandos.Services
         }
 
         public bool CheckPassword(IUser user, string password)
-            // Encrypt the password and compare with the one saved in users repopository
+        // Encrypt the password and compare with the one saved in users repopository
         {
             return (user.EncryptedPassword == EncryptOrDecryptPassword(password));
         }
 
         public IUser RegisterUser(string name, string password, Roles role = Roles.Customer)
-            // add new user to repository if he has just registered
+        // add new user to repository if he has just registered
         {
             IUser user = new Commandos.User.User(name, Guid.NewGuid(), role, EncryptOrDecryptPassword(password));
             UsersRepository.GetInstance().AddUser(user);
@@ -37,9 +37,7 @@ namespace Commandos.Services
         }
         public UserAccount? CreateUserAccount(IUser? user)
         {
-            if (user is not null)
-                return new UserAccount(user);
-            else return null;
+            return user is null ? null : UserAccount.GetInstance(user);
         }
         #endregion
     }

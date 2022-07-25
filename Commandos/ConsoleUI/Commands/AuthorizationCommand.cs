@@ -105,7 +105,7 @@ namespace ConsoleUI.Commands
         }
 
 
-        public ICollection<IMenuElement>? Execute(IUser? user = null)
+        public ICollection<IMenuElement>? Execute()
         {
             UserAccount? userAccount = LoginRoutine();
             if (userAccount is null || userAccount.User is null)

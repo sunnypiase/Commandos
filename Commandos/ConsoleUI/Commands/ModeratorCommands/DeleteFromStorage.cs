@@ -12,9 +12,9 @@ namespace ConsoleUI.Commands.ModeratorCommands
             return new DeleteFromStorage();
         }
 
-        public override ICollection<IMenuElement>? Execute(IUser? user = null)
+        public override ICollection<IMenuElement>? Execute()
         {
-            var storage = ProductStorage<IProduct>.Instance;
+            var storage = ProductStorage<IProduct>.GetInstance();
             storage.Remove(product, 1); // TODO: How we get count of products here? Maybe leave constant value like 1
                                         // or remove this product from storage.
             List<IMenuElement> elements = new()

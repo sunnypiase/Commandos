@@ -22,13 +22,12 @@ namespace ConsoleUI.Commands
             input = _input;
         }
 
-        public ICollection<IMenuElement>? Execute(IUser? user = null)
+        public ICollection<IMenuElement>? Execute()
         {
             string inputed = input.Read(title, drawer);
             ProductStorage<IProduct>? storage = ProductStorage<IProduct>.GetInstance();
             List<IMenuElement> elements = new();
 
-            var storage = ProductStorage<IProduct>.Instance;         
             IEnumerable<(IProduct Product, int Amount)>? products = storage.Where(x => x.Product is G && predicate((((G)x.Product, x.Count), inputed)));
 
             foreach ((IProduct Product, int Amount) item in products)
