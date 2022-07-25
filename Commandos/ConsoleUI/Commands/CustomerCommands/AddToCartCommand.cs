@@ -28,7 +28,7 @@ namespace ConsoleUI.Commands.CustomerCommands
         public override ICollection<IMenuElement>? Execute(IUser? user = null)
         {
             string inputed = input.Read(title, drawer);
-            CartsRepository.GetInstance().GetCart("id").AddProduct(product,int.Parse(inputed));//TODO change id to Giud of userAccount
+            //CartsRepository.GetInstance().GetCart("id").AddProduct(product,int.Parse(inputed));//TODO change id to Giud of userAccount
             List<IMenuElement> elements = new();
             elements.Add(new InfoElement("Product added to cart"));
             elements.Add(new SelectableElement("continue", "0", new BackToHome()));
