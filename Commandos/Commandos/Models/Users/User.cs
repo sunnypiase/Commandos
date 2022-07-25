@@ -9,13 +9,13 @@ namespace Commandos.User
     {
         [DataMember(Name = "Name")]
         public string Name { get; set; }
-        
+
         [DataMember(Name = "ID")]
         public Guid Guid { get; set; }
-        
+
         [DataMember(Name = "Role")]
         public Roles Role { get; set; }
-        
+
         [DataMember(Name = "EP")]
         public string EncryptedPassword { get; set; }
 

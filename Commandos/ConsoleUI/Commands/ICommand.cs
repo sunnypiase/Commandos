@@ -1,5 +1,4 @@
-﻿using Commandos.User;
-using ConsoleUI.Menu.MenuTypes;
+﻿using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands
 {

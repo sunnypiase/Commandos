@@ -85,14 +85,20 @@ namespace Commandos.Models.Users
         public void AddUser(IUser? user)
         {
             if (user is not null)
+            {
                 users.Add(user);
+            }
+
             SaveUsersToFile();
         }
 
         public void RemoveUser(IUser? user)
         {
             if (user is not null)
+            {
                 users.Remove(user);
+            }
+
             SaveUsersToFile();
         }
 

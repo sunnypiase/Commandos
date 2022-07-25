@@ -2,9 +2,6 @@
 using Commandos.Role;
 using Commandos.Services;
 using Commandos.User;
-using ConsoleUI.Drawers;
-using ConsoleUI.Inputs;
-using ConsoleUI.IO;
 using ConsoleUI.Menu;
 using ConsoleUI.Menu.MenuTypes;
 

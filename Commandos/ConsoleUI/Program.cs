@@ -1,11 +1,9 @@
 ﻿using Commandos.Logs;
 using Commandos.Models.Carts;
-using Commandos.Models.Products.DairyProduct;
 using Commandos.Models.Products.General;
 using Commandos.Models.Users;
 using Commandos.Serialize;
 using Commandos.Storage;
-using Commandos.User;
 using ConsoleUI.Commands;
 using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
@@ -41,7 +39,7 @@ internal static class Program
                 { new InfoElement("Welcome to the mega storage!"),
                   new SelectableElement("Login", "1", new AuthorizationCommand()),
                   new SelectableElement("Exit", "0", new ExitCommand())
-                }                
+                }
             );
 
             menu.Start();

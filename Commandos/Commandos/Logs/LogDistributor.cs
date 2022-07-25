@@ -33,13 +33,13 @@ namespace Commandos.Logs
                 switch (log.Titte)
                 {
                     case LogType.Result:
-                        logger = new ResultLogger(Configuration.GetInstance().AppConfiguration["ResultLog"]); 
+                        logger = new ResultLogger(Configuration.GetInstance().AppConfiguration["ResultLog"]);
                         break;
                     case LogType.Exception:
-                        logger = new ExceptionLogger(Configuration.GetInstance().AppConfiguration["ExceptionLog"]); 
+                        logger = new ExceptionLogger(Configuration.GetInstance().AppConfiguration["ExceptionLog"]);
                         break;
                     case LogType.System:
-                        logger = new SystemLogger(Configuration.GetInstance().AppConfiguration["SystemLog"]); 
+                        logger = new SystemLogger(Configuration.GetInstance().AppConfiguration["SystemLog"]);
                         break;
                     default:
                         throw new ArgumentException();

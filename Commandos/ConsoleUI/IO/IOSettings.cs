@@ -1,10 +1,5 @@
 ﻿using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleUI.IO
 {
@@ -24,7 +19,10 @@ namespace ConsoleUI.IO
         public static IOSettings GetInstance(IDrawer drawer = null, IInput input = null)
         {
             if (_instance == null)
+            {
                 _instance = new IOSettings(drawer, input);
+            }
+
             return _instance;
         }
 

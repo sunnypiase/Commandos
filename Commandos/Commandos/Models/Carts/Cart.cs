@@ -21,10 +21,7 @@ namespace Commandos.Models.Carts
         public Guid Id
         {
             get => id;
-            private set
-            {
-                id = value;
-            }
+            private set => id = value;
         }
         [DataMember(Name = "CartProducts")]
         public Dictionary<IProduct, int> CartProducts { get => cartProducts; private set => cartProducts = value; }

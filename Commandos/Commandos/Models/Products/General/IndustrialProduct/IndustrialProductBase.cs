@@ -30,6 +30,6 @@ namespace Commandos.Models.Products.General.IndustrialProduct
         {
             return base.ToString() + $"Вага: {Weight}; ";
         }
-        
+
     }
 }

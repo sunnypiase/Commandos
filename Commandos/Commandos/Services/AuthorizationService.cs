@@ -1,6 +1,4 @@
-﻿using Commandos.Logs;
-using Commandos.Logs.InterfacesAndEnums;
-using Commandos.Models.Users;
+﻿using Commandos.Models.Users;
 using Commandos.Role;
 using Commandos.User;
 
@@ -20,7 +18,10 @@ namespace Commandos.Services
         {
             string result = "";
             for (int i = 0; i < password.Length; i++)
+            {
                 result += (char)(password[i] ^ Int16.MaxValue);   // XOR with 1111111111111111
+            }
+
             return result;
         }
 

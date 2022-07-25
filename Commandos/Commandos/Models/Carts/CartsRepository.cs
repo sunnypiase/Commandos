@@ -96,9 +96,12 @@ namespace Commandos.Models.Carts
         public Cart GetCart(IUser user)
         {
             if (carts.Any(c => c.Id == user.Guid))
+            {
                 return carts.Find(c => c.Id == user.Guid);
-            var tmpCart = new Cart(user);
-            Add (tmpCart);
+            }
+
+            Cart? tmpCart = new Cart(user);
+            Add(tmpCart);
             return tmpCart;
         }
         #endregion

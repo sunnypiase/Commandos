@@ -2,9 +2,6 @@
 using Commandos.Models.Products.General;
 using Commandos.Models.Users;
 using Commandos.Storage;
-using ConsoleUI.Drawers;
-using ConsoleUI.Inputs;
-using ConsoleUI.IO;
 using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands.CustomerCommands

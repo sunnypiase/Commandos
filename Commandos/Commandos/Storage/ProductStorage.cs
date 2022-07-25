@@ -28,7 +28,10 @@ namespace Commandos.Storage
 
         [DataMember(Name = "Products")]
         private readonly List<(T Product, int Count)> _products = new();
-        public List<(T Product, int Count)> GetProducts() => new(_products);
+        public List<(T Product, int Count)> GetProducts()
+        {
+            return new(_products);
+        }
 
         #region Events
 
@@ -54,7 +57,10 @@ namespace Commandos.Storage
         }
 
         public int Count => _products.Count;
-        public void Clear() => _products.Clear();
+        public void Clear()
+        {
+            _products.Clear();
+        }
 
         public void Add(T product, int countToAdd)
         {
@@ -110,7 +116,7 @@ namespace Commandos.Storage
             {
                 if (_products[i].Product.Equals(product))
                 {
-                    var (prod, countInStorage) = _products[i];
+                    (T prod, int countInStorage) = _products[i];
 
                     if (countInStorage > countToRemove)
                     {
@@ -146,29 +152,29 @@ namespace Commandos.Storage
         }
         public IEnumerable<(T Product, int Count)> GetAll()
         {
-            foreach (var p in _products)
+            foreach ((T Product, int Count) p in _products)
             {
                 yield return p;
             }
         }
         public IEnumerable<(T Product, int Count)> GetAll(Type productType)
         {
-            var productsOfType = _products
+            IEnumerable<(T Product, int Count)>? productsOfType = _products
                 .Where(x => x.Product.GetType() == productType)
                 .Select(x => x);
 
-            foreach (var p in productsOfType)
+            foreach ((T Product, int Count) p in productsOfType)
             {
                 yield return p;
             }
         }
         public IEnumerable<(T Product, int Count)> GetAll(Predicate<T> check)
         {
-            var resProducts = _products
+            IEnumerable<(T Product, int Count)>? resProducts = _products
                 .Where(x => check(x.Product))
                 .Select(x => x);
 
-            foreach (var p in resProducts)
+            foreach ((T Product, int Count) p in resProducts)
             {
                 yield return p;
             }
@@ -189,7 +195,7 @@ namespace Commandos.Storage
         public override string ToString()
         {
             StringBuilder sb = new();
-            foreach (var p in _products)
+            foreach ((T Product, int Count) p in _products)
             {
                 sb.AppendLine(p.ToString());
             }

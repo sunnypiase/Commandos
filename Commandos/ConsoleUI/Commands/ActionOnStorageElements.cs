@@ -1,12 +1,11 @@
 ﻿using Commandos.Models.Products.General;
 using Commandos.Storage;
-using Commandos.User;
 using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands
 {
     public class ActionOnStorageElements : ICommand
-        
+
     {
         private ActionOnProductCommand actionOnProduct;
         private string title;

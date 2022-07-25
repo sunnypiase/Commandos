@@ -2,8 +2,6 @@
 using ConsoleUI.Commands;
 using ConsoleUI.Commands.CustomerCommands;
 using ConsoleUI.Commands.ModeratorCommands;
-using ConsoleUI.Drawers;
-using ConsoleUI.Inputs;
 using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.CommandsFactory
@@ -28,7 +26,7 @@ namespace ConsoleUI.CommandsFactory
                         "Enter price")),
                 new SelectableElement("Sort by price +", $"{++elmCount}",
                     new WhereStorage<IProduct>((((IProduct product, int amount) item, string input) data) => data.item.product.Price >= int.Parse(data.input),
-                        "Enter price")),
+                        "Enter price")),//TODO DO
 
                 new SelectableElement("Add to cart", $"{++elmCount}",new ActionOnStorageElements(addToCart,"Add some product to cart")),
 

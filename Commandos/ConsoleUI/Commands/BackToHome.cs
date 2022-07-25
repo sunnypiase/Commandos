@@ -1,5 +1,4 @@
 ﻿using Commandos.Models.Users;
-using Commandos.User;
 using ConsoleUI.Menu;
 using ConsoleUI.Menu.MenuTypes;
 
