@@ -36,11 +36,6 @@ namespace Commandos.Services
             return (user.EncryptedPassword == EncryptOrDecryptPassword(password));
         }
 
-        private bool RegisterLoginPassword()
-        {
-            return true;  // TODO
-        }
-
         public IUser RegisterUser(string name, string password, Roles role = Roles.Customer)
             // add new user to repository if he has just registered
         {
