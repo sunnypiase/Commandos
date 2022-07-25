@@ -1,7 +1,7 @@
 {
   "UsersPath": "..\\..\\..\\..\\Commandos\\Files\\XMLFiles\\UsersData.xml",
   "StoragePath": "..\\..\\..\\..\\Commandos\\Files\\XMLFiles\\StorageData.xml",
-  "CartsPath": "..\\..\\..\\..\\Commandos\\Files\\JSONFiles\\CartsData.json",
+  "CartsPath": "..\\..\\..\\..\\Commandos\\Files\\XMLFiles\\CartsData.xml",
 
 
   "ResultLog": "..\\..\\..\\..\\Commandos\\Files\\LogFiles\\ResultLog.txt",

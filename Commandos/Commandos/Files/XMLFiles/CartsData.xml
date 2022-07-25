@@ -1,1 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+<CartsRepository xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Carts" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Cart>
+		<CartProducts xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+			<a:KeyValueOfanyTypeint>
+				<a:Key i:type="b:DairyProductModel" xmlns:b="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.DairyProduct">
+					<ID xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General">4126166d-1197-447a-a71d-906434392c0a</ID>
+					<Name xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General">milk</Name>
+					<Price xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General">500</Price>
+					<ExpirationTime xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General.FoodProduct">2022-07-25T15:33:22.1992482+03:00</ExpirationTime>
+					<Weight xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General.FoodProduct">20</Weight>
+				</a:Key>
+				<a:Value>3</a:Value>
+			</a:KeyValueOfanyTypeint>
+			<a:KeyValueOfanyTypeint>
+				<a:Key i:type="b:DairyProductModel" xmlns:b="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.DairyProduct">
+					<ID xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General">2d4f17f3-677f-4b3a-b0ba-ee9eb75c7782</ID>
+					<Name xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General">milk1</Name>
+					<Price xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General">5</Price>
+					<ExpirationTime xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General.FoodProduct">2022-07-27T15:33:22.2108145+03:00</ExpirationTime>
+					<Weight xmlns="http://schemas.datacontract.org/2004/07/Commandos.Models.Products.General.FoodProduct">50</Weight>
+				</a:Key>
+				<a:Value>10</a:Value>
+			</a:KeyValueOfanyTypeint>
+		</CartProducts>
+		<ID>e1346a85-7440-4c4b-b21f-247602358889</ID>
+	</Cart>
+</CartsRepository>
