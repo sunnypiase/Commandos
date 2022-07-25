@@ -56,5 +56,18 @@ namespace Commandos.Models.Products.General
         {
             return $"Назва: {Name}; Ціна: {Price}; ";
         }
+        public override bool Equals(object? obj)
+        {
+            if (obj is ProductBase other)
+            {
+                return ID == other.ID;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return ID.GetHashCode();
+        }
     }
 }

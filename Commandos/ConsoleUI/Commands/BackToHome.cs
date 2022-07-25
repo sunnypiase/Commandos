@@ -1,4 +1,4 @@
-﻿using Commandos.User;
+﻿using Commandos.Models.Users;
 using ConsoleUI.Menu;
 using ConsoleUI.Menu.MenuTypes;
 
@@ -6,9 +6,9 @@ namespace ConsoleUI.Commands
 {
     public class BackToHome : ICommand
     {
-        public ICollection<IMenuElement>? Execute(IUser? user)
+        public ICollection<IMenuElement>? Execute()
         {
-            return new MenuDeterminerByRole(user).GetMenuElements();
+            return new MenuDeterminerByRole(UserAccount.GetInstance().User).GetMenuElements();
         }
     }
 }

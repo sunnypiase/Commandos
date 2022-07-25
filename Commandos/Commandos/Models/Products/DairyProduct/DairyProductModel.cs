@@ -1,5 +1,4 @@
-﻿
-using Commandos.Models.Products.General.FoodProduct;
+﻿using Commandos.Models.Products.General.FoodProduct;
 using System.Runtime.Serialization;
 
 namespace Commandos.Models.Products.DairyProduct
@@ -35,7 +34,6 @@ namespace Commandos.Models.Products.DairyProduct
         {
             return base.ToString();
         }
-
         #endregion
     }
 }

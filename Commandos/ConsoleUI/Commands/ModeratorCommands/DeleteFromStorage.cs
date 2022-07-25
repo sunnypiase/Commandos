@@ -1,6 +1,5 @@
 ﻿using Commandos.Models.Products.General;
 using Commandos.Storage;
-using Commandos.User;
 using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands.ModeratorCommands
@@ -12,10 +11,11 @@ namespace ConsoleUI.Commands.ModeratorCommands
             return new DeleteFromStorage();
         }
 
-        public override ICollection<IMenuElement>? Execute(IUser? user = null)
+        public override ICollection<IMenuElement>? Execute()
         {
             ProductStorage<IProduct>? storage = ProductStorage<IProduct>.GetInstance();
-            storage.Remove(storage.First(x => x.Product == product));
+            storage.Remove(product, 1); // TODO: How we get count of products here? Maybe leave constant value like 1
+                                        // or remove this product from storage.
             List<IMenuElement> elements = new()
             {
                 new InfoElement("Succesful"),

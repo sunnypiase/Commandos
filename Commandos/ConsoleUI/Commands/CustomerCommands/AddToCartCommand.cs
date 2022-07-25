@@ -1,44 +1,47 @@
 ﻿using Commandos.Models.Carts;
 using Commandos.Models.Products.General;
 using Commandos.Models.Users;
-using Commandos.User;
-using ConsoleUI.Drawers;
-using ConsoleUI.Inputs;
+using Commandos.Storage;
 using ConsoleUI.Menu.MenuTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleUI.Commands.CustomerCommands
 {
     internal class AddToCartCommand : ActionOnProductCommand//TODO DO
     {
         private string title;
-        private IInput input;
-        private IDrawer drawer;
 
-        public AddToCartCommand(string title, IInput input, IDrawer drawer)
+
+
+        public AddToCartCommand(string title)
         {
             this.title = title;
-            this.input = input;
-            this.drawer = drawer;
+
         }
 
         public override object Clone()
         {
-            return new AddToCartCommand(title, input, drawer);
+            return new AddToCartCommand(title);
         }
 
-        public override ICollection<IMenuElement>? Execute(IUser? user = null)
+        public override ICollection<IMenuElement>? Execute()
         {
-            string inputed = input.Read(title, drawer);
-            CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).AddProduct(product,int.Parse(inputed));
             List<IMenuElement> elements = new();
-            elements.Add(new InfoElement("Product added to cart"));
+            string inputed = input.Read(title, drawer);
+            if (IsCanAdd(int.Parse(inputed)))
+            {
+                elements.Add(new InfoElement($"Not enough products in storage"));
+            }
+            else
+            {
+                CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).AddProduct(product, int.Parse(inputed));
+                elements.Add(new InfoElement("Product added to cart"));
+            }
             elements.Add(new SelectableElement("continue", "0", new BackToHome()));
             return elements;
+        }
+        private bool IsCanAdd(int inputed)
+        {
+            return CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).GetAmount(product) + inputed > ProductStorage<IProduct>.GetInstance().GetAmountByProduct(product);
         }
     }
 }

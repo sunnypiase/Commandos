@@ -1,9 +1,4 @@
 ﻿using Commandos.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commandos.Models.Users
 {
@@ -23,7 +18,9 @@ namespace Commandos.Models.Users
         public UserAccount(IUser? user)
         {
             if (user is not null)
+            {
                 User = user;
+            }
         }
     }
 }

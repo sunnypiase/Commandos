@@ -8,7 +8,7 @@ namespace ConsoleUI.Inputs
         public ICollection<IMenuElement>? Choose(ICollection<IMenuElement>? menuElements)
         {
             string? result = Console.ReadLine();
-            
+
             SelectableElement? element = menuElements?
                     .Where(el => el is SelectableElement)
                     .Select(el => (SelectableElement)el)

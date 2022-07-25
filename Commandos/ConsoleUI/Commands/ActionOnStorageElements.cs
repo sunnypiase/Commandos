@@ -1,12 +1,11 @@
 ﻿using Commandos.Models.Products.General;
 using Commandos.Storage;
-using Commandos.User;
 using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands
 {
     public class ActionOnStorageElements : ICommand
-        
+
     {
         private ActionOnProductCommand actionOnProduct;
         private string title;
@@ -15,7 +14,7 @@ namespace ConsoleUI.Commands
             actionOnProduct = _actionOnProduct;
             title = _title;
         }
-        public ICollection<IMenuElement>? Execute(IUser? user = null)
+        public ICollection<IMenuElement>? Execute()
         {
             ProductStorage<IProduct>? storage = ProductStorage<IProduct>.GetInstance();
 

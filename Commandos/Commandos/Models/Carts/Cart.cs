@@ -18,7 +18,11 @@ namespace Commandos.Models.Carts
         private Guid id;
         private Dictionary<IProduct, int> cartProducts;
         [DataMember(Name = "ID")]
-        public Guid Id { get => id; }
+        public Guid Id
+        {
+            get => id;
+            private set => id = value;
+        }
         [DataMember(Name = "CartProducts")]
         public Dictionary<IProduct, int> CartProducts { get => cartProducts; private set => cartProducts = value; }
         #endregion
@@ -30,6 +34,11 @@ namespace Commandos.Models.Carts
         }
         #endregion
         #region Methods
+        public int GetAmount(IProduct product)
+        {
+            cartProducts.TryGetValue(product, out int res);
+            return res;
+        }
         public void AddProduct(IProduct product, int count)
         {
             if (count <= 0)
