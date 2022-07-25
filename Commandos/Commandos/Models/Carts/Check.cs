@@ -2,9 +2,10 @@
 {
     public class Check
     {
+        #region Props
         private string check;
         private double sum;
-        private string id;
+        private Guid id;
         private DateTime dateTime;
         public string CheckString { get => check; private set => check = value; }
         public double Sum
@@ -18,8 +19,10 @@
                 }
             }
         }
-        public string Id { get => id; private set => id = value; }
+        public Guid Id { get => id; private set => id = value; }
         public DateTime DateTime { get => dateTime; private set => dateTime = value; }
+        #endregion
+        #region Ctors
         public Check(Cart cart)
         {
             if (cart == null)
@@ -29,8 +32,15 @@
 
             Sum = cart.Sum();
             DateTime = DateTime.Now;
-            Id = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid();
             check = $"\tЧЕК N {Id} вiд {DateTime.ToShortDateString()} {DateTime.ToShortTimeString()} \n{cart}\n\tДЯКУЄМО ЗА ПОКУПКУ!\n";
         }
+        #endregion
+        #region Ovverrides
+        public override string ToString()
+        {
+            return CheckString;
+        }
+        #endregion
     }
 }

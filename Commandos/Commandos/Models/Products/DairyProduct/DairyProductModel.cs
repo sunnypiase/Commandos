@@ -12,16 +12,16 @@ namespace Commandos.Models.Products.DairyProduct
         #endregion
         #region Ctors
         public DairyProductModel() :
-            this(default, default, default, default, default)
+            this("", default, default, default/*, default*/)
 
         { }
 
-        public DairyProductModel(string name, double price, double weight, DateTime expirationTime, SortedDictionary<int, int> daysToExpirationAndPresentOfChange) :
-            base(name, price, weight, expirationTime, daysToExpirationAndPresentOfChange)
+        public DairyProductModel(string name, double price, double weight, DateTime expirationTime/*, SortedDictionary<int, int> daysToExpirationAndPresentOfChange*/) :
+            base(name, price, weight, expirationTime/*, daysToExpirationAndPresentOfChange*/)
         { }
 
         public DairyProductModel(DairyProductModel other) :
-            this(other.Name, other.Price, other.Weight, other.ExpirationTime, other._daysToExpirationAndPresentOfChange)
+            this(other.Name, other.Price, other.Weight, other.ExpirationTime/*, other._daysToExpirationAndPresentOfChange*/)
         { }
         #endregion
         #region Methods

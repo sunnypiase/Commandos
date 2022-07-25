@@ -1,5 +1,7 @@
 ﻿using Commandos.Models.Products.General;
 using ConsoleUI.Commands;
+using ConsoleUI.Commands.CustomerCommands;
+using ConsoleUI.Commands.ModeratorCommands;
 using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
 using ConsoleUI.Menu.MenuTypes;
@@ -8,18 +10,28 @@ namespace ConsoleUI.CommandsFactory
 {
     internal class CustomerElements : IElementsFactory
     {
+        int elmCount = default;
         public ICollection<IMenuElement> GetMenuElements()
         {
-            List<IMenuElement> menuElements = new();
-            menuElements.Add(new InfoElement("Hello user"));
-            menuElements.Add(new SelectableElement("Add product", "0", new AddProductToStorage()));
-            menuElements.Add(new SelectableElement("Reveal products", "1", new RevealStorage()));
-            menuElements.Add(new SelectableElement("Filter product by category price", "2",
-                new WhereStorage<IProduct>((((IProduct product, int amount) item, string input) data) => data.item.product.Price >= int.Parse(data.input),
-                "Enter price", new ConsoleInput(), new ConsoleDrawer())));
-            menuElements.Add(new SelectableElement("Exit", "3", new ExitCommand()));
+            DeleteFromStorage deleteFromStorage = new DeleteFromStorage();
+            AddToCartCommand addToCart = new AddToCartCommand("Input product amount", new ConsoleInput(), new ConsoleDrawer());
+            return new List<IMenuElement>()
+            {
+                new InfoElement("Hello user"),
 
-            return menuElements;
+                new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
+
+                new SelectableElement("Reveal products", $"{++elmCount}", new ActionOnStorageElements(deleteFromStorage,"Delete some product from storage")),
+
+                new SelectableElement("Filter product by category price", $"{++elmCount}",
+                    new WhereStorage<IProduct>((((IProduct product, int amount) item, string input) data) => data.item.product.Price >= int.Parse(data.input),
+                        "Enter price", new ConsoleInput(), new ConsoleDrawer())),
+
+                new SelectableElement("Add to cart", $"{++elmCount}",new ActionOnStorageElements(addToCart,"Add some product to cart")),
+
+                new SelectableElement("Exit", $"{default(int)}", new ExitCommand())
+
+            };
         }
     }
 }

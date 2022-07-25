@@ -6,6 +6,7 @@ namespace ConsoleUI.Drawers
     {
         public void Draw(ICollection<IMenuElement>? elements)
         {
+            Console.Clear();
             if (elements == null)
             {
                 return;
