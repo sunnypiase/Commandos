@@ -1,61 +1,54 @@
-﻿// using ConsoleUI;
-// ConsoleUI is not visible, so Program class is not visible
+﻿using Commandos.Models.Users;
+using Commandos.Role;
+using Commandos.User;
 
 namespace Commandos.Services
 {
     public class AuthorizationService
     {
-        //#region Fields
-        //private UsersRepository usersData; // local copy of the link to the users repository, just for faster work
-        //                                   // we don't have a method to share usersData with others, it is used only here
-        //#endregion
+        #region Fields
+        // Fields are in AuthorizationCommand. UsersRepository.GetInstance() used to reach users data
+        #endregion
 
-        //#region Constructors
-        //public AuthorizationService()
-        //{
-        //    usersData = UsersRepository.GetInstance(); // if users repository is empty, it is created and read from disk
-        //    // warning: usersData cannot be empty but can create 0 users
-        //}
-        //#endregion
+        #region Constructors
+        // A constructor is not needed
+        #endregion
 
-        //#region Commands
-        //public UserAccount LoginRoutine(IDrawer drawer)
-        //{
-        //    return CreateUserAccount(); // TODO
-        //}
-        //public void ExitProgram(IDrawer drawer)
-        //{
-        //    // Program.Quit(); // the method in Program class should close and save everything before exiting
-        //                    // it also should call UsersRepository.GetInstance().SaveUsersToFile();
-        //}
-        //#endregion
+        #region Methods
+        public IUser? CheckLogin(string nickname)
+            // returns true of users repository contains this nickname
+        {
+            return UsersRepository.GetInstance().GetPersonByName(nickname);
+        }
 
-        //#region Methods
-        //private string ReadAndCheckLogin()
-        //{
-        //    return ""; // TODO
-        //}
+        private string EncryptOrDecryptPassword(string password)
+            // in this case, encryption and decryption use the same operation :)
+        {
+            string result = "";
+            for (int i = 0; i < password.Length; i++)
+                result += (char)(password[i] ^ Int16.MaxValue);   // XOR with 1111111111111111
+            return result;
+        }
 
-        //private bool ReadAndCheckPassword()
-        //{
-        //    return true;  // TODO
-        //}
+        public bool CheckPassword(IUser user, string password)
+            // Encrypt the password and compare with the one saved in users repopository
+        {
+            return (user.EncryptedPassword == EncryptOrDecryptPassword(password));
+        }
 
-        //private bool RegisterLoginPassword()
-        //{
-        //    return true;  // TODO
-        //}
-
-        //private IUser CreatePerson()
-        //{
-        //    IUser user = new(); // TODO
-        //    PersonStorageService.AddPerson(user);
-        //    return user;
-        //}
-        //private UserAccount CreateUserAccount()
-        //{
-        //    return new UserAccount();  // TODO
-        //}
-        //#endregion
+        public IUser RegisterUser(string name, string password, Roles role = Roles.Customer)
+            // add new user to repository if he has just registered
+        {
+            IUser user = new Commandos.User.User(name, Guid.NewGuid(), role, EncryptOrDecryptPassword(password));
+            UsersRepository.GetInstance().AddUser(user);
+            return user;
+        }
+        public UserAccount? CreateUserAccount(IUser? user)
+        {
+            if (user is not null)
+                return new UserAccount(user);
+            else return null;
+        }
+        #endregion
     }
 }

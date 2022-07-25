@@ -17,7 +17,7 @@ internal static class Program
         Console.InputEncoding = System.Text.Encoding.Unicode;
         try
         {
-            Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(@"C:\Users\Sunny Piase\source\repos\NewRepo\Commandos\Commandos\Files\config.json"));
+            //Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(@"C:\Users\Sunny Piase\source\repos\NewRepo\Commandos\Commandos\Files\config.json"));
             LogDistributor distributor = LogDistributor.GetInstance();
             //DownloaderProcessor.GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>()).Load();
             //Console.WriteLine(ProductStorage<IProduct>.Instance);
@@ -26,7 +26,10 @@ internal static class Program
             storage.Add((new DairyProductModel("milk", 500, 20, DateTime.Now, null), 2));
             storage.Add((new DairyProductModel("milk1", 5, 50, DateTime.Now.AddDays(2), null), 3));
 
-            IUser user = new User("TOLYAN", Guid.NewGuid(), Commandos.Role.Roles.Customer);
+            // Users can not be created this way, names and passwords should be set during authorisation.
+            // Passwords are encrypted, and the users repository should be saved to disk before exit to save the login and password
+            // Here should be called the menu with AuthorizationCommand and Exit items
+            IUser user = new User("TOLYAN", Guid.NewGuid(), Commandos.Role.Roles.Customer, "StrangePassword");
             MenuDeterminerByRole menuDeterm = new(user);
             MenuProcess menu = new(menuDeterm.GetMenuElements(), new ConsoleDrawer(), new ConsoleInput());
             menu.Start();
