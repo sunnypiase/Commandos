@@ -7,6 +7,11 @@ namespace ConsoleUI.Commands.ModeratorCommands
 {
     public class DeleteFromStorage : ActionOnProductCommand
     {
+        public override object Clone()
+        {
+            return new DeleteFromStorage();
+        }
+
         public override ICollection<IMenuElement>? Execute(IUser? user = null)
         {
             var storage = ProductStorage<IProduct>.Instance;

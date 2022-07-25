@@ -1,5 +1,6 @@
 ﻿using Commandos.Models.Carts;
 using Commandos.Models.Products.General;
+using Commandos.Models.Users;
 using Commandos.User;
 using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
@@ -25,10 +26,15 @@ namespace ConsoleUI.Commands.CustomerCommands
             this.drawer = drawer;
         }
 
+        public override object Clone()
+        {
+            return new AddToCartCommand(title, input, drawer);
+        }
+
         public override ICollection<IMenuElement>? Execute(IUser? user = null)
         {
             string inputed = input.Read(title, drawer);
-            //CartsRepository.GetInstance().GetCart("id").AddProduct(product,int.Parse(inputed));//TODO change id to Giud of userAccount
+            CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).AddProduct(product,int.Parse(inputed));
             List<IMenuElement> elements = new();
             elements.Add(new InfoElement("Product added to cart"));
             elements.Add(new SelectableElement("continue", "0", new BackToHome()));
