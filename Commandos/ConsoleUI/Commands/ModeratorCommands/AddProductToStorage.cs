@@ -1,7 +1,7 @@
 ﻿using Commandos.User;
 using ConsoleUI.Menu.MenuTypes;
 
-namespace ConsoleUI.Commands
+namespace ConsoleUI.Commands.ModeratorCommands
 {
     public class AddProductToStorage : ICommand
     {
@@ -12,5 +12,5 @@ namespace ConsoleUI.Commands
             elements.Add(new SelectableElement("continue", "0", new BackToHome()));
             return elements;
         }
-    }
+    }//TODO do
 }

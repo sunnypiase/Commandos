@@ -1,41 +1,48 @@
 ﻿using Commandos.Models.Products.General;
+using Commandos.User;
 using System.Text;
 
 namespace Commandos.Models.Carts
 {
     public class Cart
     {
-        private string id;
+        #region Props
+        private Guid id;
         private Dictionary<IProduct, int> cartProducts;
-        public string Id => id;
+        public Guid Id { get => id; }
         public Dictionary<IProduct, int> CartProducts { get => cartProducts; private set => cartProducts = value; }
-
-        public Cart(string id)
+        #endregion
+        #region Ctors
+        public Cart(IUser user)
         {
-            this.id = id;
+            id = user.Guid;
             cartProducts = new();
         }
-        public Cart(string id, Dictionary<IProduct, int> cartProducts) : this(id)
-        {
-            CartProducts = cartProducts;
-        }
+        #endregion
+        #region Methods
         public void AddProduct(IProduct product, int count)
         {
             if (count <= 0)
             {
                 return;
             }
-
-            if (CartProducts.ContainsKey(product))
+            try
             {
-                CartProducts[product] += count;
+                if (CartProducts.ContainsKey(product))
+                {
+                    CartProducts[product] += count;
+                }
+                else
+                {
+                    CartProducts.Add(product, count);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                CartProducts.Add(product, count);
+                //Todo add event on bad data or Logger
             }
         }
-        public void DeleteProduct(IProduct product, int count)
+        public void DeleteProduct(IProduct product, int count)//TODO add event on bad data or Logger
         {
             if (count <= 0)
             {
@@ -46,15 +53,22 @@ namespace Commandos.Models.Carts
             {
                 return;
             }
+            try
+            {
+                if (CartProducts[product] > count)
+                {
+                    CartProducts[product] -= count;
+                }
+                else
+                {
+                    CartProducts.Remove(product);
+                }
+            }
+            catch (Exception ex)
+            {
+                //Todo add event on bad data or Logger
+            }
 
-            if (CartProducts[product] > count)
-            {
-                CartProducts[product] -= count;
-            }
-            else
-            {
-                CartProducts.Remove(product);
-            }
         }
         public void ClearCart()
         {
@@ -69,15 +83,26 @@ namespace Commandos.Models.Carts
             }
             return sum;
         }
+        #endregion
+        #region ObjectOvverrides
         public override string ToString()
         {
-            StringBuilder stringBuilder = new StringBuilder("Товари:\n");
+            StringBuilder stringBuilder = new StringBuilder("Products:\n");
             foreach (KeyValuePair<IProduct, int> item in cartProducts)
             {
                 stringBuilder.AppendLine($"{item.Key.Name} \t{item.Value} x {item.Key.Price} = {item.Value * item.Key.Price:#.00}");
             }
-            stringBuilder.AppendLine($"Усього : \t{Sum()}");
+            stringBuilder.AppendLine($"Total sum : \t{Sum()}");
             return stringBuilder.ToString();
         }
+        public override bool Equals(object? obj)
+        {
+            return Id == (obj as Cart).Id;
+        }
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+        #endregion
     }
 }

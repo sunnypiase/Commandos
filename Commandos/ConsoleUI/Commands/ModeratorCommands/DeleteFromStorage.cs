@@ -3,20 +3,14 @@ using Commandos.Storage;
 using Commandos.User;
 using ConsoleUI.Menu.MenuTypes;
 
-namespace ConsoleUI.Commands
+namespace ConsoleUI.Commands.ModeratorCommands
 {
-    public class DeleteFromStorage : ICommand
+    public class DeleteFromStorage : ActionOnProductCommand
     {
-        private int i;
-        public DeleteFromStorage(int i = 0)
-        {
-            this.i = i;
-        }
-
-        public ICollection<IMenuElement>? Execute(IUser? user = null)
+        public override ICollection<IMenuElement>? Execute(IUser? user = null)
         {
             ProductStorage<IProduct>? storage = ProductStorage<IProduct>.Instance;
-            storage.RemoveAt(i);
+            storage.Remove(storage.First(x => x.Product == product));
             List<IMenuElement> elements = new()
             {
                 new InfoElement("Succesful"),
@@ -24,5 +18,6 @@ namespace ConsoleUI.Commands
             };
             return elements;
         }
+
     }
 }
