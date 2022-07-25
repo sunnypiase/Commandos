@@ -1,9 +1,16 @@
-﻿using Commandos.User;
+﻿using Commandos.Models.Products.CementProduct;
+using Commandos.Models.Products.DairyProduct;
+using Commandos.Models.Products.MeatProduct;
+using Commandos.User;
 using System.Collections;
 using System.Runtime.Serialization;
 
 namespace Commandos.Models.Carts
 {
+    [KnownType(typeof(CementProductModel))]
+    [KnownType(typeof(DairyProductModel))]
+    [KnownType(typeof(MeatProductModel))]
+    [KnownType(typeof(Cart))]
     [CollectionDataContract]
     public class CartsRepository : IList<Cart>
     {
