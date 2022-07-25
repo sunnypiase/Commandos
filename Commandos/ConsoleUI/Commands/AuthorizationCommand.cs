@@ -7,37 +7,29 @@ using ConsoleUI.Inputs;
 using ConsoleUI.IO;
 using ConsoleUI.Menu;
 using ConsoleUI.Menu.MenuTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleUI.Commands
 {
-    internal class AuthorizationCommand : ICommand  // used for user's login
+    internal class AuthorizationCommand : CommandBase  // used for user's login
 
     {
         private string? currentLogin;
-
-
-        AuthorizationService authorizationService;
+        private AuthorizationService authorizationService;
 
         public AuthorizationCommand()
         {
-
             currentLogin = "";
             authorizationService = new();
         }
 
         private UserAccount? LoginRoutine()
         {
-            IInput input = IOSettings.GetInstance().Input;
-            IDrawer drawer = IOSettings.GetInstance().Drawer;
             // Enter login (nickname)
             currentLogin = input.Read("Enter nickname:", drawer);
             if (currentLogin == null || currentLogin == "")
+            {
                 return null;
+            }
             // Check if nickname exists in the user data
             IUser? foundUser = authorizationService.CheckLogin(currentLogin);
             if (foundUser is not null) // found the user with such login, enter and check password
@@ -81,7 +73,10 @@ namespace ConsoleUI.Commands
                         {
                             IUser? user = authorizationService.RegisterUser(currentLogin, currentPassword, Roles.Customer);
                             if (user == null) // some strange error
+                            {
                                 return null;
+                            }
+
                             drawer.Write("Welcome!");
                             return authorizationService.CreateUserAccount(user);
                         }
@@ -90,7 +85,10 @@ namespace ConsoleUI.Commands
                     {
                         IUser? user = authorizationService.RegisterUser(currentLogin, currentPassword, Roles.Customer);
                         if (user == null) // some strange error
+                        {
                             return null;
+                        }
+
                         drawer.Write("Welcome!");
                         return authorizationService.CreateUserAccount(user);
                     }
@@ -104,14 +102,17 @@ namespace ConsoleUI.Commands
         }
 
 
-        public ICollection<IMenuElement>? Execute()
+        public override ICollection<IMenuElement>? Execute()
         {
             UserAccount? userAccount = LoginRoutine();
             if (userAccount is null || userAccount.User is null)
+            {
                 return null; // exit
+            }
             else
+            {
                 return new MenuDeterminerByRole(userAccount.User).GetMenuElements();
-
+            }
         }
     }
 }

@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace ConsoleUI.Commands
 {
-    public abstract class ActionOnProductCommand : ICommand, ICloneable
+    public abstract class ActionOnProductCommand : CommandBase, ICloneable
     {
         protected IProduct product;
 
         public abstract object Clone();
-        public abstract ICollection<IMenuElement>? Execute();
         public virtual void  SetProduct(IProduct _product)
         {
             product = _product;

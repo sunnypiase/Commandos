@@ -16,12 +16,12 @@ namespace Commandos.Storage
     public class ProductStorage<T> : IEnumerable<(T Product, int Count)>
         where T : class, IProduct
     {
-        private static ProductStorage<T> _instance ;
+        private static ProductStorage<T> _instance;
         public static ProductStorage<T> GetInstance(ProductStorage<T> ps = null)
         {
             if (_instance is null)
             {
-                _instance = ps?? new ProductStorage<T>();
+                _instance = ps ?? new ProductStorage<T>();
             }
             return _instance;
         }
@@ -130,7 +130,7 @@ namespace Commandos.Storage
         }
         public int IndexOf(T product)
         {
-            return _products.Select(prod=>prod.Product).ToList().IndexOf(product);
+            return _products.Select(prod => prod.Product).ToList().IndexOf(product);
         }
         public void RemoveAt(int index)
         {
@@ -140,7 +140,10 @@ namespace Commandos.Storage
         #endregion
 
         #region Methods
-
+        public int GetAmountByProduct(IProduct product)
+        {
+            return _products.FirstOrDefault(prod => prod.Product == product).Count;
+        }
         public IEnumerable<(T Product, int Count)> GetAll()
         {
             foreach (var p in _products)

@@ -37,6 +37,11 @@ namespace Commandos.Models.Carts
         }
         #endregion
         #region Methods
+        public int GetAmount(IProduct product)
+        {
+            cartProducts.TryGetValue(product, out int res);
+            return res;
+        }
         public void AddProduct(IProduct product, int count)
         {
             if (count <= 0)

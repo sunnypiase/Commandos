@@ -60,9 +60,14 @@ namespace Commandos.Models.Products.General
         {
             if (obj is ProductBase other)
             {
-                return Name==other.Name && Price==other.Price;
+                return ID == other.ID;
             }
             return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return ID.GetHashCode();
         }
     }
 }

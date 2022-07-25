@@ -110,14 +110,7 @@ namespace Commandos.Models.Products.General.FoodProduct
             return base.ToString() + $"Вага: {Weight}; Термін придатності: {ExpirationTime.Date:d}; ";
         }
 
-        public override bool Equals(object? obj)
-        {
-            if (obj is FoodProductBase other)
-            {
-                return base.Equals(other) && Weight==other.Weight && ExpirationTime==other.ExpirationTime;
-            }
-            return false;
-        }
+
 
         #endregion
 

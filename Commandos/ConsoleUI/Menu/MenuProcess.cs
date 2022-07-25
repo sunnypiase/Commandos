@@ -1,5 +1,6 @@
 ﻿using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
+using ConsoleUI.IO;
 using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Menu
@@ -7,14 +8,11 @@ namespace ConsoleUI.Menu
     public class MenuProcess
     {
         private List<IMenuElement> menuElements;
-        private IDrawer drawer;
-        private IInput input;
-
-        public MenuProcess(ICollection<IMenuElement> _menuElements, IDrawer _drawer, IInput _input)
+        private IInput input = IOSettings.GetInstance().Input;
+        private IDrawer drawer = IOSettings.GetInstance().Drawer;
+        public MenuProcess(ICollection<IMenuElement> _menuElements)
         {
             menuElements = new(_menuElements.ToList());
-            drawer = _drawer;
-            input = _input;
         }
 
         public void Start()

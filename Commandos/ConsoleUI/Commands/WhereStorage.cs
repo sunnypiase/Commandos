@@ -8,7 +8,7 @@ using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands
 {
-    public class WhereStorage<G> : ICommand
+    public class WhereStorage<G> : CommandBase
         where G : IProduct
     {
         private Predicate<((G Product, int Amount) element, string inputed)> predicate;
@@ -21,10 +21,8 @@ namespace ConsoleUI.Commands
 
         }
 
-        public ICollection<IMenuElement>? Execute()
+        public override ICollection<IMenuElement>? Execute()
         {
-            IInput input = IOSettings.GetInstance().Input;
-            IDrawer drawer = IOSettings.GetInstance().Drawer;
 
             string inputed = input.Read(title, drawer);
             ProductStorage<IProduct>? storage = ProductStorage<IProduct>.GetInstance();
