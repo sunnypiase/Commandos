@@ -30,8 +30,6 @@ namespace Commandos.Storage
 
         #endregion
 
-        private ProductStorage() { }
-
         #region Price
 
         public double TotalPrice => _products.Select(x => x.Product.Price * x.Count).Sum();
