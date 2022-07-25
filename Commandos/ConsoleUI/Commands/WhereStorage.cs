@@ -25,9 +25,11 @@ namespace ConsoleUI.Commands
         public ICollection<IMenuElement>? Execute(IUser? user = null)
         {
             string inputed = input.Read(title, drawer);
-            ProductStorage<IProduct>? storage = ProductStorage<IProduct>.Instance;
             List<IMenuElement> elements = new();
-            IEnumerable<(IProduct Product, int Amount)>? products = storage.Where(x => x.Product is G && predicate((((G)x.Product, x.Amount), inputed)));
+
+            var storage = ProductStorage<IProduct>.Instance;         
+            IEnumerable<(IProduct Product, int Amount)>? products = storage.Where(x => x.Product is G && predicate((((G)x.Product, x.Count), inputed)));
+
             foreach ((IProduct Product, int Amount) item in products)
             {
                 elements.Add(new InfoElement($"{item}"));
