@@ -6,14 +6,6 @@ namespace Commandos.Services
 {
     public class AuthorizationService
     {
-        #region Fields
-        // Fields are in AuthorizationCommand. UsersRepository.GetInstance() used to reach users data
-        #endregion
-
-        #region Constructors
-        // A constructor is not needed
-        #endregion
-
         #region Methods
         public IUser? CheckLogin(string nickname)
             // returns true of users repository contains this nickname

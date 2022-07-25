@@ -1,5 +1,5 @@
 {
-  "UsersPath": "..\\..\\..\\..\\Commandos\\Files\\JSONFiles\\UsersData.json",
+  "UsersPath": "..\\..\\..\\..\\Commandos\\Files\\XMLFiles\\UsersData.xml",
   "StoragePath": "..\\..\\..\\..\\Commandos\\Files\\XMLFiles\\StorageData.xml",
   "CartsPath": "..\\..\\..\\..\\Commandos\\Files\\JSONFiles\\CartsData.json",
 

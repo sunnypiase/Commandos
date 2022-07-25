@@ -6,18 +6,33 @@ using System.Xml.Serialization;
 
 namespace Commandos.Models.Users
 {
+
+    [KnownType(typeof(Commandos.User.User))]
     [DataContract]
     public class UsersRepository
     {
-        [DataMember]
+        [DataMember(Name = "users")]
         private List<IUser> users;
 
         [XmlIgnore]
         private static UsersRepository? instance;
 
-        public static UsersRepository GetInstance()
+        private UsersRepository()  // create empty repository
         {
-            return instance is null ? instance = new UsersRepository() : instance;
+            users = new List<IUser>();
+        }
+
+        public static UsersRepository GetInstance() // create an instance: if it is not yet initialized then read from file
+        {
+            if (instance is null)
+            {
+                ReadUsersFromFile();
+                if (instance is null) // some deserialization error
+                    instance = new UsersRepository();
+                if (instance.users is null) // also some error
+                    instance.users = new List<IUser>();
+            }
+            return instance;
         }
 
         public List<IUser> AllUsers()
@@ -25,14 +40,14 @@ namespace Commandos.Models.Users
             return users;
         }
 
-        private UsersRepository()
+        /* private UsersRepository()
         {
             ReadUsersFromFile();
             if (users is null) // this is a strange error but to avoid such situation we create new list
             {
                 users = new List<IUser>();
             }
-        }
+        }*/
 
         public IUser? GetPersonByID(Guid id)
         {
@@ -65,7 +80,7 @@ namespace Commandos.Models.Users
             IUser? user = GetPersonByID(id);
             if (user is null) // (could not find user)
             {
-                ; // here we should define what to do. Probably, throw an exception
+                ; // TODO: here we should define what to do. Probably, throw an exception
             }
             else
             {
@@ -77,22 +92,39 @@ namespace Commandos.Models.Users
         {
             if (user is not null)
                 users.Add(user);
+            SaveUsersToFile();
         }
 
         public void RemoveUser(IUser? user)
         {
             if (user is not null)
                 users.Remove(user);
+            SaveUsersToFile();
         }
 
-        public void ReadUsersFromFile()
+        public static void ReadUsersFromFile()
         {
-            instance = DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>()).Load();
+            try
+            {
+                instance = DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>()).Load();
+            }
+            catch (Exception ex)
+            {
+                instance = null;
+                // TODO: need to log this exception
+            }
         }
 
         public void SaveUsersToFile()
         {
-            DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>()).Save(instance);
+            try
+            {
+                DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>()).Save(instance);
+            }
+            catch (Exception ex)
+            {
+                // TODO: need to log this exception
+            }
         }
 
         public Roles GetRole(Guid id)
@@ -118,6 +150,7 @@ namespace Commandos.Models.Users
             else
             {
                 user.Role = role;
+                SaveUsersToFile();
                 return true;
             }
         }
