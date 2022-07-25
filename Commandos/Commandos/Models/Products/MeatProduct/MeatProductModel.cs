@@ -17,18 +17,18 @@ namespace Commandos.Models.Products.MeatProduct
         #endregion
         #region Ctors
         public MeatProductModel() :
-            this(default, default, default, default, default, default, default)
+            this("", default, default, default, default, default/*, default*/)
         { }
 
-        public MeatProductModel(string name, double price, double weight, DateTime expirationTime, MeatSpecies meatSpecies, MeatCategory meatCategory, SortedDictionary<int, int> daysToExpirationAndPresentOfChange) :
-            base(name, price, weight, expirationTime, daysToExpirationAndPresentOfChange)
+        public MeatProductModel(string name, double price, double weight, DateTime expirationTime, MeatSpecies meatSpecies, MeatCategory meatCategory/*, SortedDictionary<int, int> daysToExpirationAndPresentOfChange*/) :
+            base(name, price, weight, expirationTime/*, daysToExpirationAndPresentOfChange*/)
         {
             MeatSpeciesProp = meatSpecies;
             MeatCategoryProp = meatCategory;
         }
 
         public MeatProductModel(MeatProductModel other) :
-            this(other.Name, other.Price, other.Weight, other.ExpirationTime, other.MeatSpeciesProp, other.MeatCategoryProp, other._daysToExpirationAndPresentOfChange)
+            this(other.Name, other.Price, other.Weight, other.ExpirationTime, other.MeatSpeciesProp, other.MeatCategoryProp/*, other._daysToExpirationAndPresentOfChange*/)
         { }
 
         #endregion

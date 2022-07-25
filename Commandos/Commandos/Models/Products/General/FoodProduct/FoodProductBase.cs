@@ -13,7 +13,7 @@ namespace Commandos.Models.Products.General.FoodProduct
         #region Props
 
         protected double _weight;
-        protected SortedDictionary<int, int> _daysToExpirationAndPresentOfChange;
+        /*protected SortedDictionary<int, int> _daysToExpirationAndPresentOfChange;*/
         [DataMember(Name = "ExpirationTime")]
         public virtual DateTime ExpirationTime { get; set; }
         [DataMember(Name = "Weight")]
@@ -41,7 +41,7 @@ namespace Commandos.Models.Products.General.FoodProduct
                 _price = value;
             }
         }
-        [XmlIgnore]
+        /*[XmlIgnore]
         public virtual SortedDictionary<int, int> DaysToExpirationAndPresentOfChange
         {
             get => new(_daysToExpirationAndPresentOfChange);
@@ -53,28 +53,28 @@ namespace Commandos.Models.Products.General.FoodProduct
                     _daysToExpirationAndPresentOfChange.Add(item.Key, item.Value);
                 }
             }
-        }
+        }*/
 
         #endregion
         #region Ctors
-        protected FoodProductBase() : this(default, default, default, default, default)
+        protected FoodProductBase() : this("", default, default, default/*, default*/)
         {
-            _daysToExpirationAndPresentOfChange = new SortedDictionary<int, int>();
+            /*_daysToExpirationAndPresentOfChange = new SortedDictionary<int, int>();*/
         }
 
-        protected FoodProductBase(string name, double price, double weight, DateTime expirationTime, SortedDictionary<int, int> daysToExpirationAndPresentOfChange) :
+        protected FoodProductBase(string name, double price, double weight, DateTime expirationTime/*, SortedDictionary<int, int> daysToExpirationAndPresentOfChange*/) :
             base(name, price)
         {
             ExpirationTime = expirationTime;
             Weight = weight;
-            _daysToExpirationAndPresentOfChange = new SortedDictionary<int, int>();
+            /*_daysToExpirationAndPresentOfChange = new SortedDictionary<int, int>();
             if (daysToExpirationAndPresentOfChange is not null)
             {
                 foreach (KeyValuePair<int, int> item in daysToExpirationAndPresentOfChange)
                 {
                     _daysToExpirationAndPresentOfChange.Add(item.Key, item.Value);
                 }
-            }
+            }*/
         }
         #endregion
         #region Methods
@@ -94,13 +94,13 @@ namespace Commandos.Models.Products.General.FoodProduct
         public virtual double GetPriceByExpiration()
         {
             int daysToExpiretion = ExpirationTime.Subtract(DateTime.Today).Days;
-            foreach (KeyValuePair<int, int> item in _daysToExpirationAndPresentOfChange)
+            /*foreach (KeyValuePair<int, int> item in _daysToExpirationAndPresentOfChange)
             {
                 if (daysToExpiretion <= item.Key)
                 {
                     return _price - _price * item.Value / 100d;
                 }
-            }
+            }*/
             return _price;
         }
         #endregion

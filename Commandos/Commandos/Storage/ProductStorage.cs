@@ -12,7 +12,7 @@ namespace Commandos.Storage
     [KnownType(typeof(CementProductModel))]
     [KnownType(typeof(DairyProductModel))]
     [KnownType(typeof(MeatProductModel))]
-    [DataContract]
+    [CollectionDataContract]
     public class ProductStorage<T> : IList<(T Product, int Amount)>
         where T : class, IProduct
     {
