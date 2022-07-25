@@ -1,4 +1,5 @@
 ﻿using Commandos.Models.Products.General;
+using Commandos.Models.Users;
 using ConsoleUI.Commands;
 using ConsoleUI.Commands.CustomerCommands;
 using ConsoleUI.Commands.ModeratorCommands;
@@ -15,7 +16,7 @@ namespace ConsoleUI.CommandsFactory
             AddToCartCommand addToCart = new("Input product amount");
             return new List<IMenuElement>()
             {
-                new InfoElement("Hello user"),
+                new InfoElement($"Hello {UserAccount.GetInstance()?.User?.Name}!"),
 
                 new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
 

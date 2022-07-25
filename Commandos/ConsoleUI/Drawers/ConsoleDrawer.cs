@@ -28,6 +28,10 @@ namespace ConsoleUI.Drawers
             }
         }
 
+        public void Write(string data)
+        {
+            Console.WriteLine(data);
+        }
         private ConsoleColor getColor(DrawPriority drawPriority)
         {
             switch (drawPriority)
@@ -39,11 +43,6 @@ namespace ConsoleUI.Drawers
                 default:
                     return ConsoleColor.Gray;
             }
-        }
-
-        public void Write(string data)
-        {
-            Console.WriteLine(data);
         }
     }
 }

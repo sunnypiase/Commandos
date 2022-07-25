@@ -1,4 +1,5 @@
-﻿using ConsoleUI.Drawers;
+﻿using Commandos.Models.Users;
+using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
 using ConsoleUI.IO;
 using ConsoleUI.Menu.MenuTypes;
@@ -17,6 +18,7 @@ namespace ConsoleUI.Menu
 
         public void Start()
         {
+            LoadingScene();
             toLoop();
         }
 
@@ -37,6 +39,18 @@ namespace ConsoleUI.Menu
                 }
             }
             while (!end);
+        }
+
+        private void LoadingScene(int latency = 150, int length = 11)
+        {
+            for (int i = 0; i < length; i++)
+            {
+                List<IMenuElement>? elements = new() {
+                    new InfoElement($"[{new string('#', i)}{new string('-', length - i)}]")
+                };
+                Thread.Sleep(latency);
+                drawer.Draw(elements);
+            }
         }
     }
 }
