@@ -41,7 +41,7 @@ internal static class Program
             IInput consoleInput = new ConsoleInput();
             MenuProcess menu = new(new List<IMenuElement>()
                 { new InfoElement("Welcome to the mega storage!"),
-                  new SelectableElement("Login", "1", new AuthorizationCommand(consoleInput, consoleDrawer)),
+                  new SelectableElement("Login", "1", new AuthorizationCommand()),
                   new SelectableElement("Exit", "0", new ExitCommand())
                 },
                 consoleDrawer,

@@ -3,6 +3,7 @@ using Commandos.Storage;
 using Commandos.User;
 using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
+using ConsoleUI.IO;
 using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands
@@ -12,18 +13,19 @@ namespace ConsoleUI.Commands
     {
         private Predicate<((G Product, int Amount) element, string inputed)> predicate;
         private string title;
-        private IInput input;
-        private IDrawer drawer;
-        public WhereStorage(Predicate<((G Product, int Amount) element, string inputed)> _predicate, string _title, IInput _input, IDrawer _drawer)
+
+        public WhereStorage(Predicate<((G Product, int Amount) element, string inputed)> _predicate, string _title)
         {
             predicate = _predicate;
             title = _title;
-            drawer = _drawer;
-            input = _input;
+
         }
 
         public ICollection<IMenuElement>? Execute()
         {
+            IInput input = IOSettings.GetInstance().Input;
+            IDrawer drawer = IOSettings.GetInstance().Drawer;
+
             string inputed = input.Read(title, drawer);
             ProductStorage<IProduct>? storage = ProductStorage<IProduct>.GetInstance();
             List<IMenuElement> elements = new();

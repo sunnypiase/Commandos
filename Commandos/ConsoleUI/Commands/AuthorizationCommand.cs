@@ -4,6 +4,7 @@ using Commandos.Services;
 using Commandos.User;
 using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
+using ConsoleUI.IO;
 using ConsoleUI.Menu;
 using ConsoleUI.Menu.MenuTypes;
 using System;
@@ -18,21 +19,21 @@ namespace ConsoleUI.Commands
 
     {
         private string? currentLogin;
-        private IInput input;
-        private IDrawer drawer;
+
 
         AuthorizationService authorizationService;
 
-        public AuthorizationCommand(IInput input, IDrawer drawer)
+        public AuthorizationCommand()
         {
-            this.input = input;
-            this.drawer = drawer;
+
             currentLogin = "";
             authorizationService = new();
         }
 
         private UserAccount? LoginRoutine()
         {
+            IInput input = IOSettings.GetInstance().Input;
+            IDrawer drawer = IOSettings.GetInstance().Drawer;
             // Enter login (nickname)
             currentLogin = input.Read("Enter nickname:", drawer);
             if (currentLogin == null || currentLogin == "")

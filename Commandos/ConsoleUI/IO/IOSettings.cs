@@ -21,7 +21,7 @@ namespace ConsoleUI.IO
         public IDrawer Drawer { get; }
         public IInput Input { get; }
 
-        public static IOSettings GetInstance(IDrawer drawer, IInput input)
+        public static IOSettings GetInstance(IDrawer drawer = null, IInput input = null)
         {
             if (_instance == null)
                 _instance = new IOSettings(drawer, input);

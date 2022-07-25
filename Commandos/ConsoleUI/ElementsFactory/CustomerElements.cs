@@ -14,7 +14,7 @@ namespace ConsoleUI.CommandsFactory
         public ICollection<IMenuElement> GetMenuElements()
         {
             DeleteFromStorage deleteFromStorage = new();
-            AddToCartCommand addToCart = new("Input product amount", new ConsoleInput(), new ConsoleDrawer());
+            AddToCartCommand addToCart = new("Input product amount");
             return new List<IMenuElement>()
             {
                 new InfoElement("Hello user"),
@@ -25,7 +25,7 @@ namespace ConsoleUI.CommandsFactory
 
                 new SelectableElement("Filter product by category price", $"{++elmCount}",
                     new WhereStorage<IProduct>((((IProduct product, int amount) item, string input) data) => data.item.product.Price >= int.Parse(data.input),
-                        "Enter price", new ConsoleInput(), new ConsoleDrawer())),
+                        "Enter price")),
 
                 new SelectableElement("Add to cart", $"{++elmCount}",new ActionOnStorageElements(addToCart,"Add some product to cart")),
 

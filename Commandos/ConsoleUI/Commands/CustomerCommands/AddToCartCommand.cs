@@ -4,6 +4,7 @@ using Commandos.Models.Users;
 using Commandos.User;
 using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
+using ConsoleUI.IO;
 using ConsoleUI.Menu.MenuTypes;
 using System;
 using System.Collections.Generic;
@@ -16,23 +17,24 @@ namespace ConsoleUI.Commands.CustomerCommands
     internal class AddToCartCommand : ActionOnProductCommand//TODO DO
     {
         private string title;
-        private IInput input;
-        private IDrawer drawer;
 
-        public AddToCartCommand(string title, IInput input, IDrawer drawer)
+
+        public AddToCartCommand(string title)
         {
             this.title = title;
-            this.input = input;
-            this.drawer = drawer;
+
         }
 
         public override object Clone()
         {
-            return new AddToCartCommand(title, input, drawer);
+            return new AddToCartCommand(title);
         }
 
         public override ICollection<IMenuElement>? Execute()
         {
+            IInput input = IOSettings.GetInstance().Input;
+            IDrawer drawer = IOSettings.GetInstance().Drawer;
+
             string inputed = input.Read(title, drawer);
             CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).AddProduct(product,int.Parse(inputed));
             List<IMenuElement> elements = new();
