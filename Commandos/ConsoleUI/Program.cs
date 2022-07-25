@@ -1,4 +1,4 @@
-﻿using Commandos.Logs;
+using Commandos.Logs;
 using Commandos.Models.Carts;
 using Commandos.Models.Products.DairyProduct;
 using Commandos.Models.Products.General;
@@ -11,7 +11,7 @@ using ConsoleUI.Menu;
 using Microsoft.Extensions.Configuration;
 internal static class Program
 {
-    public static void Main(string[] args)
+    public static void Main()
     {
         Console.OutputEncoding = System.Text.Encoding.Unicode;
         Console.InputEncoding = System.Text.Encoding.Unicode;
@@ -38,9 +38,9 @@ internal static class Program
             //Console.WriteLine(CartsRepository.Instance.GetCart("id"));
             distributor.Save();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-
+            Console.WriteLine(ex.Message + ex.StackTrace);
             throw;
         }
         finally
