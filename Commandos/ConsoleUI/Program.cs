@@ -1,6 +1,7 @@
 ﻿using Commandos.Logs;
 using Commandos.Models.Products.DairyProduct;
 using Commandos.Models.Products.General;
+using Commandos.Models.Users;
 using Commandos.Serialize;
 using Commandos.Storage;
 using Microsoft.Extensions.Configuration;
@@ -15,16 +16,17 @@ internal static class Program
             Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(@"D:\C# projects\CommandProject\Commandos\Commandos\Commandos\Files\config.json"));
             LogDistributor distributor = LogDistributor.GetInstance();
 
-            var storage = ProductStorage<IProduct>.Instance;
-            storage.Add((new DairyProductModel("milk", 500, 20, DateTime.Now), 2));
-            storage.Add((new DairyProductModel("milk1", 5, 50, DateTime.Now.AddDays(2)), 3));
-            DownloaderProcessor.GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>()).Save(ProductStorage<IProduct>.Instance);
-
-            var storage2 = DownloaderProcessor
+            ProductStorage<IProduct>
+                .GetInstance(DownloaderProcessor
                 .GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>())
-                .Load();
+                .Load());
 
-            Console.WriteLine(ProductStorage<IProduct>.Instance);
+            UsersRepository
+                .GetInstance(DownloaderProcessor
+                .GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>())
+                .Load());
+
+            Console.WriteLine(ProductStorage<IProduct>.GetInstance());
             Console.ReadLine();
         }
         catch (Exception)

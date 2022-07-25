@@ -1,11 +1,14 @@
 ﻿using Commandos.User;
 using System.Collections;
+using System.Runtime.Serialization;
 
 namespace Commandos.Models.Carts
 {
+    [CollectionDataContract]
     public class CartsRepository : IList<Cart>
     {
         #region Props
+        [DataMember(Name = "Carts")]
         private List<Cart> carts;
         private static CartsRepository instance;
         public static CartsRepository Instance => instance is null ? instance = new() : instance;
@@ -37,7 +40,7 @@ namespace Commandos.Models.Carts
         }
         public void AddRange(List<Cart> carts)
         {
-            foreach(Cart item in carts)
+            foreach (Cart item in carts)
             {
                 Add(item);
             }
@@ -76,6 +79,14 @@ namespace Commandos.Models.Carts
         }
         #endregion
         #region Methods
+        public static CartsRepository GetInstance(CartsRepository carts = null)
+        {
+            if (instance == null)
+            {
+                instance = carts ?? new();
+            }
+            return instance;
+        }
         public Cart GetCart(IUser user)
         {
             if (carts.Any(c => c.Id == user.Guid))

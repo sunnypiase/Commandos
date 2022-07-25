@@ -133,6 +133,14 @@ namespace Commandos.Storage
 
         #region Methods
 
+        public static ProductStorage<T> GetInstance(ProductStorage<T> storage = null)
+        {
+            if (_instance == null)
+            {
+                _instance = storage ?? new();
+            }
+            return _instance;
+        }
         public IEnumerable<G> GetAll<G>() where G : T
         {
             foreach ((T Product, int Amount) item in _products)

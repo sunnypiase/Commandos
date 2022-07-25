@@ -1,9 +1,11 @@
 ﻿using Commandos.Models.Products.General;
 using Commandos.User;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Commandos.Models.Carts
 {
+    [DataContract]
     public class Cart
     {
         #region Props
