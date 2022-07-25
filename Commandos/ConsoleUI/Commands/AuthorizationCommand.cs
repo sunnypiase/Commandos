@@ -17,7 +17,6 @@ namespace ConsoleUI.Commands
     internal class AuthorizationCommand : ICommand  // used for user's login
 
     {
-        private Roles currentRole;
         private string? currentLogin;
         private IInput input;
         private IDrawer drawer;
@@ -28,7 +27,6 @@ namespace ConsoleUI.Commands
         {
             this.input = input;
             this.drawer = drawer;
-            currentRole = Roles.Customer;
             currentLogin = "";
             authorizationService = new();
         }

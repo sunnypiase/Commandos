@@ -9,6 +9,7 @@ using Commandos.User;
 using ConsoleUI.Commands;
 using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
+using ConsoleUI.IO;
 using ConsoleUI.Menu;
 using ConsoleUI.Menu.MenuTypes;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,7 @@ internal static class Program
         {
             Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json")));
             LogDistributor distributor = LogDistributor.GetInstance();
-
+            IOSettings.GetInstance(new ConsoleDrawer(), new ConsoleInput());
 
             ProductStorage<IProduct>
                 .GetInstance(DownloaderProcessor.GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>())
@@ -49,7 +50,7 @@ internal static class Program
 
             menu.Start();
 
-            Console.WriteLine(CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User));
+            Console.WriteLine(new Check(CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User)));
         }
         catch (Exception ex)
         {
