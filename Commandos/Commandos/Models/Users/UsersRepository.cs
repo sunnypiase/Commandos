@@ -12,7 +12,7 @@ namespace Commandos.Models.Users
         private List<IUser> users;
 
         [XmlIgnore]
-        private static UsersRepository instance;
+        private static UsersRepository? instance;
 
         public static UsersRepository GetInstance()
         {
@@ -33,9 +33,9 @@ namespace Commandos.Models.Users
             }
         }
 
-        public IUser GetPerson(Guid id)
+        public IUser? GetPerson(Guid id)
         {
-            IUser user = users.Find(u => u.Guid == id);
+            IUser? user = users.Find(u => u.Guid == id);
             if (user is null) // (could not find user)
             {
                 return null;
@@ -48,7 +48,7 @@ namespace Commandos.Models.Users
 
         public void RemovePerson(Guid id)
         {
-            IUser user = GetPerson(id);
+            IUser? user = GetPerson(id);
             if (user is null) // (could not find user)
             {
                 ; // here we should define what to do. Probably, throw an exception
@@ -59,14 +59,16 @@ namespace Commandos.Models.Users
             }
         }
 
-        public void AddUser(IUser user)
+        public void AddUser(IUser? user)
         {
-            users.Add(user);
+            if (user is not null)
+                users.Add(user);
         }
 
-        public void RemoveUser(IUser user)
+        public void RemoveUser(IUser? user)
         {
-            users.Remove(user);
+            if (user is not null)
+                users.Remove(user);
         }
 
         public void ReadUsersFromFile()
@@ -81,10 +83,10 @@ namespace Commandos.Models.Users
 
         public Roles GetRole(Guid id)
         {
-            IUser user = GetPerson(id);
+            IUser? user = GetPerson(id);
             if (user is null) // (could not find user)
             {
-                return Roles.Customer;
+                return Roles.Customer;  // here were meant to be unknown since the user was not found
             }
             else
             {
@@ -94,7 +96,7 @@ namespace Commandos.Models.Users
 
         public bool SetRole(Guid id, Roles role)
         {
-            IUser user = GetPerson(id);
+            IUser? user = GetPerson(id);
             if (user is null) // (could not find user)
             {
                 return false;

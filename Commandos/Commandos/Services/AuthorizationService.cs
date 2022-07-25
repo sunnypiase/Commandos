@@ -1,61 +1,68 @@
-﻿// using ConsoleUI;
-// ConsoleUI is not visible, so Program class is not visible
+﻿using Commandos.Models.Users;
+using Commandos.Role;
+using Commandos.User;
+// using ConsoleUI.Drawers;  // Commandos does not see ConsoleUI
 
 namespace Commandos.Services
 {
     public class AuthorizationService
     {
-        //#region Fields
-        //private UsersRepository usersData; // local copy of the link to the users repository, just for faster work
-        //                                   // we don't have a method to share usersData with others, it is used only here
-        //#endregion
+        #region Fields
+        private Roles currentRole = Roles.Customer;
+        private string currentLogin = "";
+        #endregion
 
-        //#region Constructors
-        //public AuthorizationService()
-        //{
-        //    usersData = UsersRepository.GetInstance(); // if users repository is empty, it is created and read from disk
-        //    // warning: usersData cannot be empty but can create 0 users
-        //}
-        //#endregion
+        #region Constructors
+        // A constructor not needed. UsersRepository.GetInstance() used to reach users data
+        #endregion
 
-        //#region Commands
-        //public UserAccount LoginRoutine(IDrawer drawer)
-        //{
-        //    return CreateUserAccount(); // TODO
-        //}
-        //public void ExitProgram(IDrawer drawer)
-        //{
-        //    // Program.Quit(); // the method in Program class should close and save everything before exiting
-        //                    // it also should call UsersRepository.GetInstance().SaveUsersToFile();
-        //}
-        //#endregion
+        #region Methods
+        public UserAccount LoginRoutine()
+        {
+            /* TODO
+             * 	Enter login (nickname)
+Check if nickname exists in the user data
+If yes:
+	Enter password
+	Check password
+	If correct, create the person
+	If not correct, allow repeat once or exit
+If not:
+	Ask user if he wants to register
+	If yes: enter password
+		    add user with this login and password
+		    save the users DB (serialize)
+		    create the person
+	If not, exit (return null)
+             */
+            return CreateUserAccount(); // TODO
+        }
 
-        //#region Methods
-        //private string ReadAndCheckLogin()
-        //{
-        //    return ""; // TODO
-        //}
+        private string ReadAndCheckLogin()
+        {
+            return ""; // TODO
+        }
 
-        //private bool ReadAndCheckPassword()
-        //{
-        //    return true;  // TODO
-        //}
+        private bool ReadAndCheckPassword()
+        {
+            return true;  // TODO
+        }
 
-        //private bool RegisterLoginPassword()
-        //{
-        //    return true;  // TODO
-        //}
+        private bool RegisterLoginPassword()
+        {
+            return true;  // TODO
+        }
 
-        //private IUser CreatePerson()
-        //{
-        //    IUser user = new(); // TODO
-        //    PersonStorageService.AddPerson(user);
-        //    return user;
-        //}
-        //private UserAccount CreateUserAccount()
-        //{
-        //    return new UserAccount();  // TODO
-        //}
-        //#endregion
+        public IUser CreatePerson(string name, Roles role = Roles.Customer)
+        {
+            IUser user = new Commandos.User.User(name, Guid.NewGuid(), role);
+            UsersRepository.GetInstance().AddUser(user);
+            return user;
+        }
+        public UserAccount CreateUserAccount()
+        {
+            return new UserAccount(CreatePerson(currentLogin, currentRole));  // TODO
+        }
+        #endregion
     }
 }
