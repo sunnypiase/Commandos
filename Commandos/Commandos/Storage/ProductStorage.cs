@@ -19,7 +19,6 @@ namespace Commandos.Storage
 
         #region Props
         private static ProductStorage<T> _instance;
-        public static ProductStorage<T> Instance => _instance is null ? _instance = new() : _instance;
         [DataMember(Name = "Products")]
         private List<(T Product, int Amount)> _products;
         /// <summary>

@@ -4,6 +4,10 @@ using Commandos.Models.Products.General;
 using Commandos.Models.Users;
 using Commandos.Serialize;
 using Commandos.Storage;
+using Commandos.User;
+using ConsoleUI.Drawers;
+using ConsoleUI.Inputs;
+using ConsoleUI.Menu;
 using Microsoft.Extensions.Configuration;
 internal static class Program
 {
@@ -13,21 +17,22 @@ internal static class Program
         Console.InputEncoding = System.Text.Encoding.Unicode;
         try
         {
-            Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(@"D:\C# projects\CommandProject\Commandos\Commandos\Commandos\Files\config.json"));
+            Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json")));
             LogDistributor distributor = LogDistributor.GetInstance();
 
             ProductStorage<IProduct>
-                .GetInstance(DownloaderProcessor
-                .GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>())
+                .GetInstance(DownloaderProcessor.GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>())
                 .Load());
 
             UsersRepository
-                .GetInstance(DownloaderProcessor
-                .GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>())
+                .GetInstance(DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>())
                 .Load());
 
-            Console.WriteLine(ProductStorage<IProduct>.GetInstance());
-            Console.ReadLine();
+            IUser user = new User("TOLYAN", Guid.NewGuid(), Commandos.Role.Roles.Customer,"asd");
+            UserAccount.GetInstance(user);
+            MenuDeterminerByRole menuDeterm = new(user);
+            MenuProcess menu = new(menuDeterm.GetMenuElements(), new ConsoleDrawer(), new ConsoleInput());
+            menu.Start();
         }
         catch (Exception)
         {
@@ -46,10 +51,6 @@ internal static class Program
         //storage.Add((new DairyProductModel("milk", 500, 20, DateTime.Now, null), 2));
         //storage.Add((new DairyProductModel("milk1", 5, 50, DateTime.Now.AddDays(2), null), 3));
 
-        //IUser user = new User("TOLYAN", Guid.NewGuid(), Commandos.Role.Roles.Customer);
-        //MenuDeterminerByRole menuDeterm = new(user);
-        //MenuProcess menu = new(menuDeterm.GetMenuElements(), new ConsoleDrawer(), new ConsoleInput());
-        //menu.Start();
         //distributor.Save();
     }
 
