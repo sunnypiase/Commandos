@@ -30,5 +30,13 @@ namespace Commandos.Models.Products.General.IndustrialProduct
         {
             return base.ToString() + $"Вага: {Weight}; ";
         }
+        public override bool Equals(object? obj)
+        {
+            if (obj is IndustrialProductBase other)
+            {
+                return base.Equals(other) && Weight == other.Weight;
+            }
+            return false;
+        }
     }
 }
