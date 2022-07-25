@@ -1,17 +1,25 @@
-﻿using Commandos.Models.Products.General;
+﻿using Commandos.Models.Products.CementProduct;
+using Commandos.Models.Products.DairyProduct;
+using Commandos.Models.Products.General;
+using Commandos.Models.Products.MeatProduct;
 using Commandos.User;
 using System.Runtime.Serialization;
 using System.Text;
 
 namespace Commandos.Models.Carts
 {
+    [KnownType(typeof(CementProductModel))]
+    [KnownType(typeof(DairyProductModel))]
+    [KnownType(typeof(MeatProductModel))]
     [DataContract]
     public class Cart
     {
         #region Props
         private Guid id;
         private Dictionary<IProduct, int> cartProducts;
+        [DataMember(Name = "ID")]
         public Guid Id { get => id; }
+        [DataMember(Name = "CartProducts")]
         public Dictionary<IProduct, int> CartProducts { get => cartProducts; private set => cartProducts = value; }
         #endregion
         #region Ctors
