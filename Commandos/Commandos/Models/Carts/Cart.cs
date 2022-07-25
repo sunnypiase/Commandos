@@ -89,7 +89,7 @@ namespace Commandos.Models.Carts
             double sum = 0;
             foreach (KeyValuePair<IProduct, int> prod in CartProducts)
             {
-                sum += prod.Key.Price + prod.Value;
+                sum += prod.Key.Price * prod.Value;
             }
             return sum;
         }

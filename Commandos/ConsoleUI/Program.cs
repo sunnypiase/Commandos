@@ -1,4 +1,5 @@
 ﻿using Commandos.Logs;
+using Commandos.Models.Carts;
 using Commandos.Models.Products.DairyProduct;
 using Commandos.Models.Products.General;
 using Commandos.Models.Users;
@@ -27,12 +28,13 @@ internal static class Program
             UsersRepository
                 .GetInstance(DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>())
                 .Load());
-
             IUser user = new User("TOLYAN", Guid.NewGuid(), Commandos.Role.Roles.Customer,"asd");
+            CartsRepository.GetInstance().Add(new Cart(user));
             UserAccount.GetInstance(user);
             MenuDeterminerByRole menuDeterm = new(user);
             MenuProcess menu = new(menuDeterm.GetMenuElements(), new ConsoleDrawer(), new ConsoleInput());
             menu.Start();
+            Console.WriteLine(CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User));
         }
         catch (Exception)
         {
