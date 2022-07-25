@@ -17,7 +17,7 @@ internal static class Program
         Console.InputEncoding = System.Text.Encoding.Unicode;
         try
         {
-            Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(@"C:\Users\Sunny Piase\source\repos\NewRepo\Commandos\Commandos\Files\config.json"));
+            //Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(@"C:\Users\Sunny Piase\source\repos\NewRepo\Commandos\Commandos\Files\config.json"));
             LogDistributor distributor = LogDistributor.GetInstance();
             //DownloaderProcessor.GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>()).Load();
             //Console.WriteLine(ProductStorage<IProduct>.Instance);
