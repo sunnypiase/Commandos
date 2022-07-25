@@ -99,8 +99,7 @@ namespace Commandos.Storage
         }
         public int IndexOf(T product)
         {
-            var itemInProducts = _products.FirstOrDefault(x => x.Product == product);
-            return _products.IndexOf(itemInProducts);
+            return new List<T>(_products.Select(x => x.Product)).IndexOf(product);
         }
         public void RemoveAt(int index)
         {
