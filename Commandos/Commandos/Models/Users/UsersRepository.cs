@@ -1,4 +1,5 @@
 ﻿using Commandos.Role;
+using Commandos.Serialize;
 using Commandos.User;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
@@ -86,12 +87,12 @@ namespace Commandos.Models.Users
 
         public void ReadUsersFromFile()
         {
-            //TODO DownloaderProcessor.GetUserDataSerializer(new XmlSerialization<UsersRepository>).Load(instance);
+            instance = DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>()).Load();
         }
 
         public void SaveUsersToFile()
         {
-            //TODO DownloaderProcessor.GetUserDataSerializer(new XmlSerialization<UsersRepository>).Save(instance);
+            DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>()).Save(instance);
         }
 
         public Roles GetRole(Guid id)
