@@ -16,8 +16,8 @@ internal static class Program
             LogDistributor distributor = LogDistributor.GetInstance();
 
             var storage = ProductStorage<IProduct>.Instance;
-            storage.Add((new DairyProductModel("milk", 500, 20, DateTime.Now), 2));
-            storage.Add((new DairyProductModel("milk1", 5, 50, DateTime.Now.AddDays(2)), 3));
+            storage.Add(new DairyProductModel("milk", 500, 20, DateTime.Now), 2);
+            storage.Add(new DairyProductModel("milk1", 5, 50, DateTime.Now.AddDays(2)), 3);
             DownloaderProcessor.GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>()).Save(ProductStorage<IProduct>.Instance);
 
             var storage2 = DownloaderProcessor
