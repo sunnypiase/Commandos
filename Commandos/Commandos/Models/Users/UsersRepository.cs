@@ -33,7 +33,7 @@ namespace Commandos.Models.Users
             }
         }
 
-        public IUser? GetPerson(Guid id)
+        public IUser? GetPersonByID(Guid id)
         {
             IUser? user = users.Find(u => u.Guid == id);
             if (user is null) // (could not find user)
@@ -46,9 +46,22 @@ namespace Commandos.Models.Users
             }
         }
 
+        public IUser? GetPersonByName(string nickname)
+        {
+            IUser? user = users.Find(u => u.Name == nickname);
+            if (user is null) // (could not find user)
+            {
+                return null;
+            }
+            else
+            {
+                return user;
+            }
+        }
+
         public void RemovePerson(Guid id)
         {
-            IUser? user = GetPerson(id);
+            IUser? user = GetPersonByID(id);
             if (user is null) // (could not find user)
             {
                 ; // here we should define what to do. Probably, throw an exception
@@ -83,7 +96,7 @@ namespace Commandos.Models.Users
 
         public Roles GetRole(Guid id)
         {
-            IUser? user = GetPerson(id);
+            IUser? user = GetPersonByID(id);
             if (user is null) // (could not find user)
             {
                 return Roles.Customer;  // here were meant to be unknown since the user was not found
@@ -96,7 +109,7 @@ namespace Commandos.Models.Users
 
         public bool SetRole(Guid id, Roles role)
         {
-            IUser? user = GetPerson(id);
+            IUser? user = GetPersonByID(id);
             if (user is null) // (could not find user)
             {
                 return false;

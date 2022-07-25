@@ -9,7 +9,7 @@ namespace Commandos.Models.Users
 {
     public class UserAccount     // an entity that holds the current logged user
     {
-        public IUser? User { get; set; } = null;  // default is null until the user is logged in
+        public IUser? User { get; } = null;  // default is null until the user is logged in
 
         public UserAccount(IUser? user)
         {

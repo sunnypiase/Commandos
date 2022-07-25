@@ -1,51 +1,39 @@
 ﻿using Commandos.Models.Users;
 using Commandos.Role;
 using Commandos.User;
-// using ConsoleUI.Drawers;  // Commandos does not see ConsoleUI
 
 namespace Commandos.Services
 {
     public class AuthorizationService
     {
         #region Fields
-        private Roles currentRole = Roles.Customer;
-        private string currentLogin = "";
+        // Fields are in AuthorizationCommand. UsersRepository.GetInstance() used to reach users data
         #endregion
 
         #region Constructors
-        // A constructor not needed. UsersRepository.GetInstance() used to reach users data
+        // A constructor is not needed
         #endregion
 
         #region Methods
-        public UserAccount LoginRoutine()
+        public IUser? CheckLogin(string nickname)
+            // returns true of users repository contains this nickname
         {
-            /* TODO
-             * 	Enter login (nickname)
-Check if nickname exists in the user data
-If yes:
-	Enter password
-	Check password
-	If correct, create the person
-	If not correct, allow repeat once or exit
-If not:
-	Ask user if he wants to register
-	If yes: enter password
-		    add user with this login and password
-		    save the users DB (serialize)
-		    create the person
-	If not, exit (return null)
-             */
-            return CreateUserAccount(); // TODO
+            return UsersRepository.GetInstance().GetPersonByName(nickname);
         }
 
-        private string ReadAndCheckLogin()
+        private string EncryptOrDecryptPassword(string password)
+            // in this case, encryption and decryption use the same operation :)
         {
-            return ""; // TODO
+            string result = "";
+            for (int i = 0; i < password.Length; i++)
+                result += (char)(password[i] ^ Int16.MaxValue);   // XOR with 1111111111111111
+            return result;
         }
 
-        private bool ReadAndCheckPassword()
+        public bool CheckPassword(IUser user, string password)
+            // Encrypt the password and compare with the one saved in users repopository
         {
-            return true;  // TODO
+            return (user.EncryptedPassword == EncryptOrDecryptPassword(password));
         }
 
         private bool RegisterLoginPassword()
@@ -53,15 +41,18 @@ If not:
             return true;  // TODO
         }
 
-        public IUser CreatePerson(string name, Roles role = Roles.Customer)
+        public IUser RegisterUser(string name, string password, Roles role = Roles.Customer)
+            // add new user to repository if he has just registered
         {
-            IUser user = new Commandos.User.User(name, Guid.NewGuid(), role);
+            IUser user = new Commandos.User.User(name, Guid.NewGuid(), role, EncryptOrDecryptPassword(password));
             UsersRepository.GetInstance().AddUser(user);
             return user;
         }
-        public UserAccount CreateUserAccount()
+        public UserAccount? CreateUserAccount(IUser? user)
         {
-            return new UserAccount(CreatePerson(currentLogin, currentRole));  // TODO
+            if (user is not null)
+                return new UserAccount(user);
+            else return null;
         }
         #endregion
     }
