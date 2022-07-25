@@ -25,6 +25,7 @@ namespace ConsoleUI.Commands
         public ICollection<IMenuElement>? Execute(IUser? user = null)
         {
             string inputed = input.Read(title, drawer);
+            ProductStorage<IProduct>? storage = ProductStorage<IProduct>.GetInstance();
             List<IMenuElement> elements = new();
 
             var storage = ProductStorage<IProduct>.Instance;         

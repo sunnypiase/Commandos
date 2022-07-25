@@ -2,19 +2,17 @@
 using Commandos.Serialize;
 using Commandos.User;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
 
 namespace Commandos.Models.Users
 {
 
-    [KnownType(typeof(Commandos.User.User))]
+    [KnownType(typeof(User.User))]
     [DataContract]
     public class UsersRepository
     {
         [DataMember(Name = "users")]
         private List<IUser> users;
 
-        [XmlIgnore]
         private static UsersRepository? instance;
 
         private UsersRepository()  // create empty repository
@@ -22,15 +20,11 @@ namespace Commandos.Models.Users
             users = new List<IUser>();
         }
 
-        public static UsersRepository GetInstance() // create an instance: if it is not yet initialized then read from file
+        public static UsersRepository GetInstance(UsersRepository repository = null) // create an instance
         {
             if (instance is null)
             {
-                ReadUsersFromFile();
-                if (instance is null) // some deserialization error
-                    instance = new UsersRepository();
-                if (instance.users is null) // also some error
-                    instance.users = new List<IUser>();
+                instance = repository ?? new();
             }
             return instance;
         }
@@ -102,7 +96,7 @@ namespace Commandos.Models.Users
             SaveUsersToFile();
         }
 
-        public static void ReadUsersFromFile()
+        /*public static void ReadUsersFromFile()
         {
             try
             {
@@ -113,7 +107,7 @@ namespace Commandos.Models.Users
                 instance = null;
                 // TODO: need to log this exception
             }
-        }
+        }*/
 
         public void SaveUsersToFile()
         {

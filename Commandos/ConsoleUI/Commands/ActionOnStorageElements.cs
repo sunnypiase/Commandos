@@ -17,16 +17,17 @@ namespace ConsoleUI.Commands
         }
         public ICollection<IMenuElement>? Execute(IUser? user = null)
         {
-            ProductStorage<IProduct>? storage = ProductStorage<IProduct>.Instance;
+            ProductStorage<IProduct>? storage = ProductStorage<IProduct>.GetInstance();
 
             List<IMenuElement> elements = new();
 
             elements.Add(new InfoElement(title));
             int i = default;
             foreach ((IProduct Product, int Amount) item in storage)
-            {                
-                actionOnProduct.SetProduct(item.Product);
-                elements.Add(new SelectableElement($"{item}", $"{++i}", actionOnProduct));
+            {
+                ActionOnProductCommand tmpAction = actionOnProduct.Clone() as ActionOnProductCommand;
+                tmpAction.SetProduct(item.Product);
+                elements.Add(new SelectableElement($"{item}", $"{++i}", tmpAction));
             }
             elements.Add(new SelectableElement("back to home", "0", new BackToHome()));
             return elements;

@@ -10,11 +10,11 @@ namespace ConsoleUI.CommandsFactory
 {
     internal class CustomerElements : IElementsFactory
     {
-        int elmCount = default;
+        private int elmCount = default;
         public ICollection<IMenuElement> GetMenuElements()
         {
-            DeleteFromStorage deleteFromStorage = new DeleteFromStorage();
-            AddToCartCommand addToCart = new AddToCartCommand("Input product amount", new ConsoleInput(), new ConsoleDrawer());
+            DeleteFromStorage deleteFromStorage = new();
+            AddToCartCommand addToCart = new("Input product amount", new ConsoleInput(), new ConsoleDrawer());
             return new List<IMenuElement>()
             {
                 new InfoElement("Hello user"),
