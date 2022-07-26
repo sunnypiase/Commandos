@@ -14,6 +14,7 @@ namespace ConsoleUI.CommandsFactory
         {
             DeleteFromStorage deleteFromStorage = new();
             AddToCartCommand addToCart = new("Input product amount");
+            
             return new List<IMenuElement>()
             {
                 new InfoElement($"Hello {UserAccount.GetInstance()?.User?.Name}!"),

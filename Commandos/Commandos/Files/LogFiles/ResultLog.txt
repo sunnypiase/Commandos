@@ -22,3 +22,8 @@
 <Log Type: Result>;<Log Body: Null>;
 <Log Type: Result>;<Log Body: Login>;
 <Log Type: Result>;<Log Body: Null>;
+<Log Type: Result>;<Log Body: Login>;
+<Log Type: Result>;<Log Body: Add to cart>;
+<Log Type: Result>;<Log Body: (Назва: milk; Ціна: 500; Вага: 20; Термін придатності: 25.07.2022; , 2)>;
+<Log Type: Result>;<Log Body: continue>;
+<Log Type: Result>;<Log Body: Exit>;
