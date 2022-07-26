@@ -16,8 +16,15 @@ namespace Commandos.Storage
     public class ProductStorage<T> : IEnumerable<(T Product, int Count)>
         where T : class, IProduct
     {
-        private static readonly Lazy<ProductStorage<T>> _instance = new();
-        public static ProductStorage<T> Instance => _instance.Value;
+        private static ProductStorage<T>? _instance;
+        public static ProductStorage<T> GetInstance(ProductStorage<T>? ps = null)
+        {
+            if (_instance == null)
+            {
+                _instance = ps ?? new ProductStorage<T>();
+            }
+            return _instance;
+        }
 
         [DataMember(Name = "Products")]
         private readonly List<(T Product, int Count)> _products = new();
@@ -53,17 +60,12 @@ namespace Commandos.Storage
         {
             if (OnProductPreAddFaceControl?.Invoke(product) ?? true)
             {
-                bool isInStorage = false;
-                for (int i = 0; i < _products.Count; i++)
+                int idx = IndexOf(product);
+                if (idx >= 0)
                 {
-                    if (_products[i].Product.Equals(product))
-                    {
-                        _products[i] = (product, _products[i].Count + countToAdd);
-                        isInStorage = true;
-                        break;
-                    }
+                    _products[idx] = (_products[idx].Product, _products[idx].Count + countToAdd);
                 }
-                if (!isInStorage)
+                else
                 {
                     _products.Add((product, countToAdd));
                 }
@@ -73,25 +75,28 @@ namespace Commandos.Storage
                 OnBadProductLogger?.Invoke(new TxtSerializer().Serialize(product) + "<Describe : Продукт не підпадає під умови додавання>;");
             }
         }
+        public void Add((T Product, int Count) item)
+        {
+            Add(item.Product, item.Count);
+        }
         public void Remove(T product, int countToRemove)
         {
-            for (int i = 0; i < _products.Count; i++)
+            int idx = IndexOf(product);
+            if (idx >= 0)
             {
-                if (_products[i].Product.Equals(product))
-                {
-                    var (prod, countInStorage) = _products[i];
+                var (p, countInStorage) = _products[idx];
 
-                    if (countInStorage > countToRemove)
-                    {
-                        _products[i] = (prod, countInStorage - countToRemove);
-                    }
-                    else
-                    {
-                        _products.RemoveAt(i);
-                    }
+                if (countInStorage > countToRemove)
+                {
+                    _products[idx] = (p, countInStorage - countToRemove);
                     return;
                 }
+                _products.RemoveAt(idx);
             }
+        }
+        public void Remove((T Product, int Count) item)
+        {
+            Remove(item.Product, item.Count);
         }
         public bool Contains(T product)
         {
@@ -99,7 +104,7 @@ namespace Commandos.Storage
         }
         public int IndexOf(T product)
         {
-            return new List<T>(_products.Select(x => x.Product)).IndexOf(product);
+            return _products.Select(x => x.Product).ToList().IndexOf(product);
         }
         public void RemoveAt(int index)
         {
@@ -109,32 +114,35 @@ namespace Commandos.Storage
         #endregion
 
         #region Methods
-
+        public int GetAmountByProduct(IProduct product)
+        {
+            return _products.FirstOrDefault(prod => prod.Product == product).Count;
+        }
         public IEnumerable<(T Product, int Count)> GetAll()
         {
-            foreach (var p in _products)
+            foreach ((T Product, int Count) p in _products)
             {
                 yield return p;
             }
         }
         public IEnumerable<(T Product, int Count)> GetAll(Type productType)
         {
-            var productsOfType = _products
+            IEnumerable<(T Product, int Count)>? productsOfType = _products
                 .Where(x => x.Product.GetType() == productType)
                 .Select(x => x);
 
-            foreach (var p in productsOfType)
+            foreach ((T Product, int Count) p in productsOfType)
             {
                 yield return p;
             }
         }
         public IEnumerable<(T Product, int Count)> GetAll(Predicate<T> check)
         {
-            var resProducts = _products
+            IEnumerable<(T Product, int Count)>? resProducts = _products
                 .Where(x => check(x.Product))
                 .Select(x => x);
 
-            foreach (var p in resProducts)
+            foreach ((T Product, int Count) p in resProducts)
             {
                 yield return p;
             }
@@ -155,7 +163,7 @@ namespace Commandos.Storage
         public override string ToString()
         {
             StringBuilder sb = new();
-            foreach (var p in _products)
+            foreach ((T Product, int Count) p in _products)
             {
                 sb.AppendLine(p.ToString());
             }
@@ -175,8 +183,6 @@ namespace Commandos.Storage
         {
             return GetEnumerator();
         }
-
-
 
         #endregion
     }
