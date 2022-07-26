@@ -28,6 +28,7 @@ namespace ConsoleUI.Commands.CustomerCommands
             elements.Add(new InfoElement("Your check:"));
             elements.Add(new InfoElement(check.ToString()));
             elements.Add(new SelectableElement("back to home", "0", new BackToHome()));
+            CartsRepository.GetInstance().GetCart(commandTarget.Id).ClearCart();
             return elements;
         }
     }
