@@ -1,4 +1,6 @@
-﻿using ConsoleUI.Menu.MenuTypes;
+﻿using ConsoleUI.Inputs;
+using ConsoleUI.IO;
+using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Drawers
 {
@@ -14,16 +16,28 @@ namespace ConsoleUI.Drawers
 
             IEnumerable<IMenuElement> priorElements = elements.OrderBy(el => el.Priority);
 
+            bool arrowsInput = IOSettings.GetInstance().Input is ConsoleInputByArrows;
             foreach (IMenuElement? item in priorElements)
             {
                 Console.ForegroundColor = getColor(item.Priority);
                 if (item is SelectableElement element)
                 {
-                    if(element.isOnCursor)
+                    if (arrowsInput)
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        if (element.isOnCursor)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.WriteLine(">{1}", element.SignToCommand, element.Title);
+                        }
+                        else
+                        {
+                            Console.WriteLine(" {1}", element.SignToCommand, element.Title);
+                        }
                     }
-                    Console.WriteLine("{0} > {1}", element.SignToCommand, element.Title);
+                    else
+                    {
+                        Console.WriteLine("{0} > {1}", element.SignToCommand, element.Title);
+                    }
                 }
                 else
                 {
@@ -34,8 +48,10 @@ namespace ConsoleUI.Drawers
 
         public void Write(string data)
         {
+            getColor(DrawPriority.First);
             Console.WriteLine(data);
         }
+
         private ConsoleColor getColor(DrawPriority drawPriority)
         {
             switch (drawPriority)
