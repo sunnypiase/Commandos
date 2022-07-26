@@ -11,6 +11,7 @@ using ConsoleUI.Inputs;
 using ConsoleUI.IO;
 using ConsoleUI.Menu;
 using ConsoleUI.Menu.MenuTypes;
+using ConsoleUI.Menu.Music;
 using Microsoft.Extensions.Configuration;
 internal static class Program
 {
@@ -41,7 +42,7 @@ internal static class Program
                 new SelectableElement("Login", "1", new AuthorizationCommand()),
                 new SelectableElement("Exit", "0", new ExitCommand())
             });
-
+            menu.SetMusic(new MarioMusic());
             menu.Start();
 
             Console.WriteLine(new Check(CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User)));
