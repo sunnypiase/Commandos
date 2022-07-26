@@ -9,10 +9,12 @@ namespace ConsoleUI.CommandsFactory
 {
     internal class CustomerElements : IElementsFactory
     {
+
         private int elmCount = default;
         public ICollection<IMenuElement> GetMenuElements()
         {
             DeleteFromStorage deleteFromStorage = new();
+            SortStorageBy sortStorageByPrice = new SortStorageBy(Comparer<(IProduct, int)>.Create(new Comparison<(IProduct, int)>((x, y) => x.Item1.CompareTo(y.Item1))));
             AddToCartCommand addToCart = new("Input product amount");
             return new List<IMenuElement>()
             {
@@ -25,9 +27,12 @@ namespace ConsoleUI.CommandsFactory
                 new SelectableElement("Filter product by category price", $"{++elmCount}",
                     new WhereStorage<IProduct>((((IProduct product, int amount) item, string input) data) => data.item.product.Price >= int.Parse(data.input),
                         "Enter price")),
+
                 new SelectableElement("Sort by price +", $"{++elmCount}",
-                    new WhereStorage<IProduct>((((IProduct product, int amount) item, string input) data) => data.item.product.Price >= int.Parse(data.input),
-                        "Enter price")),//TODO DO
+                    new SortStorageBy(Comparer<(IProduct, int)>.Create(new Comparison<(IProduct, int)>((x, y) => x.Item1.CompareTo(y.Item1))))),
+
+                new SelectableElement("Sort by price -", $"{++elmCount}",
+                    new SortStorageBy(Comparer<(IProduct, int)>.Create(new Comparison<(IProduct, int)>((x, y) => y.Item1.CompareTo(x.Item1))))),
 
                 new SelectableElement("Add to cart", $"{++elmCount}",new ActionOnStorageElements(addToCart,"Add some product to cart")),
 

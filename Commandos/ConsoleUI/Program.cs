@@ -1,4 +1,5 @@
 ﻿using Commandos.Logs;
+using Commandos.Logs.InterfacesAndEnums;
 using Commandos.Models.Carts;
 using Commandos.Models.Products.General;
 using Commandos.Models.Users;
@@ -48,6 +49,7 @@ internal static class Program
         }
         catch (Exception ex)
         {
+            LogDistributor.GetInstance().Add(new Log(LogType.Exception, ex.Message));
             Console.WriteLine(ex.Message + ex.StackTrace);
         }
         finally
