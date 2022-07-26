@@ -11,6 +11,7 @@ namespace ConsoleUI.Inputs
         {
             string? result = Console.ReadLine();
 
+            Console.Beep();
             SelectableElement? element = menuElements?
                     .Where(el => el is SelectableElement)
                     .Select(el => (SelectableElement)el)
@@ -29,4 +30,5 @@ namespace ConsoleUI.Inputs
             return result;
         }
     }
+
 }

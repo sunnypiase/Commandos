@@ -101,3 +101,14 @@
 <Log Type: Result>;<Log Body: Delete user>;
 <Log Type: Result>;<Log Body: continue>;
 <Log Type: Result>;<Log Body: Exit>;
+<Log Type: Result>;<Log Body: Login>;
+<Log Type: Result>;<Log Body: Filter product by category price>;
+<Log Type: Result>;<Log Body: continue>;
+<Log Type: Result>;<Log Body: Sort by price +>;
+<Log Type: Result>;<Log Body: back to home>;
+<Log Type: Result>;<Log Body: Sort by price ->;
+<Log Type: Result>;<Log Body: back to home>;
+<Log Type: Result>;<Log Body: Add to cart>;
+<Log Type: Result>;<Log Body: (Назва: milk; Ціна: 650; Вага: 20; Термін придатності: 7/25/2022; , 2)>;
+<Log Type: Result>;<Log Body: continue>;
+<Log Type: Result>;<Log Body: Null function>;
