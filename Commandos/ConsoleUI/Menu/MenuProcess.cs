@@ -1,8 +1,8 @@
-﻿using ConsoleUI.Drawers;
+﻿using Commandos.Models.Users;
+using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
 using ConsoleUI.IO;
 using ConsoleUI.Menu.MenuTypes;
-using ConsoleUI.Menu.Music;
 
 namespace ConsoleUI.Menu
 {
@@ -11,7 +11,6 @@ namespace ConsoleUI.Menu
         private List<IMenuElement> menuElements;
         private IInput input = IOSettings.GetInstance().Input;
         private IDrawer drawer = IOSettings.GetInstance().Drawer;
-        private IConsoleMusic music;
         public MenuProcess(ICollection<IMenuElement> _menuElements)
         {
             menuElements = new(_menuElements.ToList());
@@ -42,42 +41,15 @@ namespace ConsoleUI.Menu
             while (!end);
         }
 
-        public void SetMusic(IConsoleMusic _music)
+        private void LoadingScene(int latency = 150, int length = 11)
         {
-            if (drawer is ConsoleDrawer)
-                music = _music;
-        }
-
-        private void LoadingScene(int length = 10)
-        {
-            var stop = false;
-            if (music is not null)
+            for (int i = 0; i < length; i++)
             {
-                var tones = music.GetMusic().GetEnumerator();
-                for (int i = 0; i < 22 && !stop; i++)
-                {
-                    tones.MoveNext();
-                    Console.Beep(tones.Current.Item1, tones.Current.Item2);
-                    List<IMenuElement>? elements = new() {
-                        new InfoElement($"[{new string('#', i)}{new string('-', 22 - i)}]")
-                    };
-                    Thread.Sleep(tones.Current.Item3);
-                    drawer.Draw(elements);
-                    drawer.Write("Press any button to skip");
-                    stop = Console.KeyAvailable;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < length; i++)
-                {
-                    List<IMenuElement>? elements = new() {
-                        new InfoElement($"[{new string('#', i)}{new string('-', length - i)}]")
-                    };
-                    drawer.Draw(elements);
-                    drawer.Write("Press any button to skip");
-                    stop = Console.KeyAvailable;
-                }
+                List<IMenuElement>? elements = new() {
+                    new InfoElement($"[{new string('#', i)}{new string('-', length - i)}]")
+                };
+                Thread.Sleep(latency);
+                drawer.Draw(elements);
             }
         }
     }

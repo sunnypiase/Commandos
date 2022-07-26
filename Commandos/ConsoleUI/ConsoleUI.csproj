@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Menu\" />
     <Folder Include="Drawers\" />
     <Folder Include="Inputs\" />
   </ItemGroup>

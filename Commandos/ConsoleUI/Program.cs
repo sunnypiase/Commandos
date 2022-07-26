@@ -11,7 +11,6 @@ using ConsoleUI.Inputs;
 using ConsoleUI.IO;
 using ConsoleUI.Menu;
 using ConsoleUI.Menu.MenuTypes;
-using ConsoleUI.Menu.Music;
 using Microsoft.Extensions.Configuration;
 internal static class Program
 {
@@ -21,8 +20,7 @@ internal static class Program
         Console.InputEncoding = System.Text.Encoding.Unicode;
         try
         {
-            Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json")));
-            LogDistributor distributor = LogDistributor.GetInstance();
+            Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json")));            
             IOSettings.GetInstance(new ConsoleDrawer(), new ConsoleInput());
 
             ProductStorage<IProduct>
@@ -43,7 +41,7 @@ internal static class Program
                 new SelectableElement("Login", "1", new AuthorizationCommand()),
                 new SelectableElement("Exit", "0", new ExitCommand())
             });
-            menu.SetMusic(new MarioMusic());
+
             menu.Start();
 
             Console.WriteLine(new Check(CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User)));
@@ -51,7 +49,6 @@ internal static class Program
         catch (Exception ex)
         {
             LogDistributor.GetInstance().Add(new Log(LogType.Exception, ex.Message));
-            Console.WriteLine(ex.Message + ex.StackTrace);
             IOSettings.GetInstance().Drawer.Write(ex.Message + ex.StackTrace);
         }
         finally

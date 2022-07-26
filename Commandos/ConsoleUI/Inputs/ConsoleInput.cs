@@ -11,14 +11,13 @@ namespace ConsoleUI.Inputs
         {
             string? result = Console.ReadLine();
 
-            Console.Beep();
             SelectableElement? element = menuElements?
                     .Where(el => el is SelectableElement)
                     .Select(el => (SelectableElement)el)
                     .Where(el => el.SignToCommand == result)
                     .LastOrDefault();
 
-            LogDistributor.GetInstance().Add(new Log(LogType.Result, element?.Title ?? "Null function"));
+            LogDistributor.GetInstance().Add(new Log(LogType.System, element?.Title ?? "Null function"));
 
             return element?.Run();
         }
@@ -30,5 +29,4 @@ namespace ConsoleUI.Inputs
             return result;
         }
     }
-
 }

@@ -26,5 +26,10 @@ namespace Commandos.User
             Role = role;
             EncryptedPassword = encryptedPassword;
         }
+
+        public override string? ToString()
+        {
+            return $"Name: {Name}, Role: {Role}";
+        }
     }
 }
