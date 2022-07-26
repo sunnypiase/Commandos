@@ -49,11 +49,23 @@ namespace Commandos.Logs
 
             _loggers[log.Titte].Add(log);
         }
+        public void SaveAndClear()
+        {
+            Save();
+            Clear();
+        }
         public void Save()
         {
             foreach (KeyValuePair<LogType, LoggerBase> item in _loggers)
             {
                 item.Value.Save();
+            }
+        }
+        public void Clear()
+        {
+            foreach (KeyValuePair<LogType, LoggerBase> item in _loggers)
+            {
+                item.Value.Clear();
             }
         }
         #endregion

@@ -17,11 +17,11 @@ namespace ConsoleUI.CommandsFactory
 
                 new InfoElement($"Hello {UserAccount.GetInstance()?.User?.Name}!"),
 
-                new SelectableElement("Add product", "0", new AddProductToStorage()),
+                new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
 
                 new SelectableElement("Change product price", $"{++elmCount}", new ActionOnStorageElements(changePrice, "Whitch product price you want to change")),
                 
-                new SelectableElement("Exit", "1", new ExitCommand())
+                new SelectableElement("Exit", $"{default(int)}", new ExitCommand())
             };
             return menuElements;
         }

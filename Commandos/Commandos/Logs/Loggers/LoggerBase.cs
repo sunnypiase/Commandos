@@ -32,6 +32,10 @@ namespace Commandos.Logs.Loggers
                 }
             }
         }
+        public virtual void Clear()
+        {
+            _logs.Clear();
+        }
         #endregion
     }
 }
