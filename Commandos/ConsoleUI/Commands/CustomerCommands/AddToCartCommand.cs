@@ -6,7 +6,7 @@ using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands.CustomerCommands
 {
-    internal class AddToCartCommand : ActionOnProductCommand//TODO DO
+    internal class AddToCartCommand : CommandOn<(IProduct product,int amount)>//TODO DO
     {
         private string title;
 
@@ -33,7 +33,7 @@ namespace ConsoleUI.Commands.CustomerCommands
             }
             else
             {
-                CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).AddProduct(product, int.Parse(inputed));
+                CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).AddProduct(commandTarget.product, int.Parse(inputed));
                 elements.Add(new InfoElement("Product added to cart"));
             }
             elements.Add(new SelectableElement("continue", "0", new BackToHome()));
@@ -41,7 +41,7 @@ namespace ConsoleUI.Commands.CustomerCommands
         }
         private bool IsCanAdd(int inputed)
         {
-            return CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).GetAmount(product) + inputed > ProductStorage<IProduct>.GetInstance().GetAmountByProduct(product);
+            return CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).GetAmount(commandTarget.product) + inputed > ProductStorage<IProduct>.GetInstance().GetAmountByProduct(commandTarget.product);
         }
     }
 }

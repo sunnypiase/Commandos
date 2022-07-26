@@ -1,13 +1,14 @@
 ﻿using Commandos.Role;
 using Commandos.Serialize;
 using Commandos.User;
+using System.Collections;
 using System.Runtime.Serialization;
 
 namespace Commandos.Models.Users
 {
     [KnownType(typeof(User.User))]
     [DataContract]
-    public class UsersRepository
+    public class UsersRepository : IEnumerable<IUser>
     {
         [DataMember(Name = "users")]
         private List<IUser> users;
@@ -86,6 +87,16 @@ namespace Commandos.Models.Users
             {
                 throw;
             }
+        }
+
+        public IEnumerator<IUser> GetEnumerator()
+        {
+            return this.users.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
