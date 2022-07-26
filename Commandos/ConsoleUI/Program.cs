@@ -6,6 +6,7 @@ using Commandos.Models.Users;
 using Commandos.Serialize;
 using Commandos.Storage;
 using ConsoleUI.Commands;
+using ConsoleUI.CommandsFactory;
 using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
 using ConsoleUI.IO;
@@ -36,12 +37,7 @@ internal static class Program
                 .GetInstance(DownloaderProcessor.GetCartsDataSerializer(new XmlStreamSerialization<CartsRepository>())
                 .Load());
 
-            MenuProcess menu = new(new List<IMenuElement>()
-            {
-                new InfoElement("Welcome to the mega storage!"),
-                new SelectableElement("Login", "1", new AuthorizationCommand()),
-                new SelectableElement("Exit", "0", new ExitCommand())
-            });
+            MenuProcess menu = new(new UserAuthorization().GetMenuElements());
             menu.SetMusic(new MarioMusic());
             menu.Start();
 
