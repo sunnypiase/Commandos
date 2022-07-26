@@ -1,4 +1,5 @@
 ﻿using Commandos.Logs;
+using Commandos.Logs.InterfacesAndEnums;
 using Commandos.Models.Carts;
 using Commandos.Models.Products.General;
 using Commandos.Models.Users;
@@ -36,11 +37,11 @@ internal static class Program
                 .Load());
 
             MenuProcess menu = new(new List<IMenuElement>()
-                { new InfoElement("Welcome to the mega storage!"),
-                  new SelectableElement("Login", "1", new AuthorizationCommand()),
-                  new SelectableElement("Exit", "0", new ExitCommand())
-                }
-            );
+            {
+                new InfoElement("Welcome to the mega storage!"),
+                new SelectableElement("Login", "1", new AuthorizationCommand()),
+                new SelectableElement("Exit", "0", new ExitCommand())
+            });
 
             menu.Start();
 
@@ -48,11 +49,13 @@ internal static class Program
         }
         catch (Exception ex)
         {
+            LogDistributor.GetInstance().Add(new Log(LogType.Exception, ex.Message));
             Console.WriteLine(ex.Message + ex.StackTrace);
+            IOSettings.GetInstance().Drawer.Write(ex.Message + ex.StackTrace);
         }
         finally
         {
-            //DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>()).Save(UsersRepository.GetInstance());
+            DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>()).Save(UsersRepository.GetInstance());
             DownloaderProcessor.GetCartsDataSerializer(new XmlStreamSerialization<CartsRepository>()).Save(CartsRepository.GetInstance());
             LogDistributor.GetInstance().Save();
         }

@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\AdminCommands\" />
     <Folder Include="Menu\" />
     <Folder Include="Drawers\" />
     <Folder Include="Inputs\" />
