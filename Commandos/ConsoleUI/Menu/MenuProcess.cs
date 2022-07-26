@@ -48,6 +48,7 @@ namespace ConsoleUI.Menu
                 music = _music;
         }
 
+        #region Scene
         private void LoadingScene(int length = 10)
         {
             var stop = false;
@@ -81,5 +82,6 @@ namespace ConsoleUI.Menu
                 }
             }
         }
+        #endregion
     }
 }
