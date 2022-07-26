@@ -63,7 +63,7 @@ namespace ConsoleUI.Menu
                     List<IMenuElement>? elements = new() {
                         new InfoElement($"[{new string('#', i)}{new string('-', musicLength - i)}]")
                     };
-                    Thread.Sleep(tones.Current.Item3);
+                    Thread.Sleep(tones.Current.Item3 / 2);
                     drawer.Draw(elements);
                     drawer.Write("Press esc to skip");
                     stop = Console.KeyAvailable;
