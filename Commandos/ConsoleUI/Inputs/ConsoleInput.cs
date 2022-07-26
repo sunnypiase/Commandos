@@ -10,7 +10,7 @@ namespace ConsoleUI.Inputs
         public virtual ICollection<IMenuElement>? Choose(ICollection<IMenuElement>? menuElements)
         {
             string? result = Console.ReadLine();
-            Console.Beep();
+            Console.Beep(800, 125);
             SelectableElement? element = menuElements?
                     .Where(el => el is SelectableElement)
                     .Select(el => (SelectableElement)el)
