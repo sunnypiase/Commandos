@@ -10,8 +10,7 @@ namespace ConsoleUI.Commands.AdminCommands
 
         public ChangeSelectedUserRoleCommand()
     {
-            string tmp = "";
-        }
+    }
 
     public override object Clone()
     {
@@ -28,13 +27,20 @@ namespace ConsoleUI.Commands.AdminCommands
                 menuElements.Add(new InfoElement($"There is no selected user!"));
             }
             else
-            { 
-                int elmCount = 0;
-                List<Roles> listRoles = Enum.GetValues<Roles>().ToList();
-                var c = new CommandOnIEnumerable<IEnumerable<Roles>, Roles>(listRoles, new SelectRoleAndUserRoleCommand(chosenPerson), "Select new role for "+chosenPerson.Name+"!");
-                menuElements.Add(new SelectableElement("Choose new role for "+ chosenPerson.Name, $"{++elmCount}", c));
+            {
+                var chosenRole = input.Read("Enter role for this user: ", drawer);
+                if (!Enum.TryParse(chosenRole, true, out Roles role))
+                {
+                    menuElements.Add(new InfoElement($"There is no role {chosenRole}!"));
+                }
+                else
+                {
+                    menuElements.Add(new InfoElement($"Role of the user with nickname {chosenPerson.Name} has been changed to \"{chosenRole}\"!"));
+                    chosenPerson.Role = role;
+                }
+
             }
-            menuElements.Add(new SelectableElement("Exit", "0", new BackToHome()));
+            menuElements.Add(new SelectableElement("continue", "0", new BackToHome()));
             return menuElements;
         }
     }
