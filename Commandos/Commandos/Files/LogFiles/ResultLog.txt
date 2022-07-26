@@ -101,3 +101,15 @@
 <Log Type: Result>;<Log Body: Delete user>;
 <Log Type: Result>;<Log Body: continue>;
 <Log Type: Result>;<Log Body: Exit>;
+<Log Type: Result>;<Log Body: Login>;
+<Log Type: Result>;<Log Body: Show products>;
+<Log Type: Result>;<Log Body: back to home>;
+<Log Type: Result>;<Log Body: Show users>;
+<Log Type: Result>;<Log Body: back to home>;
+<Log Type: Result>;<Log Body: Show carts>;
+<Log Type: Result>;<Log Body: back to home>;
+<Log Type: Result>;<Log Body: Exit>;
+<Log Type: Result>;<Log Body: Login>;
+<Log Type: Result>;<Log Body: Show users>;
+<Log Type: Result>;<Log Body: back to home>;
+<Log Type: Result>;<Log Body: Exit>;
