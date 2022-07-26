@@ -12,3 +12,6 @@ Actual value was 0.>;
 Actual value was 0.>;
 <Log Type: Exception>;<Log Body: Count cannot be less than zero. (Parameter 'count')>;
 <Log Type: Exception>;<Log Body: Count cannot be less than zero. (Parameter 'count')>;
+<Log Type: Exception>;<Log Body: There was an error deserializing the object of type Commandos.Storage.ProductStorage`1[[Commandos.Models.Products.General.IProduct, Commandos, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]. Name cannot begin with the '<' character, hexadecimal value 0x3C. Line 1, position 2.>;
+<Log Type: Exception>;<Log Body: Object reference not set to an instance of an object.>;
+<Log Type: Exception>;<Log Body: Object reference not set to an instance of an object.>;

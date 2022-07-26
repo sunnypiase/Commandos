@@ -143,3 +143,5 @@
 <Log Type: Result>;<Log Body: back to home>;
 <Log Type: Result>;<Log Body: Exit>;
 >>>>>>> 5f62d6b056aa2b5c9da36ac725e9c82caa44e246
+<Log Type: Result>;<Log Body: Null function>;
+<Log Type: Result>;<Log Body: Null function>;
