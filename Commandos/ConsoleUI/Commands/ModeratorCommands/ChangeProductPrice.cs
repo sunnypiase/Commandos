@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleUI.Commands.ModeratorCommands
 {
-    internal class ChangeProductPrice : ActionOnProductCommand
+    internal class ChangeProductPrice : CommandOn<(IProduct product, int amount)>
     {
         private string title;
         public ChangeProductPrice(string title)
@@ -32,7 +32,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
             }
             else
             {
-                int productIndex = ProductStorage<IProduct>.GetInstance().IndexOf(product);
+                int productIndex = ProductStorage<IProduct>.GetInstance().IndexOf(commandTarget.product);
                 ProductStorage<IProduct>.GetInstance()[productIndex].Product.ChangePrice(int.Parse(inputed));
                 elements.Add(new InfoElement("Product price changed!"));
             }

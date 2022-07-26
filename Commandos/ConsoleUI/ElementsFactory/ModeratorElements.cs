@@ -1,4 +1,6 @@
-﻿using Commandos.Models.Users;
+﻿using Commandos.Models.Products.General;
+using Commandos.Models.Users;
+using Commandos.Storage;
 using ConsoleUI.Commands;
 using ConsoleUI.Commands.ModeratorCommands;
 using ConsoleUI.Menu.MenuTypes;
@@ -19,7 +21,7 @@ namespace ConsoleUI.CommandsFactory
 
                 new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
 
-                new SelectableElement("Change product price", $"{++elmCount}", new ActionOnStorageElements(changePrice, "Whitch product price you want to change")),
+                new SelectableElement("Change product price", $"{++elmCount}", new CommandOnIEnumerable<ProductStorage<IProduct>,(IProduct,int)>(ProductStorage<IProduct>.GetInstance(),changePrice, "Whitch product price you want to change")),
                 
                 new SelectableElement("Exit", $"{default(int)}", new ExitCommand())
             };
