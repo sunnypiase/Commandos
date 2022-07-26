@@ -45,6 +45,7 @@ namespace ConsoleUI.Inputs
                 drawer.Draw(tmpList);
                 if (ch == ConsoleKey.Enter)
                 {
+                    Console.Beep();
                     break;
                 }
             }
