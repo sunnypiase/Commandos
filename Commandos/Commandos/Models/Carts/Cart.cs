@@ -32,6 +32,11 @@ namespace Commandos.Models.Carts
             id = user.Guid;
             cartProducts = new();
         }
+        public Cart(Guid userId)
+        {
+            id = userId;
+            cartProducts = new();
+        }
         #endregion
         #region Methods
         public int GetAmount(IProduct product)
