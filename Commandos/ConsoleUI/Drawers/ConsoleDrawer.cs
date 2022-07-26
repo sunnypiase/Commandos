@@ -19,6 +19,10 @@ namespace ConsoleUI.Drawers
                 Console.ForegroundColor = getColor(item.Priority);
                 if (item is SelectableElement element)
                 {
+                    if(element.isOnCursor)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    }
                     Console.WriteLine("{0} > {1}", element.SignToCommand, element.Title);
                 }
                 else

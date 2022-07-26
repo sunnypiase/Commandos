@@ -26,6 +26,7 @@
             yield return (352, 500, 125);
             yield return (396, 500, 125);
             yield return (352, 1000, 100);
+            GetMusic();
         }
     }
 }

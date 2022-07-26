@@ -34,6 +34,7 @@
             yield return (494, 125, 125);
             yield return (466, 125, 42);
             yield return (440, 125, 125);
+            GetMusic();
         }
     }
 }
