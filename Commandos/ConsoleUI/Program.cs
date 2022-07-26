@@ -55,9 +55,10 @@ internal static class Program
         }
         finally
         {
+            DownloaderProcessor.GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>()).Save(ProductStorage<IProduct>.GetInstance());
             DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>()).Save(UsersRepository.GetInstance());
             DownloaderProcessor.GetCartsDataSerializer(new XmlStreamSerialization<CartsRepository>()).Save(CartsRepository.GetInstance());
-            LogDistributor.GetInstance().Save();
+            LogDistributor.GetInstance().SaveAndClear();
         }
     }
 }
