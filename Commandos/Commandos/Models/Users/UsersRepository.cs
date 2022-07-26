@@ -34,15 +34,6 @@ namespace Commandos.Models.Users
             return users;
         }
 
-        /* private UsersRepository()
-        {
-            ReadUsersFromFile();
-            if (users is null) // this is a strange error but to avoid such situation we create new list
-            {
-                users = new List<IUser>();
-            }
-        }*/
-
         public IUser? GetPersonByID(Guid id)
         {
             IUser? user = users.Find(u => u.Guid == id);
@@ -58,15 +49,7 @@ namespace Commandos.Models.Users
 
         public IUser? GetPersonByName(string nickname)
         {
-            IUser? user = users.Find(u => u.Name == nickname);
-            if (user is null) // (could not find user)
-            {
-                return null;
-            }
-            else
-            {
-                return user;
-            }
+            return users.Find(u => u.Name.Equals(nickname));
         }
 
         public void RemovePerson(Guid id)
