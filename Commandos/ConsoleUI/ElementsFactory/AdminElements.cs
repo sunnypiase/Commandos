@@ -1,4 +1,5 @@
 ﻿using Commandos.Models.Users;
+using Commandos.User;
 using ConsoleUI.Commands;
 using ConsoleUI.Commands.AdminCommands;
 using ConsoleUI.Commands.ModeratorCommands;
@@ -14,9 +15,11 @@ namespace ConsoleUI.CommandsFactory
             return new List<IMenuElement>
             {
                 new InfoElement($"Hello {UserAccount.GetInstance()?.User?.Name}!"),
-                new SelectableElement("Add product", $"{++elemsCount}", new AddProductToStorage()),
-                new SelectableElement("Change user role",$"{++elemsCount}",new ChangeUserRoleCommand("Enter user nickname: ", "Enter role for this user: ")),
-                new SelectableElement("Delete user", $"{++elemsCount}", new RemoveUserFromRepositoryCommand("Enter user nickname: ")),
+                new SelectableElement("Show all users", $"{++elemsCount}", new ShowCollectionCommand(UsersRepository.GetInstance())),
+                new SelectableElement("Select and delete user", $"{++elemsCount}", new CommandOnIEnumerable<UsersRepository, IUser>(UsersRepository.GetInstance(),new RemoveSelectedUserFromRepositoryCommand(),"Select user")),
+                new SelectableElement("Select and change user role", $"{++elemsCount}", new CommandOnIEnumerable<UsersRepository, IUser>(UsersRepository.GetInstance(),new ChangeSelectedUserRoleCommand(),"Select user")),
+                new SelectableElement("Change user role by login",$"{++elemsCount}",new ChangeUserRoleCommand("Enter user nickname: ", "Enter role for this user: ")),
+                new SelectableElement("Delete user by login", $"{++elemsCount}", new RemoveUserFromRepositoryCommand("Enter user nickname: ")),
                 new SelectableElement("Exit", $"{default(int)}", new ExitCommand())
             };
         }
