@@ -17,6 +17,7 @@ namespace ConsoleUI.CommandsFactory
                 new SelectableElement("Add product", $"{++elemsCount}", new AddProductToStorage()),
                 new SelectableElement("Change user role",$"{++elemsCount}",new ChangeUserRoleCommand("Enter user nickname: ", "Enter role for this user: ")),
                 new SelectableElement("Delete user", $"{++elemsCount}", new RemoveUserFromRepositoryCommand("Enter user nickname: ")),
+                new SelectableElement("Log out", $"{++elemsCount}", new LogoutCommand()),
                 new SelectableElement("Exit", $"{default(int)}", new ExitCommand())
             };
         }
