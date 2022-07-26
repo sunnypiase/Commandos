@@ -1,4 +1,5 @@
-﻿using Commandos.Models.Products.General;
+﻿using Commandos.Models.Carts;
+using Commandos.Models.Products.General;
 using Commandos.Models.Users;
 using Commandos.Storage;
 using ConsoleUI.Commands;
@@ -21,6 +22,12 @@ namespace ConsoleUI.CommandsFactory
             return new List<IMenuElement>()
             {
                 new InfoElement($"Hello {UserAccount.GetInstance()?.User?.Name}!"),
+
+                new SelectableElement("Show products", $"{++elmCount}", new ShowCollectionCommand(ProductStorage<IProduct>.GetInstance())),
+
+                new SelectableElement("Show users", $"{++elmCount}", new ShowCollectionCommand(UsersRepository.GetInstance())),
+
+                new SelectableElement("Show carts", $"{++elmCount}", new ShowCollectionCommand(CartsRepository.GetInstance())),
 
                 new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
 

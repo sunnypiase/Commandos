@@ -51,7 +51,6 @@ internal static class Program
         catch (Exception ex)
         {
             LogDistributor.GetInstance().Add(new Log(LogType.Exception, ex.Message));
-            Console.WriteLine(ex.Message + ex.StackTrace);
             IOSettings.GetInstance().Drawer.Write(ex.Message + ex.StackTrace);
         }
         finally
