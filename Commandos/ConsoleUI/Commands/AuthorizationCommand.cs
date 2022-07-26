@@ -10,19 +10,17 @@ namespace ConsoleUI.Commands
     internal class AuthorizationCommand : CommandBase  // used for user's login
 
     {
-        private string? currentLogin;
         private AuthorizationService authorizationService;
 
         public AuthorizationCommand()
         {
-            currentLogin = "";
             authorizationService = new();
         }
 
         private UserAccount? LoginRoutine()
         {
             // Enter login (nickname)
-            currentLogin = input.Read("Enter nickname:", drawer);
+            string? currentLogin = input.Read("Enter nickname:", drawer);
             if (currentLogin == null || currentLogin == "")
             {
                 return null;
