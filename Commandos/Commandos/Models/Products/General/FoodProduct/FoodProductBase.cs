@@ -114,7 +114,7 @@ namespace Commandos.Models.Products.General.FoodProduct
         {
             if (obj is FoodProductBase other)
             {
-                return base.Equals(other) && Weight==other.Weight && ExpirationTime==other.ExpirationTime;
+                return base.Equals(other) && Weight == other.Weight && ExpirationTime.Date == other.ExpirationTime.Date;
             }
             return false;
         }
