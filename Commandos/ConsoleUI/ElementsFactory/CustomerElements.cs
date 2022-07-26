@@ -24,7 +24,9 @@ namespace ConsoleUI.CommandsFactory
                 new InfoElement($"Hello {UserAccount.GetInstance()?.User?.Name}!"),
 
                 new SelectableElement("Show products", $"{++elmCount}", new ShowCollectionCommand(ProductStorage<IProduct>.GetInstance())),
+
                 new SelectableElement("Show users", $"{++elmCount}", new ShowCollectionCommand(UsersRepository.GetInstance())),
+
                 new SelectableElement("Show carts", $"{++elmCount}", new ShowCollectionCommand(CartsRepository.GetInstance())),
 
                 new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
