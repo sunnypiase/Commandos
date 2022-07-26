@@ -1,7 +1,6 @@
 ﻿using Commandos.Models.Products.DairyProduct;
 using Commandos.Models.Products.MeatProduct;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
 
 namespace Commandos.Models.Products.General.FoodProduct
 {

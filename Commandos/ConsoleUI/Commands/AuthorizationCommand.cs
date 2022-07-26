@@ -2,43 +2,29 @@
 using Commandos.Role;
 using Commandos.Services;
 using Commandos.User;
-using ConsoleUI.Drawers;
-using ConsoleUI.Inputs;
 using ConsoleUI.Menu;
 using ConsoleUI.Menu.MenuTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleUI.Commands
 {
-    internal class AuthorizationCommand : ICommand  // used for user's login
+    internal class AuthorizationCommand : CommandBase  // used for user's login
 
     {
-        private Roles currentRole;
-        private string? currentLogin;
-        private IInput input;
-        private IDrawer drawer;
+        private AuthorizationService authorizationService;
 
-        AuthorizationService authorizationService;
-
-        public AuthorizationCommand(IInput input, IDrawer drawer)
+        public AuthorizationCommand()
         {
-            this.input = input;
-            this.drawer = drawer;
-            currentRole = Roles.Customer;
-            currentLogin = "";
             authorizationService = new();
         }
 
         private UserAccount? LoginRoutine()
         {
             // Enter login (nickname)
-            currentLogin = input.Read("Enter nickname:", drawer);
+            string? currentLogin = input.Read("Enter nickname:", drawer);
             if (currentLogin == null || currentLogin == "")
+            {
                 return null;
+            }
             // Check if nickname exists in the user data
             IUser? foundUser = authorizationService.CheckLogin(currentLogin);
             if (foundUser is not null) // found the user with such login, enter and check password
@@ -82,7 +68,10 @@ namespace ConsoleUI.Commands
                         {
                             IUser? user = authorizationService.RegisterUser(currentLogin, currentPassword, Roles.Customer);
                             if (user == null) // some strange error
+                            {
                                 return null;
+                            }
+
                             drawer.Write("Welcome!");
                             return authorizationService.CreateUserAccount(user);
                         }
@@ -91,7 +80,10 @@ namespace ConsoleUI.Commands
                     {
                         IUser? user = authorizationService.RegisterUser(currentLogin, currentPassword, Roles.Customer);
                         if (user == null) // some strange error
+                        {
                             return null;
+                        }
+
                         drawer.Write("Welcome!");
                         return authorizationService.CreateUserAccount(user);
                     }
@@ -105,14 +97,17 @@ namespace ConsoleUI.Commands
         }
 
 
-        public ICollection<IMenuElement>? Execute(IUser? user = null)
+        public override ICollection<IMenuElement>? Execute()
         {
             UserAccount? userAccount = LoginRoutine();
             if (userAccount is null || userAccount.User is null)
+            {
                 return null; // exit
+            }
             else
+            {
                 return new MenuDeterminerByRole(userAccount.User).GetMenuElements();
-
+            }
         }
     }
 }

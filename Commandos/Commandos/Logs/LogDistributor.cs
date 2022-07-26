@@ -33,13 +33,13 @@ namespace Commandos.Logs
                 switch (log.Titte)
                 {
                     case LogType.Result:
-                        logger = new ResultLogger(Configuration.GetInstance().AppConfiguration["ResultLog"]); //TODO set concreate path
+                        logger = new ResultLogger(Configuration.GetInstance().AppConfiguration["ResultLog"]);
                         break;
                     case LogType.Exception:
-                        logger = new ExceptionLogger(Configuration.GetInstance().AppConfiguration["ExceptionLog"]); //TODO set concreate path
+                        logger = new ExceptionLogger(Configuration.GetInstance().AppConfiguration["ExceptionLog"]);
                         break;
                     case LogType.System:
-                        logger = new SystemLogger(Configuration.GetInstance().AppConfiguration["SystemLog"]); //TODO set concreate path
+                        logger = new SystemLogger(Configuration.GetInstance().AppConfiguration["SystemLog"]);
                         break;
                     default:
                         throw new ArgumentException();
@@ -49,11 +49,23 @@ namespace Commandos.Logs
 
             _loggers[log.Titte].Add(log);
         }
+        public void SaveAndClear()
+        {
+            Save();
+            Clear();
+        }
         public void Save()
         {
             foreach (KeyValuePair<LogType, LoggerBase> item in _loggers)
             {
                 item.Value.Save();
+            }
+        }
+        public void Clear()
+        {
+            foreach (KeyValuePair<LogType, LoggerBase> item in _loggers)
+            {
+                item.Value.Clear();
             }
         }
         #endregion

@@ -21,10 +21,7 @@ namespace Commandos.Models.Carts
         public Guid Id
         {
             get => id;
-            private set
-            {
-                id = value;
-            }
+            private set => id = value;
         }
         [DataMember(Name = "CartProducts")]
         public Dictionary<IProduct, int> CartProducts { get => cartProducts; private set => cartProducts = value; }
@@ -35,8 +32,18 @@ namespace Commandos.Models.Carts
             id = user.Guid;
             cartProducts = new();
         }
+        public Cart(Guid userId)
+        {
+            id = userId;
+            cartProducts = new();
+        }
         #endregion
         #region Methods
+        public int GetAmount(IProduct product)
+        {
+            cartProducts.TryGetValue(product, out int res);
+            return res;
+        }
         public void AddProduct(IProduct product, int count)
         {
             if (count <= 0)

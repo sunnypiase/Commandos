@@ -1,6 +1,4 @@
-﻿
-using Commandos.Models.Products.General;
-using Commandos.Models.Products.General.FoodProduct;
+﻿using Commandos.Models.Products.General.FoodProduct;
 using System.Runtime.Serialization;
 
 namespace Commandos.Models.Products.DairyProduct

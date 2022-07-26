@@ -114,10 +114,7 @@ namespace Commandos.Storage
         #endregion
 
         #region Methods
-        public int GetAmountByProduct(IProduct product)
-        {
-            return _products.FirstOrDefault(prod => prod.Product == product).Count;
-        }
+
         public IEnumerable<(T Product, int Count)> GetAll()
         {
             foreach ((T Product, int Count) p in _products)

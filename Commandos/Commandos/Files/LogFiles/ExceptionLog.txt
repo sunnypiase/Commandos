@@ -3,3 +3,4 @@
 <Log Type: Exception>;<Log Body: Exception Log>;
 <Log Type: Exception>;<Log Body: Exception Log>;
 <Log Type: Exception>;<Log Body: Exception Log>;
+<Log Type: Exception>;<Log Body: Object reference not set to an instance of an object.>;
