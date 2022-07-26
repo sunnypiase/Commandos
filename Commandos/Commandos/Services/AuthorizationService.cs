@@ -8,7 +8,7 @@ namespace Commandos.Services
     {
         #region Methods
         public IUser? CheckLogin(string nickname)
-        // returns true of users repository contains this nickname
+        // returns true if users repository contains this nickname
         {
             return UsersRepository.GetInstance().GetPersonByName(nickname);
         }

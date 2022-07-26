@@ -16,7 +16,7 @@ namespace ConsoleUI.Commands
         {
             commandTarget = _commandTarget;
         }
-        public void SerTarget(T _commandTarget)
+        public void SetTarget(T _commandTarget)
         {
             commandTarget = _commandTarget;
         }
