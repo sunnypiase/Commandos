@@ -1,4 +1,6 @@
-﻿using Commandos.Models.Users;
+﻿using Commandos.Logs;
+using Commandos.Logs.InterfacesAndEnums;
+using Commandos.Models.Users;
 using Commandos.Role;
 using Commandos.Services;
 using Commandos.User;
@@ -17,21 +19,6 @@ namespace ConsoleUI.Commands
             authorizationService = new();
         }
 
-        private bool CheckPasswordStrength(string? pass)
-        {
-            bool containsDigit = false;
-            bool containsLetter = false;
-            if (pass is null ||
-                pass.Length < 8) return false;
-            for (int i = 0; i < pass.Length; i++)
-                if (pass[i] >= '0' && pass[i] <= '9')
-                    containsDigit = true;
-            for (int i = 0; i < pass.Length; i++)
-                if (pass[i] >= 'A' && pass[i] <= 'Z' ||
-                    pass[i] >= 'a' && pass[i] <= 'z')
-                    containsLetter = true;
-            return containsDigit && containsLetter;
-        }
         private UserAccount? LoginRoutine()
         {
             // Enter login (nickname)
@@ -52,17 +39,18 @@ namespace ConsoleUI.Commands
                     if (string.IsNullOrEmpty(currentPassword) ||
                         !authorizationService.CheckPassword(foundUser, currentPassword))
                     {
-                        drawer.Write("Wrong password. Exiting.... Press Enter.");
-                        input.Read("", drawer);
+                        input.Read("Wrong password. Exiting.... Press Enter.", drawer);
                         return null;
                     }
                     else // password is correct, create the user account
                     {
+                        LogDistributor.GetInstance().Add(new Log(LogType.System, $"User {currentLogin}) entered the system"));
                         return authorizationService.CreateUserAccount(foundUser);
                     }
                 }
                 else // password is correct, create the user account
                 {
+                    LogDistributor.GetInstance().Add(new Log(LogType.System, $"User {currentLogin}) entered the system"));
                     return authorizationService.CreateUserAccount(foundUser);
                 }
             }
@@ -72,13 +60,12 @@ namespace ConsoleUI.Commands
                 if (userReply?.ToUpper() == "Y") // yes, ask the password 
                 {
                     string? currentPassword = input.Read("Enter new password:", drawer);
-                    if (!CheckPasswordStrength(currentPassword))
+                    if (!authorizationService.CheckPasswordStrength(currentPassword))
                     {
                         currentPassword = input.Read("Password should be longer than 7 characters and contain at least one letter and one digit. Try again:", drawer);
-                        if (!CheckPasswordStrength(currentPassword))
+                        if (!authorizationService.CheckPasswordStrength(currentPassword))
                         {
-                            drawer.Write("Wrong password. Exiting.... Press Enter.");
-                            input.Read("", drawer);
+                            input.Read("Wrong password. Exiting.... Press Enter.", drawer);
                             return null;
                         }
                         else // password is OK, register user and create the user account
@@ -88,6 +75,8 @@ namespace ConsoleUI.Commands
                             {
                                 return null;
                             }
+                            drawer.Write("Welcome!");
+                            LogDistributor.GetInstance().Add(new Log(LogType.System, $"New user {currentLogin}) just registered and entered the system"));
                             return authorizationService.CreateUserAccount(user);
                         }
                     }
@@ -98,14 +87,14 @@ namespace ConsoleUI.Commands
                         {
                             return null;
                         }
-
                         drawer.Write("Welcome!");
+                        LogDistributor.GetInstance().Add(new Log(LogType.System, $"New user {currentLogin}) just registered and entered the system"));
                         return authorizationService.CreateUserAccount(user);
                     }
                 }
                 else // user does not want to register
                 {
-                    drawer.Write("Exiting.");
+                    input.Read("Exiting... Press Enter.", drawer);
                     return null;
                 }
             }

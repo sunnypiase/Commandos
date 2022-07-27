@@ -1,4 +1,6 @@
-﻿using Commandos.Role;
+﻿using Commandos.Logs;
+using Commandos.Logs.InterfacesAndEnums;
+using Commandos.Role;
 using Commandos.User;
 using ConsoleUI.Menu.MenuTypes;
 
@@ -28,6 +30,8 @@ namespace ConsoleUI.Commands.AdminCommands
             }
             else
             {
+                LogDistributor.GetInstance().Add(new Log(LogType.System, 
+                    $"Role of the user with nickname {user.Name} has been changed to \"{newRole}\""));
                 menuElements.Add(new InfoElement($"Role of the user with nickname {user.Name} has been changed to \"{newRole}\"!"));
                 user.Role = newRole;
             }

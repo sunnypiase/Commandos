@@ -5,3 +5,7 @@
 <Log Type: System>;<Log Body: Login>;
 <Log Type: System>;<Log Body: Exit>;
 <Log Type: System>;<Log Body: Login>;
+<Log Type: System>;<Log Body: New user OlegM) just registered and entered the system>;
+<Log Type: System>;<Log Body: User OlegM) has logged out>;
+<Log Type: System>;<Log Body: User OlegM) entered the system>;
+<Log Type: System>;<Log Body: User OlegM) performed exit>;
