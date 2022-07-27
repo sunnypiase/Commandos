@@ -17,6 +17,21 @@ namespace ConsoleUI.Commands
             authorizationService = new();
         }
 
+        private bool CheckPasswordStrength(string? pass)
+        {
+            bool containsDigit = false;
+            bool containsLetter = false;
+            if (pass is null ||
+                pass.Length < 8) return false;
+            for (int i = 0; i < pass.Length; i++)
+                if (pass[i] >= '0' && pass[i] <= '9')
+                    containsDigit = true;
+            for (int i = 0; i < pass.Length; i++)
+                if (pass[i] >= 'A' && pass[i] <= 'Z' ||
+                    pass[i] >= 'a' && pass[i] <= 'z')
+                    containsLetter = true;
+            return containsDigit && containsLetter;
+        }
         private UserAccount? LoginRoutine()
         {
             // Enter login (nickname)
@@ -37,7 +52,8 @@ namespace ConsoleUI.Commands
                     if (string.IsNullOrEmpty(currentPassword) ||
                         !authorizationService.CheckPassword(foundUser, currentPassword))
                     {
-                        drawer.Write("Wrong password. Exiting.");
+                        drawer.Write("Wrong password. Exiting.... Press Enter.");
+                        input.Read("", drawer);
                         return null;
                     }
                     else // password is correct, create the user account
@@ -55,13 +71,14 @@ namespace ConsoleUI.Commands
                 string? userReply = input.Read("Login not found. Do you want to register? (Y/N):", drawer);
                 if (userReply?.ToUpper() == "Y") // yes, ask the password 
                 {
-                    string? currentPassword = input.Read("Enter password:", drawer);
-                    if (string.IsNullOrEmpty(currentPassword)) // register new user and create the user account
+                    string? currentPassword = input.Read("Enter new password:", drawer);
+                    if (!CheckPasswordStrength(currentPassword))
                     {
-                        currentPassword = input.Read("Password can not be empty. Try again:", drawer);
-                        if (string.IsNullOrEmpty(currentPassword))
+                        currentPassword = input.Read("Password should be longer than 7 characters and contain at least one letter and one digit. Try again:", drawer);
+                        if (!CheckPasswordStrength(currentPassword))
                         {
-                            drawer.Write("Wrong password. Exiting.");
+                            drawer.Write("Wrong password. Exiting.... Press Enter.");
+                            input.Read("", drawer);
                             return null;
                         }
                         else // password is OK, register user and create the user account
@@ -71,8 +88,6 @@ namespace ConsoleUI.Commands
                             {
                                 return null;
                             }
-
-                            drawer.Write("Welcome!");
                             return authorizationService.CreateUserAccount(user);
                         }
                     }

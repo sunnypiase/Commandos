@@ -48,6 +48,8 @@ namespace ConsoleUI.CommandsFactory
 
                 new SelectableElement("Buy", $"{++elmCount}", new BuyCommand() ),
 
+                new SelectableElement("Change your password", $"{++elmCount}", new ChangePasswordCommand()),
+
                 new SelectableElement("Log out", $"{++elmCount}", new LogoutCommand()),
 
                 new SelectableElement("Exit", $"{default(int)}", new ExitCommand())

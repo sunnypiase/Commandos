@@ -20,6 +20,7 @@ namespace ConsoleUI.CommandsFactory
                 new SelectableElement("Select and change user role", $"{++elemsCount}", new CommandOnIEnumerable<UsersRepository, IUser>(UsersRepository.GetInstance(),new ChangeSelectedUserRoleCommand(),"Select user")),
                 new SelectableElement("Change user role by login",$"{++elemsCount}",new ChangeUserRoleCommand("Enter user nickname: ", "Enter role for this user: ")),
                 new SelectableElement("Delete user by login", $"{++elemsCount}", new RemoveUserFromRepositoryCommand("Enter user nickname: ")),
+                new SelectableElement("Change your password", $"{++elemsCount}", new ChangePasswordCommand()),
                 new SelectableElement("Log out", $"{++elemsCount}", new LogoutCommand()),
                 new SelectableElement("Exit", $"{default(int)}", new ExitCommand())
             };

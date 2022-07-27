@@ -30,6 +30,11 @@ namespace Commandos.Services
         {
             return (user.EncryptedPassword == EncryptOrDecryptPassword(password));
         }
+        public void ChangePassword(IUser user, string password)
+        // Encrypt the password and set it to user
+        {
+            user.EncryptedPassword = EncryptOrDecryptPassword(password);
+        }
 
         public IUser RegisterUser(string name, string password, Roles role = Roles.Customer)
         // add new user to repository if he has just registered
