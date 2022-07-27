@@ -1,6 +1,6 @@
 ﻿namespace Commandos.Models.Carts
 {
-    public class Check
+    public class Check : ICheck
     {
         #region Props
         private string check;
@@ -23,7 +23,7 @@
         public DateTime DateTime { get => dateTime; private set => dateTime = value; }
         #endregion
         #region Ctors
-        public Check(Cart cart)
+        public Check(ICart cart)
         {
             if (cart == null)
             {
