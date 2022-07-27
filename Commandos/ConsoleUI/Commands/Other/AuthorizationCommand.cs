@@ -1,4 +1,6 @@
-﻿using Commandos.Models.Users;
+﻿using Commandos.Logs;
+using Commandos.Logs.InterfacesAndEnums;
+using Commandos.Models.Users;
 using Commandos.Role;
 using Commandos.Services;
 using Commandos.User;
@@ -58,11 +60,13 @@ namespace ConsoleUI.Commands
                     }
                     else // password is correct, create the user account
                     {
+                        LogDistributor.GetInstance().Add(new Log(LogType.System, $"User {currentLogin}) entered the system"));
                         return authorizationService.CreateUserAccount(foundUser);
                     }
                 }
                 else // password is correct, create the user account
                 {
+                    LogDistributor.GetInstance().Add(new Log(LogType.System, $"User {currentLogin}) entered the system"));
                     return authorizationService.CreateUserAccount(foundUser);
                 }
             }
@@ -72,24 +76,21 @@ namespace ConsoleUI.Commands
                 if (userReply?.ToUpper() == "Y") // yes, ask the password 
                 {
                     string? currentPassword = input.Read("Enter new password:", drawer);
-                    if (!CheckPasswordStrength(currentPassword))
+                    int attemptCount = 2;
+                    while (attemptCount > 0)
                     {
                         currentPassword = input.Read("Password should be longer than 7 characters and contain at least one letter and one digit. Try again:", drawer);
-                        if (!CheckPasswordStrength(currentPassword))
+                        if (!authorizationService.CheckPasswordStrength(currentPassword))
                         {
-                            drawer.Write("Wrong password. Exiting.... Press Enter.");
-                            input.Read("", drawer);
-                            return null;
+                            currentPassword = input.Read("Password should be longer than 7 characters and contain at least one letter and one digit. Try again:", drawer);
+                            attemptCount--;
                         }
-                        else // password is OK, register user and create the user account
-                        {
-                            IUser? user = authorizationService.RegisterUser(currentLogin, currentPassword, Roles.Customer);
-                            if (user == null) // some strange error
-                            {
-                                return null;
-                            }
-                            return authorizationService.CreateUserAccount(user);
-                        }
+                        else
+                            break;
+                    }
+                    if (attemptCount <= 0) {
+                        input.Read("Wrong password. Exiting.... Press Enter.", drawer);
+                        return null;
                     }
                     else // password is OK, register user and create the user account
                     {
@@ -98,14 +99,14 @@ namespace ConsoleUI.Commands
                         {
                             return null;
                         }
-
                         drawer.Write("Welcome!");
+                        LogDistributor.GetInstance().Add(new Log(LogType.System, $"New user {currentLogin}) just registered and entered the system"));
                         return authorizationService.CreateUserAccount(user);
                     }
                 }
                 else // user does not want to register
                 {
-                    drawer.Write("Exiting.");
+                    input.Read("Exiting... Press Enter.", drawer);
                     return null;
                 }
             }

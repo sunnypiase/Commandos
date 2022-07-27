@@ -1,4 +1,6 @@
-﻿using Commandos.Models.Users;
+﻿using Commandos.Logs;
+using Commandos.Logs.InterfacesAndEnums;
+using Commandos.Models.Users;
 using Commandos.Role;
 using Commandos.Services;
 using Commandos.User;
@@ -41,22 +43,25 @@ namespace ConsoleUI.Commands
             }
             var menuElements = new List<IMenuElement>();
             var newPassword = input.Read("Enter new password:", drawer);
-            if (!CheckPasswordStrength(newPassword))
+            int attemptCount = 2;
+            while (attemptCount > 0)
             {
-                newPassword = input.Read("Password should be longer than 7 characters and contain at least one letter and one digit. Try again:", drawer);
-                if (!CheckPasswordStrength(newPassword))
+                if (!authorizationService.CheckPasswordStrength(newPassword))
                 {
-                    menuElements.Add(new InfoElement("Wrong password. Change is not performed."));
+                    newPassword = input.Read("Password should be longer than 7 characters and contain at least one letter and one digit. Try again:", drawer);
+                    attemptCount--;
                 }
-                else // password is OK, change the password
-                {
-                    authorizationService.ChangePassword(userAccount.User, newPassword);
-                    menuElements.Add(new InfoElement("Password has been changed."));
-                }
+                else
+                    break;
+            }
+            if (attemptCount <= 0)
+            {
+                menuElements.Add(new InfoElement("Wrong password. Change is not performed."));
             }
             else // password is OK, change the password
             {
                 authorizationService.ChangePassword(userAccount.User, newPassword);
+                LogDistributor.GetInstance().Add(new Log(LogType.System, $"User {userAccount.User.Name}) has changed his password"));
                 menuElements.Add(new InfoElement("Password has been changed."));
             }
             menuElements.Add(new SelectableElement("continue", "0", new BackToHome()));

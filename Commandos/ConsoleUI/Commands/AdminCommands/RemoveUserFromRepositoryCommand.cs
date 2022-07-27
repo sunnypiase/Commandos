@@ -1,4 +1,6 @@
-﻿using Commandos.Models.Carts;
+﻿using Commandos.Logs;
+using Commandos.Logs.InterfacesAndEnums;
+using Commandos.Models.Carts;
 using Commandos.Models.Users;
 using ConsoleUI.Menu.MenuTypes;
 
@@ -27,6 +29,7 @@ namespace ConsoleUI.Commands.AdminCommands
                 users.RemoveUser(chosenPerson);
                 CartsRepository? carts = CartsRepository.GetInstance();
                 carts.Remove(carts.GetCart(chosenPerson));
+                LogDistributor.GetInstance().Add(new Log(LogType.System, $"User with nickname {chosenNickname} has been deleted"));
                 menuElements.Add(new InfoElement($"Successfully deleted user with nickname {chosenNickname}"));
             }
             menuElements.Add(new SelectableElement("continue", "0", new BackToHome()));
