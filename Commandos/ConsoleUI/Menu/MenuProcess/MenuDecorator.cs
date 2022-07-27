@@ -6,8 +6,8 @@ namespace ConsoleUI.Menu
     public abstract class MenuDecorator : IMenuProcess
     {
         protected IMenuProcess menuProcess;
-        public IInput Input { get => menuProcess.Input; }
-        public IDrawer Drawer { get => menuProcess.Drawer; }
+        public IInput Input => menuProcess.Input;
+        public IDrawer Drawer => menuProcess.Drawer;
 
         public MenuDecorator(IMenuProcess menuProcess)
         {

@@ -67,17 +67,17 @@ namespace ConsoleUI.Commands.ModeratorCommands
                                                             | BindingFlags.DeclaredOnly)
                                                         );
 
-            foreach (var item in tmpPropss)
+            foreach (PropertyInfo? item in tmpPropss)
             {
                 tmpProps.Add(item);
             }
 
-            foreach (var prop in tmpProps)
+            foreach (PropertyInfo? prop in tmpProps)
             {
                 if (prop.PropertyType.IsEnum)
                 {
                     output += $"choise need type: \n";
-                    foreach (var item in Enum.GetValues(prop.PropertyType))
+                    foreach (object? item in Enum.GetValues(prop.PropertyType))
                     {
                         output += $"{++index} > if you want create [{item}]\n";
                     }
@@ -96,7 +96,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
                     }
 
                     int i = 0;
-                    foreach (var item in Enum.GetValues(prop.PropertyType))
+                    foreach (object? item in Enum.GetValues(prop.PropertyType))
                     {
                         if (int.Parse(inputedEnum) == (++i))
                         {
@@ -126,8 +126,8 @@ namespace ConsoleUI.Commands.ModeratorCommands
                         while (!operation)
                         {
                             int def = default;
-                            var example = new DateTime(
-                                CheckDateParams(prop.PropertyType , DateTime.MinValue.Year, DateTime.MaxValue.Year), 
+                            DateTime example = new DateTime(
+                                CheckDateParams(prop.PropertyType, DateTime.MinValue.Year, DateTime.MaxValue.Year),
                                 CheckDateParams(prop.PropertyType, DateTime.MinValue.Month, DateTime.MaxValue.Month),
                                 CheckDateParams(prop.PropertyType, DateTime.MinValue.Day, DateTime.MaxValue.Day));
                             tmpInputResults.Add((example, prop.PropertyType));
@@ -152,7 +152,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
                                 }
                             }
 
-                            var example = Convert.ChangeType(inputed, (prop.PropertyType), CultureInfo.InvariantCulture);
+                            object? example = Convert.ChangeType(inputed, (prop.PropertyType), CultureInfo.InvariantCulture);
                             if (example != null)
                             {
                                 tmpInputResults.Add((example, prop.PropertyType));
@@ -193,20 +193,20 @@ namespace ConsoleUI.Commands.ModeratorCommands
 
         private bool FactorySaver()
         {
-            var ctorList = commandType.GetConstructors();
-            var parameters = new object[tmpInputResults.Count];
+            ConstructorInfo[]? ctorList = commandType.GetConstructors();
+            object[]? parameters = new object[tmpInputResults.Count];
             for (int i = 0; i < tmpInputResults.Count; i++)
             {
                 parameters[i] = tmpInputResults[i].Item1;
             }
 
-            foreach (var item in ctorList)
+            foreach (ConstructorInfo? item in ctorList)
             {
                 if (item.GetParameters().Length == commandType.GetProperties().Length)
                 {
-                    var tempFactory = item.Invoke(parameters);
+                    object? tempFactory = item.Invoke(parameters);
                     AbstractMethod FactoryDeveloper = (AbstractMethod)tempFactory;
-                    var resultProduct = FactoryDeveloper.CreateProduct();
+                    IProduct? resultProduct = FactoryDeveloper.CreateProduct();
                     string inputed = "";
                     bool operation = false;
                     while (!operation)
@@ -228,7 +228,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
         private bool CheckParams(out string? checkingResult)
         {
             object example = null;
-            foreach (var item in tmpInputResults)
+            foreach ((object, Type) item in tmpInputResults)
             {
                 example = null;
                 // example = Convert.ChangeType(item.Item1, item.Item2);
@@ -247,9 +247,9 @@ namespace ConsoleUI.Commands.ModeratorCommands
 
         protected object GetInstance()
         {
-            var list = GetTypeFactories();
+            IEnumerable<Type>? list = GetTypeFactories();
 
-            foreach (var item in list)
+            foreach (Type? item in list)
             {
                 if (item.Name.Equals(commandType.Name))
                 {
@@ -262,7 +262,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
 
         protected IEnumerable<Type> GetTypeFactories()
         {
-            var typeList = typeof(AbstractMethod);
+            Type? typeList = typeof(AbstractMethod);
             return Assembly.GetAssembly(typeList).GetTypes().Where(type => type.IsSubclassOf(typeList));
         }
 

@@ -1,7 +1,7 @@
 ﻿using Commandos.Logs;
+using Commandos.Logs.InterfacesAndEnums;
 using ConsoleUI.Drawers;
 using ConsoleUI.Menu.MenuTypes;
-using Commandos.Logs.InterfacesAndEnums;
 
 namespace ConsoleUI.Inputs
 {

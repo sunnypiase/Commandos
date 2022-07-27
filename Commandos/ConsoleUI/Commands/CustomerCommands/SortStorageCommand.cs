@@ -13,7 +13,7 @@ namespace ConsoleUI.Commands.CustomerCommands
             comparer = _comparer;
         }
         public override ICollection<IMenuElement>? Execute()
-        { 
+        {
             ProductStorage<IProduct>.GetInstance().Sort(comparer);
             List<IMenuElement> elements = new();
             elements.Add(new InfoElement("Sorted storage: "));

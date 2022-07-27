@@ -41,7 +41,9 @@ namespace Commandos.Services
         public UserAccount? CreateUserAccount(IUser? user)
         {
             if (user is null)
+            {
                 return null;
+            }
             else
             {
                 UserAccount.GetInstance().User = user;

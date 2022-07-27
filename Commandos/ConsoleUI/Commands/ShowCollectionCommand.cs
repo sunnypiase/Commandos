@@ -1,10 +1,5 @@
 ﻿using ConsoleUI.Menu.MenuTypes;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleUI.Commands
 {
@@ -13,7 +8,7 @@ namespace ConsoleUI.Commands
         private readonly IEnumerable collection;
         private readonly string title;
 
-        public ShowCollectionCommand(IEnumerable _collection,string _title = "List:")
+        public ShowCollectionCommand(IEnumerable _collection, string _title = "List:")
         {
             collection = _collection;
             title = _title;
@@ -23,8 +18,8 @@ namespace ConsoleUI.Commands
             List<IMenuElement> elements = new();
             elements.Add(new InfoElement(title));
 
-            foreach (var item in collection)
-            {                
+            foreach (object? item in collection)
+            {
                 elements.Add(new InfoElement($"{item}"));
             }
 

@@ -27,7 +27,9 @@ namespace Commandos.AbstractMethod.Factories
             _expirationTime = expirationTime > DateTime.Now ? expirationTime : DateTime.Now;
         }
 
-        public override IProduct CreateProduct() =>
-            new MeatProductModel(_name, _price, _weight, _expirationTime, _meatSpecies, _meatCategory);
+        public override IProduct CreateProduct()
+        {
+            return new MeatProductModel(_name, _price, _weight, _expirationTime, _meatSpecies, _meatCategory);
+        }
     }
 }

@@ -8,8 +8,8 @@ namespace ConsoleUI.Menu
     public class MenuProcess : IMenuProcess
     {
         private List<IMenuElement> menuElements;
-        public IInput Input { get => IOSettings.GetInstance().Input; }
-        public IDrawer Drawer { get => IOSettings.GetInstance().Drawer; }
+        public IInput Input => IOSettings.GetInstance().Input;
+        public IDrawer Drawer => IOSettings.GetInstance().Drawer;
 
         public MenuProcess(ICollection<IMenuElement> _menuElements)
         {

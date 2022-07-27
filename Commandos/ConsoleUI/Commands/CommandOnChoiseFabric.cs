@@ -1,11 +1,6 @@
 ﻿using Commandos.AbstractMethod;
 using ConsoleUI.Menu.MenuTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleUI.Commands
 {
@@ -31,13 +26,13 @@ namespace ConsoleUI.Commands
 
             elements.Add(new InfoElement(title));
 
-            var typeList = GetTypeFactories();
+            IEnumerable<Type>? typeList = GetTypeFactories();
             int i = default;
 
-            foreach (var type in typeList)
+            foreach (Type? type in typeList)
             {
                 CommandOn<T> tmpChoiseType = command.Clone() as CommandOn<T>;
-                tmpChoiseType.SetTargetType(type);;
+                tmpChoiseType.SetTargetType(type); ;
                 elements.Add(new SelectableElement($"{type.Name.Replace("Factory", "")}", $"{++i}", tmpChoiseType));
             }
 
@@ -47,7 +42,7 @@ namespace ConsoleUI.Commands
 
         protected IEnumerable<Type> GetTypeFactories()
         {
-            var typeList = typeof(AbstractMethod);
+            Type? typeList = typeof(AbstractMethod);
             return Assembly.GetAssembly(typeList).GetTypes().Where(type => type.IsSubclassOf(typeList));
         }
 

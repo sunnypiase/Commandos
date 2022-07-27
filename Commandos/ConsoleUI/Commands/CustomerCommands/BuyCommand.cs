@@ -1,12 +1,6 @@
 ﻿using Commandos.Models.Carts;
-using Commandos.Models.Users;
 using Commandos.Services;
 using ConsoleUI.Menu.MenuTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleUI.Commands.CustomerCommands
 {
@@ -22,7 +16,7 @@ namespace ConsoleUI.Commands.CustomerCommands
         {
             List<IMenuElement> elements = new();
 
-            var service = new BuyService();
+            BuyService? service = new BuyService();
             service.OnInfo += (msg) => drawer.Write(msg);
 
             elements.Add(new InfoElement(service.Buy().ToString()));
@@ -31,6 +25,6 @@ namespace ConsoleUI.Commands.CustomerCommands
 
             return elements;
         }
-        
+
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Commandos.Models.Users;
 using ConsoleUI.Commands;
 using ConsoleUI.Commands.AdminCommands;
-using ConsoleUI.Commands.ModeratorCommands;
 using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.CommandsFactory

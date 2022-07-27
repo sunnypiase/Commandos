@@ -4,7 +4,7 @@ using Commandos.Models.Products.General;
 
 namespace Commandos.AbstractMethod.Factories
 {
-    class CementFactory : AbstractMethod
+    internal class CementFactory : AbstractMethod
     {
         private CementBrand _cementBrand;
 
@@ -16,9 +16,14 @@ namespace Commandos.AbstractMethod.Factories
         }
 
         public CementFactory(string name, double price, double weight, CementBrand cementBrand)
-            : base(name, price, weight) => _cementBrand = cementBrand;
+            : base(name, price, weight)
+        {
+            _cementBrand = cementBrand;
+        }
 
-
-        public override IProduct CreateProduct() => new CementProductModel(_name, _price, _weight, _cementBrand);
+        public override IProduct CreateProduct()
+        {
+            return new CementProductModel(_name, _price, _weight, _cementBrand);
+        }
     }
 }

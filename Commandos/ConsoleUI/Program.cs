@@ -5,7 +5,6 @@ using Commandos.Models.Products.General;
 using Commandos.Models.Users;
 using Commandos.Serialize;
 using Commandos.Storage;
-using ConsoleUI.Commands;
 using ConsoleUI.CommandsFactory;
 using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
@@ -21,8 +20,8 @@ internal static class Program
         Console.InputEncoding = System.Text.Encoding.Unicode;
         try
         {
-            
-            Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json")));            
+
+            Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json")));
             IOSettings.GetInstance(new ConsoleDrawer(), new ConsoleInputByArrows());
 
             ProductStorage<IProduct>
@@ -42,7 +41,7 @@ internal static class Program
             LoadingMenu decoratedMenu = new(menu);
             decoratedMenu.SetMusic(new MarioMusic());
             decoratedMenu.Start();
-            
+
         }
         catch (Exception ex)
         {

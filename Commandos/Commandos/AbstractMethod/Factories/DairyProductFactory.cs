@@ -21,6 +21,9 @@ namespace Commandos.AbstractMethod.Factories
             _expirationTime = expirationTime > DateTime.Now ? expirationTime : DateTime.Now;
         }
 
-        public override IProduct CreateProduct() => new DairyProductModel(_name, _price, _weight, _expirationTime);
+        public override IProduct CreateProduct()
+        {
+            return new DairyProductModel(_name, _price, _weight, _expirationTime);
+        }
     }
 }
