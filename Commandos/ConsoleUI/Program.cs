@@ -11,7 +11,6 @@ using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
 using ConsoleUI.IO;
 using ConsoleUI.Menu;
-using ConsoleUI.Menu.MenuTypes;
 using ConsoleUI.Menu.Music;
 using Microsoft.Extensions.Configuration;
 internal static class Program
@@ -37,12 +36,12 @@ internal static class Program
                 .GetInstance(DownloaderProcessor.GetCartsDataSerializer(new XmlStreamSerialization<CartsRepository>())
                 .Load());
 
+
             MenuProcess menu = new(new AuthorizationElements().GetMenuElements());
-            menu.SetMusic(new MarioMusic());
-            menu.Start();
+            DecoratedMenu decoratedMenu = new(menu);
+            decoratedMenu.SetMusic(new MarioMusic());
+            decoratedMenu.Start();
             
-            // these steps are done after exit from menu (ExitCommand)
-            // Console.WriteLine(new Check(CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User)));
 
         }
         catch (Exception ex)

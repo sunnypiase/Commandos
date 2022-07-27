@@ -1,50 +1,31 @@
 ﻿using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
-using ConsoleUI.IO;
 using ConsoleUI.Menu.MenuTypes;
 using ConsoleUI.Menu.Music;
 
 namespace ConsoleUI.Menu
 {
-    public class MenuProcess
+    public class DecoratedMenu : IMenuProcess
     {
-        private List<IMenuElement> menuElements;
-        private IInput input = IOSettings.GetInstance().Input;
-        private IDrawer drawer = IOSettings.GetInstance().Drawer;
+        private IMenuProcess menuProcess;
+        public IInput Input { get => menuProcess.Input; }
+        public IDrawer Drawer { get => menuProcess.Drawer; }
         private IConsoleMusic music;
-        public MenuProcess(ICollection<IMenuElement> _menuElements)
+
+        public DecoratedMenu(IMenuProcess menuProcess)
         {
-            menuElements = new(_menuElements.ToList());
+            this.menuProcess = menuProcess;
         }
 
         public void Start()
         {
             LoadingScene();
-            toLoop();
-        }
-
-        private void toLoop()
-        {
-            bool end = false;
-            ICollection<IMenuElement>? elements = menuElements;
-            drawer.Draw(menuElements);
-            do
-            {
-                elements = input.Choose(elements);
-
-                drawer.Draw(elements);
-
-                if (elements == null)
-                {
-                    end = true;
-                }
-            }
-            while (!end);
+            menuProcess.Start();
         }
 
         public void SetMusic(IConsoleMusic _music)
         {
-            if (drawer is ConsoleDrawer)
+            if (Drawer is ConsoleDrawer)
                 music = _music;
         }
 
@@ -64,8 +45,8 @@ namespace ConsoleUI.Menu
                         new InfoElement($"[{new string('#', i)}{new string('-', musicLength - i)}]")
                     };
                     Thread.Sleep(tones.Current.Item3 / 2);
-                    drawer.Draw(elements);
-                    drawer.Write("Press esc to skip");
+                    Drawer.Draw(elements);
+                    Drawer.Write("Press esc to skip");
                     stop = Console.KeyAvailable;
                 }
             }
@@ -76,8 +57,8 @@ namespace ConsoleUI.Menu
                     List<IMenuElement>? elements = new() {
                         new InfoElement($"[{new string('#', i)}{new string('-', length - i)}]")
                     };
-                    drawer.Draw(elements);
-                    drawer.Write("Press esc to skip");
+                    Drawer.Draw(elements);
+                    Drawer.Write("Press esc to skip");
                     stop = Console.KeyAvailable;
                 }
             }
