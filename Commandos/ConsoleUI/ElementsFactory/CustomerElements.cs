@@ -15,8 +15,6 @@ namespace ConsoleUI.CommandsFactory
         private int elmCount = default;
         public ICollection<IMenuElement> GetMenuElements()
         {
-            DeleteFromStorage deleteFromStorage = new();
-            AddProductToStorage addProduct = new("Input correct points");
             SortStorageCommand sortStorageByPrice = new SortStorageCommand(Comparer<(IProduct, int)>.Create(new Comparison<(IProduct, int)>((x, y) => x.Item1.CompareTo(y.Item1))));
             AddToCartCommand addToCart = new("Input product amount");
 
@@ -25,14 +23,6 @@ namespace ConsoleUI.CommandsFactory
                 new InfoElement($"Hello {UserAccount.GetInstance()?.User?.Name}!"),
 
                 new SelectableElement("Show products", $"{++elmCount}", new ShowCollectionCommand(ProductStorage<IProduct>.GetInstance())),
-
-                new SelectableElement("Show users", $"{++elmCount}", new ShowCollectionCommand(UsersRepository.GetInstance())),
-
-                new SelectableElement("Show carts", $"{++elmCount}", new ShowCollectionCommand(CartsRepository.GetInstance())),
-
-                new SelectableElement("Add product", $"{++elmCount}", new CommandOnChoiseFabric<Type>(addProduct,"Add some product to storage")),
-
-                new SelectableElement("Reveal products", $"{++elmCount}", new CommandOnIEnumerable<ProductStorage<IProduct>,(IProduct,int)>(ProductStorage<IProduct>.GetInstance(),deleteFromStorage,"Delete some product from storage")),
 
                 new SelectableElement("Filter product by price", $"{++elmCount}",
                     new WhereStorage<IProduct>((((IProduct product, int amount) item, string input) data) => data.item.product.Price >= int.Parse(data.input),

@@ -16,13 +16,21 @@ namespace ConsoleUI.CommandsFactory
         {
             ChangeProductPrice changePrice = new("Input value in percentice %");
             ClearCart clearCart = new("Enter cart index");
+            AddProductToStorage addProduct = new("Input correct points");
+            DeleteFromStorage deleteFromStorage = new();
 
             List<IMenuElement> menuElements = new()
             {
 
                 new InfoElement($"Hello {UserAccount.GetInstance()?.User?.Name}!"),
 
-                //new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
+                new SelectableElement("Show users", $"{++elmCount}", new ShowCollectionCommand(UsersRepository.GetInstance())),
+
+                new SelectableElement("Show carts", $"{++elmCount}", new ShowCollectionCommand(CartsRepository.GetInstance())),
+
+                new SelectableElement("Add product to storage", $"{++elmCount}", new CommandOnChoiseFabric<Type>(addProduct,"Add some product to storage")),
+
+                new SelectableElement("Delete products from storage", $"{++elmCount}", new CommandOnIEnumerable<ProductStorage<IProduct>,(IProduct,int)>(ProductStorage<IProduct>.GetInstance(),deleteFromStorage,"Delete some product from storage")),
 
                 new SelectableElement("Change product price", $"{++elmCount}", new CommandOnIEnumerable<ProductStorage<IProduct>, (IProduct, int)>(ProductStorage<IProduct>.GetInstance(), changePrice, "Whitch product price you want to change")),
 
