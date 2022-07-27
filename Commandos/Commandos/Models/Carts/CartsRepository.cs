@@ -12,11 +12,11 @@ namespace Commandos.Models.Carts
     [KnownType(typeof(MeatProductModel))]
     [KnownType(typeof(Cart))]
     [CollectionDataContract]
-    public class CartsRepository : IList<Cart>
+    public class CartsRepository : IList<ICart>
     {
         #region Props
         [DataMember(Name = "Carts")]
-        private List<Cart> carts;
+        private List<ICart> carts;
         private static CartsRepository instance;
         #endregion
         #region Ctors
@@ -26,14 +26,14 @@ namespace Commandos.Models.Carts
         }
         #endregion
         #region Ilist
-        public Cart this[int index]
+        public ICart this[int index]
         {
             get => carts[index];
             set => carts[index] = value;
         }
         public int Count => carts.Count;
         public bool IsReadOnly => false;
-        public void Add(Cart item)
+        public void Add(ICart item)
         {
             if (carts.Contains(item))
             {
@@ -44,9 +44,9 @@ namespace Commandos.Models.Carts
                 carts.Add(item);
             }
         }
-        public void AddRange(List<Cart> carts)
+        public void AddRange(List<ICart> carts)
         {
-            foreach (Cart item in carts)
+            foreach (ICart item in carts)
             {
                 Add(item);
             }
@@ -55,27 +55,27 @@ namespace Commandos.Models.Carts
         {
             carts.Clear();
         }
-        public bool Contains(Cart item)
+        public bool Contains(ICart item)
         {
             return carts.Contains(item);
         }
-        public void CopyTo(Cart[] array, int arrayIndex)
+        public void CopyTo(ICart[] array, int arrayIndex)
         {
             carts.CopyTo(array, arrayIndex);
         }
-        public IEnumerator<Cart> GetEnumerator()
+        public IEnumerator<ICart> GetEnumerator()
         {
             return carts.GetEnumerator();
         }
-        public int IndexOf(Cart item)
+        public int IndexOf(ICart item)
         {
             return carts.IndexOf(item);
         }
-        public void Insert(int index, Cart item)
+        public void Insert(int index, ICart item)
         {
             carts.Insert(index, item);
         }
-        public bool Remove(Cart item)
+        public bool Remove(ICart item)
         {
             return carts.Remove(item);
         }
@@ -93,25 +93,14 @@ namespace Commandos.Models.Carts
             }
             return instance;
         }
-        public Cart GetCart(IUser user)
+        public ICart GetCart(IUser user)
         {
             if (carts.Any(c => c.Id == user.Guid))
             {
                 return carts.Find(c => c.Id == user.Guid);
             }
 
-            Cart? tmpCart = new Cart(user);
-            Add(tmpCart);
-            return tmpCart;
-        }
-        public Cart GetCart(Guid userId)
-        {
-            if (carts.Any(c => c.Id == userId))
-            {
-                return carts.Find(c => c.Id == userId);
-            }
-
-            Cart? tmpCart = new Cart(userId);
+            ICart? tmpCart = new Cart(user);
             Add(tmpCart);
             return tmpCart;
         }
