@@ -20,32 +20,32 @@ internal static class Program
     {
         Console.OutputEncoding = System.Text.Encoding.Unicode;
         Console.InputEncoding = System.Text.Encoding.Unicode;
+        Downloader? loader = null;
+
         try
         {
-            Downloader? loader = new Downloader().SetStorageSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>())
-                                                 .SetCartsSerializer(new XmlStreamSerialization<CartsRepository>())
-                                                 .SetUsersSerializer(new XmlStreamSerialization<UsersRepository>())
-                                                 .SetSystemDrawer(new ConsoleDrawer())
-                                                 .SetSystemInput(new ConsoleInputByArrows())
-                                                 .SetConfigPath(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json"));
+            loader = new Downloader().SetStorageSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>())
+                                     .SetCartsSerializer(new XmlStreamSerialization<CartsRepository>())
+                                     .SetUsersSerializer(new XmlStreamSerialization<UsersRepository>())
+                                     .SetSystemDrawer(new ConsoleDrawer())
+                                     .SetSystemInput(new ConsoleInputByArrows())
+                                     .SetConfigPath(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json"));
             loader.Initialize();
 
-            try
-            {
-                MenuProcess menu = new(new AuthorizationElements().GetMenuElements());
-                LoadingMenu decoratedMenu = new(menu);
-                decoratedMenu.SetMusic(new MarioMusic());
-                decoratedMenu.Start();
-            }
-            finally
-            {
-                loader.Save();
-            }
+            MenuProcess menu = new(new AuthorizationElements().GetMenuElements());
+            LoadingMenu decoratedMenu = new(menu);
+            decoratedMenu.SetMusic(new MarioMusic());
+            decoratedMenu.Start();
+
         }
         catch (Exception ex)
         {
             LogDistributor.GetInstance().Add(new Log(LogType.Exception, ex.Message));
             IOSettings.GetInstance().Drawer.Write(ex.Message + ex.StackTrace);
+        }
+        finally
+        {
+            loader?.Save();
         }
     }
 }
