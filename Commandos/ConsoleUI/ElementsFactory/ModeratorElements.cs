@@ -28,6 +28,8 @@ namespace ConsoleUI.CommandsFactory
 
                 new SelectableElement("Clear customer cart", $"{++elmCount}", new CommandOnIEnumerable<CartsRepository, Cart>(CartsRepository.GetInstance(),clearCart, "Whitch cart do you want to clear")),
 
+                new SelectableElement("Log out", $"{++elmCount}", new LogoutCommand()),
+
                 new SelectableElement("Exit", $"{default(int)}", new ExitCommand())
             };
             return menuElements;
