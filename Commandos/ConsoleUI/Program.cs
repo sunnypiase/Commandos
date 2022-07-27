@@ -21,11 +21,11 @@ internal static class Program
         try
         {
             Downloader? loader = new Downloader().SetStorageSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>())
-                                      .SetCartsSerializer(new XmlStreamSerialization<CartsRepository>())
-                                      .SetUsersSerializer(new XmlStreamSerialization<UsersRepository>())
-                                      .SetSystemDrawer(new ConsoleDrawer())
-                                      .SetSystemInput(new ConsoleInputByArrows())
-                                      .SetConfigPath(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json"));
+                                                 .SetCartsSerializer(new XmlStreamSerialization<CartsRepository>())
+                                                 .SetUsersSerializer(new XmlStreamSerialization<UsersRepository>())
+                                                 .SetSystemDrawer(new ConsoleDrawer())
+                                                 .SetSystemInput(new ConsoleInputByArrows())
+                                                 .SetConfigPath(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json"));
             loader.Initialize();
 
             try
@@ -35,13 +35,8 @@ internal static class Program
                 decoratedMenu.SetMusic(new MarioMusic());
                 decoratedMenu.Start();
             }
-            catch (Exception)
-            {
-                throw;
-            }
             finally
             {
-                // Saving repositories and logs. These steps are done in any case when the program finishes
                 loader.Save();
             }
         }
