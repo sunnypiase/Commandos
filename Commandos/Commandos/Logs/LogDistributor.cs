@@ -27,10 +27,10 @@ namespace Commandos.Logs
         }
         public void Add(Log log)
         {
-            if (!_loggers.ContainsKey(log.Titte))
+            if (!_loggers.ContainsKey(log.Title))
             {
                 LoggerBase logger = null;
-                switch (log.Titte)
+                switch (log.Title)
                 {
                     case LogType.Result:
                         logger = ResultLogger.GetInstance(Configuration.GetInstance().AppConfiguration["ResultLog"]);
@@ -44,10 +44,10 @@ namespace Commandos.Logs
                     default:
                         throw new ArgumentException();
                 }
-                _loggers.Add(log.Titte, logger);
+                _loggers.Add(log.Title, logger);
             }
 
-            _loggers[log.Titte].Add(log);
+            _loggers[log.Title].Add(log);
         }
         public void SaveAndClear()
         {

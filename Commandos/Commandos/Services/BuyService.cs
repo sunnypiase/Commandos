@@ -10,11 +10,16 @@ namespace Commandos.Services
 
         public Check Buy()
         {
-            Check check = new Buy().BuyCart(CartsRepository.GetInstance().GetCart((UserAccount.GetInstance().User)));
+            Check check = new Buy().TryBuy(CartsRepository.GetInstance().GetCart((UserAccount.GetInstance().User)));
             OnInfo("Successfullly buyed!");
             OnInfo("Your check:");
             CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).ClearCart();
             return check;
+        }
+        public bool IsBuyAvailable()
+        {
+            return true;
+            //TODO DO
         }
 
     }

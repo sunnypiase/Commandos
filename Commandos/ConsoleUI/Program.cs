@@ -6,12 +6,12 @@ using Commandos.Models.Users;
 using Commandos.Serialize;
 using Commandos.Storage;
 using ConsoleUI.CommandsFactory;
+using ConsoleUI.Downloader;
 using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
 using ConsoleUI.IO;
 using ConsoleUI.Menu;
 using ConsoleUI.Menu.Music;
-using Microsoft.Extensions.Configuration;
 internal static class Program
 {
     public static void Main()
@@ -20,41 +20,35 @@ internal static class Program
         Console.InputEncoding = System.Text.Encoding.Unicode;
         try
         {
-            Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json")));
-            IOSettings.GetInstance(new ConsoleDrawer(), new ConsoleInputByArrows());
+            Downloader? loader = new Downloader().SetStorageSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>())
+                                      .SetCartsSerializer(new XmlStreamSerialization<CartsRepository>())
+                                      .SetUsersSerializer(new XmlStreamSerialization<UsersRepository>())
+                                      .SetSystemDrawer(new ConsoleDrawer())
+                                      .SetSystemInput(new ConsoleInputByArrows())
+                                      .SetConfigPath(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json"));
+            loader.Initialize();
 
-
-            ProductStorage<IProduct>
-                .GetInstance(DownloaderProcessor.GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>())
-                .Load());
-
-            UsersRepository
-                .GetInstance(DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>())
-                .Load());
-
-            CartsRepository
-                .GetInstance(DownloaderProcessor.GetCartsDataSerializer(new XmlStreamSerialization<CartsRepository>())
-                .Load());
-
-
-            MenuProcess menu = new(new AuthorizationElements().GetMenuElements());
-            LoadingMenu decoratedMenu = new(menu);
-            decoratedMenu.SetMusic(new MarioMusic());
-            decoratedMenu.Start();
-
+            try
+            {
+                MenuProcess menu = new(new AuthorizationElements().GetMenuElements());
+                LoadingMenu decoratedMenu = new(menu);
+                decoratedMenu.SetMusic(new MarioMusic());
+                decoratedMenu.Start();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                // Saving repositories and logs. These steps are done in any case when the program finishes
+                loader.Save();
+            }
         }
         catch (Exception ex)
         {
             LogDistributor.GetInstance().Add(new Log(LogType.Exception, ex.Message));
             IOSettings.GetInstance().Drawer.Write(ex.Message + ex.StackTrace);
-        }
-        finally
-        {
-            // Saving repositories and logs. These steps are done in any case when the program finishes
-            DownloaderProcessor.GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>()).Save(ProductStorage<IProduct>.GetInstance());
-            DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>()).Save(UsersRepository.GetInstance());
-            DownloaderProcessor.GetCartsDataSerializer(new XmlStreamSerialization<CartsRepository>()).Save(CartsRepository.GetInstance());
-            LogDistributor.GetInstance().SaveAndClear();
         }
     }
 }

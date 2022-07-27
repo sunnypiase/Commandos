@@ -6,18 +6,12 @@ namespace ConsoleUI.Commands.AdminCommands
 {
     public class ChangeSelectedUserRoleCommand : CommandOn<IUser>
     {
-
         public ChangeSelectedUserRoleCommand()
-        {
-            string tmp = "";
-        }
-
+        { }
         public override object Clone()
         {
             return new ChangeSelectedUserRoleCommand(); ;
         }
-
-
         public override ICollection<IMenuElement>? Execute()
         {
             List<IMenuElement>? menuElements = new List<IMenuElement>();
