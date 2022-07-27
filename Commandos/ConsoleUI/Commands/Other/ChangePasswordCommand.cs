@@ -17,6 +17,21 @@ namespace ConsoleUI.Commands
             authorizationService = new();
         }
 
+        private bool CheckPasswordStrength(string? pass)
+        {
+            bool containsDigit = false;
+            bool containsLetter = false;
+            if (pass is null ||
+                pass.Length < 8) return false;
+            for (int i = 0; i < pass.Length; i++)
+                if (pass[i] >= '0' && pass[i] <= '9')
+                    containsDigit = true;
+            for (int i = 0; i < pass.Length; i++)
+                if (pass[i] >= 'A' && pass[i] <= 'Z' ||
+                    pass[i] >= 'a' && pass[i] <= 'z')
+                    containsLetter = true;
+            return containsDigit && containsLetter;
+        }
         public override ICollection<IMenuElement>? Execute()
         {
             UserAccount userAccount = UserAccount.GetInstance();
@@ -26,10 +41,10 @@ namespace ConsoleUI.Commands
             }
             var menuElements = new List<IMenuElement>();
             var newPassword = input.Read("Enter new password:", drawer);
-            if (!authorizationService.CheckPasswordStrength(newPassword))
+            if (!CheckPasswordStrength(newPassword))
             {
                 newPassword = input.Read("Password should be longer than 7 characters and contain at least one letter and one digit. Try again:", drawer);
-                if (!authorizationService.CheckPasswordStrength(newPassword))
+                if (!CheckPasswordStrength(newPassword))
                 {
                     menuElements.Add(new InfoElement("Wrong password. Change is not performed."));
                 }

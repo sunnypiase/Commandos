@@ -49,6 +49,8 @@ namespace Commandos.Models.Users
             {
                 users.Add(user);
             }
+
+            SaveUsersToFile();
         }
 
         public void RemoveUser(IUser? user)
@@ -57,8 +59,20 @@ namespace Commandos.Models.Users
             {
                 users.Remove(user);
             }
-        }      
-                
+
+            SaveUsersToFile();
+        }
+
+        protected void SaveUsersToFile()
+        {
+            try
+            {
+                DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>()).Save(instance);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public IEnumerator<IUser> GetEnumerator()

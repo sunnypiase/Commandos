@@ -8,18 +8,13 @@ namespace Commandos.Services
         public event Action<string> OnInfo;
         public event Func<string, object> OnGetInfo;
 
-        public Check Buy()
+        public ICheck Buy()
         {
-            Check check = new Buy().TryBuy(CartsRepository.GetInstance().GetCart((UserAccount.GetInstance().User)));
+            ICheck check = new Buy(new CheckCreator()).BuyCart(CartsRepository.GetInstance().GetCart((UserAccount.GetInstance().User)));
             OnInfo("Successfullly buyed!");
             OnInfo("Your check:");
             CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).ClearCart();
             return check;
-        }
-        public bool IsBuyAvailable()
-        {
-            return true;
-            //TODO DO
         }
 
     }

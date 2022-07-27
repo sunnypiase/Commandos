@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Commandos.Models.Carts
 {
-    internal interface IBuy
+    public interface ICheckCreator
     {
-        public bool TryBuy(ICart cart);
-        public bool IsBuyAvailable(ICart cart);
-        public ICheck GetCheck();
+        ICheck CreateCheck(ICart cart);
     }
 }
