@@ -22,11 +22,13 @@ namespace ConsoleUI.CommandsFactory
 
                 new InfoElement($"Hello {UserAccount.GetInstance()?.User?.Name}!"),
 
-                new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
+                //new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
 
-                new SelectableElement("Change product price", $"{++elmCount}", new CommandOnIEnumerable<ProductStorage<IProduct>,(IProduct,int)>(ProductStorage<IProduct>.GetInstance(),changePrice, "Whitch product price you want to change")),
+                new SelectableElement("Change product price", $"{++elmCount}", new CommandOnIEnumerable<ProductStorage<IProduct>, (IProduct, int)>(ProductStorage<IProduct>.GetInstance(), changePrice, "Whitch product price you want to change")),
 
-                new SelectableElement("Clear customer cart", $"{++elmCount}", new CommandOnIEnumerable<CartsRepository, Cart>(CartsRepository.GetInstance(),clearCart, "Whitch cart do you want to clear")),
+                new SelectableElement("Clear customer cart", $"{++elmCount}", new CommandOnIEnumerable<CartsRepository, Cart>(CartsRepository.GetInstance(), clearCart, "Whitch cart do you want to clear")),
+
+                new SelectableElement("Log out", $"{++elmCount}", new LogoutCommand()),
 
                 new SelectableElement("Exit", $"{default(int)}", new ExitCommand())
             };

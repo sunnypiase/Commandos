@@ -5,5 +5,6 @@
         void Add(Log log);
         void Save();
         void Clear();
+        void SaveAndClear();
     }
 }

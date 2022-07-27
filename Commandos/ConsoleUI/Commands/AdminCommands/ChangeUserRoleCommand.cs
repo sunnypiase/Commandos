@@ -16,16 +16,16 @@ namespace ConsoleUI.Commands.AdminCommands
 
         public override ICollection<IMenuElement>? Execute()
         {
-            var menuElements = new List<IMenuElement>();
-            var chosenNickname = input.Read(_userMessage, drawer);
-            var chosenPerson = UsersRepository.GetInstance().GetPersonByName(chosenNickname);
+            List<IMenuElement>? menuElements = new List<IMenuElement>();
+            string? chosenNickname = input.Read(_userMessage, drawer);
+            Commandos.User.IUser? chosenPerson = UsersRepository.GetInstance().GetPersonByName(chosenNickname);
             if (chosenPerson == null)
             {
                 menuElements.Add(new InfoElement($"There is no user with nickname {chosenNickname}!"));
             }
             else
             {
-                var chosenRole = input.Read(_roleMessage, drawer);
+                string? chosenRole = input.Read(_roleMessage, drawer);
                 if (!Enum.TryParse(chosenRole, true, out Roles role))
                 {
                     menuElements.Add(new InfoElement($"There is no role {chosenRole}!"));

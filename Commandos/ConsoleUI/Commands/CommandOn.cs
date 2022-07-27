@@ -1,15 +1,12 @@
 ﻿using ConsoleUI.Menu.MenuTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleUI.Commands
 {
     public abstract class CommandOn<T> : CommandBase, ICloneable
     {
         protected T? commandTarget;
+        protected Type? commandType;
+
         public CommandOn()
         { }
         public CommandOn(T _commandTarget)
@@ -21,7 +18,14 @@ namespace ConsoleUI.Commands
             commandTarget = _commandTarget;
         }
 
+        public void SetTargetType(Type type)
+        {
+            commandType = type;
+        }
+
         public abstract object Clone();
-        public override abstract ICollection<IMenuElement>? Execute();
+        public abstract override ICollection<IMenuElement>? Execute();
+
+
     }
 }

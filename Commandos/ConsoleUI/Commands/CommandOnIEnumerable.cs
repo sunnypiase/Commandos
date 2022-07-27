@@ -1,9 +1,4 @@
 ﻿using ConsoleUI.Menu.MenuTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleUI.Commands
 {
@@ -20,7 +15,7 @@ namespace ConsoleUI.Commands
         }
         public override object Clone()
         {
-            return new CommandOnIEnumerable<T, G>(commandTarget,command);
+            return new CommandOnIEnumerable<T, G>(commandTarget, command);
         }
 
         public override ICollection<IMenuElement>? Execute()

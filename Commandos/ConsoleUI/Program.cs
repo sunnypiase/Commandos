@@ -5,12 +5,11 @@ using Commandos.Models.Products.General;
 using Commandos.Models.Users;
 using Commandos.Serialize;
 using Commandos.Storage;
-using ConsoleUI.Commands;
+using ConsoleUI.CommandsFactory;
 using ConsoleUI.Drawers;
 using ConsoleUI.Inputs;
 using ConsoleUI.IO;
 using ConsoleUI.Menu;
-using ConsoleUI.Menu.MenuTypes;
 using ConsoleUI.Menu.Music;
 using Microsoft.Extensions.Configuration;
 internal static class Program
@@ -21,7 +20,8 @@ internal static class Program
         Console.InputEncoding = System.Text.Encoding.Unicode;
         try
         {
-            Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json")));            
+
+            Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json")));
             IOSettings.GetInstance(new ConsoleDrawer(), new ConsoleInputByArrows());
 
             ProductStorage<IProduct>
@@ -36,16 +36,12 @@ internal static class Program
                 .GetInstance(DownloaderProcessor.GetCartsDataSerializer(new XmlStreamSerialization<CartsRepository>())
                 .Load());
 
-            MenuProcess menu = new(new List<IMenuElement>()
-            {
-                new InfoElement("Welcome to the mega storage!"),
-                new SelectableElement("Login", "1", new AuthorizationCommand()),
-                new SelectableElement("Exit", "0", new ExitCommand())
-            });
-            menu.SetMusic(new MarioMusic());
-            menu.Start();
 
-            Console.WriteLine(new Check(CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User)));
+            MenuProcess menu = new(new AuthorizationElements().GetMenuElements());
+            LoadingMenu decoratedMenu = new(menu);
+            decoratedMenu.SetMusic(new MarioMusic());
+            decoratedMenu.Start();
+
         }
         catch (Exception ex)
         {
@@ -54,6 +50,7 @@ internal static class Program
         }
         finally
         {
+            // Saving repositories and logs. These steps are done in any case when the program finishes
             DownloaderProcessor.GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>()).Save(ProductStorage<IProduct>.GetInstance());
             DownloaderProcessor.GetUserDataSerializer(new XmlStreamSerialization<UsersRepository>()).Save(UsersRepository.GetInstance());
             DownloaderProcessor.GetCartsDataSerializer(new XmlStreamSerialization<CartsRepository>()).Save(CartsRepository.GetInstance());

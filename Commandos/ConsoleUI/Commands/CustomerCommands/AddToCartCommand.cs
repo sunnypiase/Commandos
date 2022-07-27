@@ -6,16 +6,13 @@ using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands.CustomerCommands
 {
-    internal class AddToCartCommand : CommandOn<(IProduct product,int amount)>//TODO DO
+    internal class AddToCartCommand : CommandOn<(IProduct product, int amount)>//TODO DO
     {
         private string title;
-
-
 
         public AddToCartCommand(string title)
         {
             this.title = title;
-
         }
 
         public override object Clone()

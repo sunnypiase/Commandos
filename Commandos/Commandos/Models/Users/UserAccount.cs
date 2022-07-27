@@ -4,7 +4,8 @@ namespace Commandos.Models.Users
 {
     public class UserAccount     // an entity that holds the current logged user
     {
-        private static UserAccount _instance;
+        private static UserAccount? _instance;
+        public IUser? User { get; set; } = null;  // default is null until the user is logged in
         public static UserAccount GetInstance(IUser? user = null)
         {
             if (_instance == null)
@@ -14,8 +15,7 @@ namespace Commandos.Models.Users
             return _instance;
         }
 
-        public IUser? User { get; } = null;  // default is null until the user is logged in
-        public UserAccount(IUser? user)
+        private UserAccount(IUser? user)
         {
             if (user is not null)
             {

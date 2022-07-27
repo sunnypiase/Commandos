@@ -4,7 +4,7 @@ using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands.ModeratorCommands
 {
-    public class DeleteFromStorage : CommandOn<(IProduct, int)>
+    public class DeleteFromStorage : CommandOn<(IProduct product, int amount)>
     {
         public DeleteFromStorage()
         { }
@@ -19,8 +19,9 @@ namespace ConsoleUI.Commands.ModeratorCommands
         public override ICollection<IMenuElement>? Execute()
         {
             ProductStorage<IProduct>? storage = ProductStorage<IProduct>.GetInstance();
-            storage.Remove(commandTarget.Item1, 1); // TODO: How we get count of products here? Maybe leave constant value like 1
-                                                    // or remove this product from storage.
+
+            storage.Remove(commandTarget.product, 1); // TODO: How we get count of products here? Maybe leave constant value like 1
+                                                      // or remove this product from storage.
             List<IMenuElement> elements = new()
             {
                 new InfoElement("Succesful"),
