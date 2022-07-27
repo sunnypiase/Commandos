@@ -10,7 +10,7 @@ namespace ConsoleUI.Menu
         private IMenuProcess menuProcess;
         public IInput Input { get => menuProcess.Input; }
         public IDrawer Drawer { get => menuProcess.Drawer; }
-        private IConsoleMusic music;
+        private IConsoleMusic? music;
 
         public DecoratedMenu(IMenuProcess menuProcess)
         {
