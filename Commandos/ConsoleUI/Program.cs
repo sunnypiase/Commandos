@@ -45,7 +45,7 @@ internal static class Program
             menu.SetMusic(new MarioMusic());
             menu.Start();
 
-            Console.WriteLine(new Check(CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User)));
+            //Console.WriteLine(new Check(CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User)));
         }
         catch (Exception ex)
         {
