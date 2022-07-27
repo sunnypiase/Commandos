@@ -9,3 +9,12 @@
 <Log Type: System>;<Log Body: User OlegM) has logged out>;
 <Log Type: System>;<Log Body: User OlegM) entered the system>;
 <Log Type: System>;<Log Body: User OlegM) performed exit>;
+<Log Type: System>;<Log Body: New user 1) just registered and entered the system>;
+<Log Type: System>;<Log Body: User 1) has logged out>;
+<Log Type: System>;<Log Body: New user novakoleg) just registered and entered the system>;
+<Log Type: System>;<Log Body: User novakoleg) has logged out>;
+<Log Type: System>;<Log Body: User SunnyPiase) entered the system>;
+<Log Type: System>;<Log Body: Role of the user with nickname novakoleg has been changed to "Moderator">;
+<Log Type: System>;<Log Body: User SunnyPiase) has logged out>;
+<Log Type: System>;<Log Body: User novakoleg) entered the system>;
+<Log Type: System>;<Log Body: User novakoleg) performed exit>;

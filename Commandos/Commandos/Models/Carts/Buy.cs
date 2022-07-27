@@ -14,6 +14,11 @@ namespace Commandos.Models.Carts
         {
             checkCreator = creator;
         }
+
+        internal ICheck BuyCart(ICart cart)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
         #region Methods
         public ICheck GetCheck()
