@@ -16,7 +16,7 @@ namespace ConsoleUI.CommandsFactory
         public ICollection<IMenuElement> GetMenuElements()
         {
             DeleteFromStorage deleteFromStorage = new();
-            SortStorageBy sortStorageByPrice = new SortStorageBy(Comparer<(IProduct, int)>.Create(new Comparison<(IProduct, int)>((x, y) => x.Item1.CompareTo(y.Item1))));
+            SortStorageCommand sortStorageByPrice = new SortStorageCommand(Comparer<(IProduct, int)>.Create(new Comparison<(IProduct, int)>((x, y) => x.Item1.CompareTo(y.Item1))));
             AddToCartCommand addToCart = new("Input product amount");
 
             return new List<IMenuElement>()
@@ -38,10 +38,10 @@ namespace ConsoleUI.CommandsFactory
                         "Enter price")),
 
                 new SelectableElement("Sort by price +", $"{++elmCount}",
-                    new SortStorageBy(Comparer<(IProduct, int)>.Create(new Comparison<(IProduct, int)>((x, y) => x.Item1.CompareTo(y.Item1))))),
+                    new SortStorageCommand(Comparer<(IProduct, int)>.Create(new Comparison<(IProduct, int)>((x, y) => x.Item1.CompareTo(y.Item1))))),
 
                 new SelectableElement("Sort by price -", $"{++elmCount}",
-                    new SortStorageBy(Comparer<(IProduct, int)>.Create(new Comparison<(IProduct, int)>((x, y) => y.Item1.CompareTo(x.Item1))))),
+                    new SortStorageCommand(Comparer<(IProduct, int)>.Create(new Comparison<(IProduct, int)>((x, y) => y.Item1.CompareTo(x.Item1))))),
 
                 new SelectableElement("Add to cart", $"{++elmCount}",new CommandOnIEnumerable<ProductStorage<IProduct>,(IProduct,int)>(ProductStorage<IProduct>.GetInstance(),addToCart,"Add some product to cart")),
 

@@ -4,11 +4,11 @@ using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands.CustomerCommands
 {
-    internal class SortStorageBy : CommandBase
+    internal class SortStorageCommand : CommandBase
     {
         private readonly IComparer<(IProduct, int)> comparer;
 
-        public SortStorageBy(IComparer<(IProduct, int)> _comparer)
+        public SortStorageCommand(IComparer<(IProduct, int)> _comparer)
         {
             comparer = _comparer;
         }
