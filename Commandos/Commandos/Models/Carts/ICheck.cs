@@ -11,6 +11,6 @@ namespace Commandos.Models.Carts
         public string CheckString { get; }
         public double Sum { get; }
         public Guid Id { get; }
-        public DateTime DateTime { get; }
+        public DateTime CreatingTime { get; }
     }
 }
