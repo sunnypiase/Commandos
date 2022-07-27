@@ -21,6 +21,7 @@ internal static class Program
         Console.InputEncoding = System.Text.Encoding.Unicode;
         try
         {
+            
             Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json")));            
             IOSettings.GetInstance(new ConsoleDrawer(), new ConsoleInputByArrows());
 
@@ -42,7 +43,6 @@ internal static class Program
             decoratedMenu.SetMusic(new MarioMusic());
             decoratedMenu.Start();
             
-
         }
         catch (Exception ex)
         {

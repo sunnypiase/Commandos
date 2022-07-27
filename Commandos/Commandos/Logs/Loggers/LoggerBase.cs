@@ -21,6 +21,11 @@ namespace Commandos.Logs.Loggers
             _logs.Add(log);
         }
 
+        public virtual void SaveAndClear()
+        {
+            Save();
+            Clear();
+        }
         public virtual void Save()
         {
 
@@ -36,6 +41,7 @@ namespace Commandos.Logs.Loggers
         {
             _logs.Clear();
         }
+
         #endregion
     }
 }

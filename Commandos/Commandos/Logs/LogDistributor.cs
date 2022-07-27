@@ -4,7 +4,7 @@ using Commandos.Serialize;
 
 namespace Commandos.Logs
 {
-    public class LogDistributor
+    public class LogDistributor : ILogger
     {
         #region Fields
         private Dictionary<LogType, LoggerBase> _loggers;
@@ -33,13 +33,13 @@ namespace Commandos.Logs
                 switch (log.Titte)
                 {
                     case LogType.Result:
-                        logger = new ResultLogger(Configuration.GetInstance().AppConfiguration["ResultLog"]);
+                        logger = ResultLogger.GetInstance(Configuration.GetInstance().AppConfiguration["ResultLog"]);
                         break;
                     case LogType.Exception:
-                        logger = new ExceptionLogger(Configuration.GetInstance().AppConfiguration["ExceptionLog"]);
+                        logger = ExceptionLogger.GetInstance(Configuration.GetInstance().AppConfiguration["ExceptionLog"]);
                         break;
                     case LogType.System:
-                        logger = new SystemLogger(Configuration.GetInstance().AppConfiguration["SystemLog"]);
+                        logger = SystemLogger.GetInstance(Configuration.GetInstance().AppConfiguration["SystemLog"]);
                         break;
                     default:
                         throw new ArgumentException();
@@ -54,14 +54,14 @@ namespace Commandos.Logs
             Save();
             Clear();
         }
-        private void Save()
+        public void Save()
         {
             foreach (KeyValuePair<LogType, LoggerBase> item in _loggers)
             {
                 item.Value.Save();
             }
         }
-        private void Clear()
+        public void Clear()
         {
             foreach (KeyValuePair<LogType, LoggerBase> item in _loggers)
             {
