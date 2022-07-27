@@ -3,6 +3,7 @@ using Commandos.Models.Products.DairyProduct;
 using Commandos.Models.Products.General;
 using Commandos.Models.Products.MeatProduct;
 using Commandos.User;
+using System.Collections;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace Commandos.Models.Carts
     [KnownType(typeof(DairyProductModel))]
     [KnownType(typeof(MeatProductModel))]
     [DataContract]
-    public class Cart
+    public class Cart : IEnumerable<KeyValuePair<IProduct, int>>
     {
         #region Props
         private Guid id;
@@ -126,6 +127,16 @@ namespace Commandos.Models.Carts
         public override int GetHashCode()
         {
             return Id.GetHashCode();
+        }
+
+        public IEnumerator<KeyValuePair<IProduct, int>> GetEnumerator()
+        {
+            return cartProducts.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
         #endregion
     }

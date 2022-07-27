@@ -33,7 +33,7 @@ namespace ConsoleUI.CommandsFactory
 
                 new SelectableElement("Reveal products", $"{++elmCount}", new CommandOnIEnumerable<ProductStorage<IProduct>,(IProduct,int)>(ProductStorage<IProduct>.GetInstance(),deleteFromStorage,"Delete some product from storage")),
 
-                new SelectableElement("Filter product by category price", $"{++elmCount}",
+                new SelectableElement("Filter product by price", $"{++elmCount}",
                     new WhereStorage<IProduct>((((IProduct product, int amount) item, string input) data) => data.item.product.Price >= int.Parse(data.input),
                         "Enter price")),
 
@@ -44,6 +44,10 @@ namespace ConsoleUI.CommandsFactory
                     new SortStorageBy(Comparer<(IProduct, int)>.Create(new Comparison<(IProduct, int)>((x, y) => y.Item1.CompareTo(x.Item1))))),
 
                 new SelectableElement("Add to cart", $"{++elmCount}",new CommandOnIEnumerable<ProductStorage<IProduct>,(IProduct,int)>(ProductStorage<IProduct>.GetInstance(),addToCart,"Add some product to cart")),
+
+                //new SelectableElement("Buy", $"{++elmCount}", new BuyCommand() ),
+
+                new SelectableElement("Log out", $"{++elmCount}", new LogoutCommand()),
 
                 new SelectableElement("Exit", $"{default(int)}", new ExitCommand())
 

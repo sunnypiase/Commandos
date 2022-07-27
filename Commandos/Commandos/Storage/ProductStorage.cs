@@ -130,6 +130,25 @@ namespace Commandos.Storage
                 }
             }
         }
+        public int Buy(T product, int countTobuy)
+        {
+            for (int i = 0; i < _products.Count; i++)
+            {
+                if (_products[i].Product.Equals(product))
+                {
+                    (T prod, int countInStorage) = _products[i];
+
+                    if (countInStorage > countTobuy)
+                    {
+                        _products[i] = (prod, countInStorage - countTobuy);
+                        return countTobuy;
+                    }
+                    _products.RemoveAt(i);
+                    return countInStorage - countTobuy;
+                }
+            }
+            return 0;
+        }
         public bool Contains(T product)
         {
             return _products.Select(x => x.Product).Contains(product);
