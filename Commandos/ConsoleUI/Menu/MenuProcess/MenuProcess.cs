@@ -18,10 +18,10 @@ namespace ConsoleUI.Menu
 
         public void Start()
         {
-            toLoop();
+            ToLoop();
         }
 
-        private void toLoop()
+        private void ToLoop()
         {
             bool end = false;
             ICollection<IMenuElement>? elements = menuElements;

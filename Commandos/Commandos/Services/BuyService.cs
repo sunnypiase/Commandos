@@ -10,15 +10,17 @@ namespace Commandos.Services
 {
     public class BuyService
     {
-        public event Action<string> OnBuyInfo;
+        public event Action<string> OnInfo;
+        public event Func<string,object> OnGetInfo;
 
         public Check Buy()
         {
             Check check = new Buy().BuyCart(CartsRepository.GetInstance().GetCart((UserAccount.GetInstance().User)));
-            OnBuyInfo("Successfullly buyed!");
-            OnBuyInfo("Your check:");
+            OnInfo("Successfullly buyed!");
+            OnInfo("Your check:");
             CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User).ClearCart();
             return check;
         }
+        
     }
 }

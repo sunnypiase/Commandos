@@ -4,11 +4,11 @@ using ConsoleUI.Menu.Music;
 
 namespace ConsoleUI.Menu
 {
-    public class DecoratedMenu : MenuDecorator
+    public class LoadingMenu : MenuDecorator
     {
         private IConsoleMusic? music;
 
-        public DecoratedMenu(IMenuProcess menuProcess) : base(menuProcess)
+        public LoadingMenu(IMenuProcess menuProcess) : base(menuProcess)
         {
         }
 

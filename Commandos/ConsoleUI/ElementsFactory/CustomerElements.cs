@@ -46,7 +46,7 @@ namespace ConsoleUI.CommandsFactory
 
                 new SelectableElement("Add to cart", $"{++elmCount}",new CommandOnIEnumerable<ProductStorage<IProduct>,(IProduct,int)>(ProductStorage<IProduct>.GetInstance(),addToCart,"Add some product to cart")),
 
-                //new SelectableElement("Buy", $"{++elmCount}", new BuyCommand() ),
+                new SelectableElement("Buy", $"{++elmCount}", new BuyCommand() ),
 
                 new SelectableElement("Log out", $"{++elmCount}", new LogoutCommand()),
 

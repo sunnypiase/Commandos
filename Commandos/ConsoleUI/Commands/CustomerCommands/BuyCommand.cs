@@ -23,7 +23,7 @@ namespace ConsoleUI.Commands.CustomerCommands
             List<IMenuElement> elements = new();
 
             var service = new BuyService();
-            service.OnBuyInfo += (msg) => elements.Add(new InfoElement(msg));
+            service.OnInfo += (msg) => drawer.Write(msg);
 
             elements.Add(new InfoElement(service.Buy().ToString()));
 
@@ -31,5 +31,6 @@ namespace ConsoleUI.Commands.CustomerCommands
 
             return elements;
         }
+        
     }
 }

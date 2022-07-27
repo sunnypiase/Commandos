@@ -39,7 +39,7 @@ internal static class Program
 
 
             MenuProcess menu = new(new AuthorizationElements().GetMenuElements());
-            DecoratedMenu decoratedMenu = new(menu);
+            LoadingMenu decoratedMenu = new(menu);
             decoratedMenu.SetMusic(new MarioMusic());
             decoratedMenu.Start();
             
