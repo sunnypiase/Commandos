@@ -1,2 +1,7 @@
 <Log Type: System>;<Log Body: System Log>;
 <Log Type: System>;<Log Body: Back to main menu>;
+<Log Type: System>;<Log Body: Login>;
+<Log Type: System>;<Log Body: Login>;
+<Log Type: System>;<Log Body: Login>;
+<Log Type: System>;<Log Body: Exit>;
+<Log Type: System>;<Log Body: Login>;

@@ -1,36 +1,40 @@
 ﻿using Commandos.Models.Carts;
 using Commandos.Models.Users;
+using Commandos.User;
 using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands.AdminCommands
 {
-    public class RemoveUserFromRepositoryCommand : CommandBase
+    public class RemoveSelectedUserFromRepositoryCommand : CommandOn<IUser>
     {
-        private readonly string _userMessage;
-        public RemoveUserFromRepositoryCommand(string userMessage)
+
+        public RemoveSelectedUserFromRepositoryCommand()
         {
-            _userMessage = userMessage;
+        }
+
+        public override object Clone()
+        {
+            return new RemoveSelectedUserFromRepositoryCommand(); ;
         }
 
         public override ICollection<IMenuElement>? Execute()
         {
             var menuElements = new List<IMenuElement>();
-            var chosenNickname = input.Read(_userMessage, drawer);
-            var users = UsersRepository.GetInstance();
-            var chosenPerson = users.GetPersonByName(chosenNickname);
+            var chosenPerson = commandTarget;
             if (chosenPerson == null)
             {
-                menuElements.Add(new InfoElement($"There is no user with nickname {chosenNickname}!"));
+                menuElements.Add(new InfoElement("There is no selected user!"));
             }
             else
             {
-                users.RemoveUser(chosenPerson);
+                UsersRepository.GetInstance().RemoveUser(chosenPerson);
                 var carts = CartsRepository.GetInstance();
                 carts.Remove(carts.GetCart(chosenPerson));
-                menuElements.Add(new InfoElement($"Successfully deleted user with nickname {chosenNickname}"));
+                menuElements.Add(new InfoElement($"Successfully deleted user with nickname {chosenPerson.Name}"));
             }
             menuElements.Add(new SelectableElement("continue", "0", new BackToHome()));
             return menuElements;
         }
+
     }
 }

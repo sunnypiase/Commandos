@@ -5,41 +5,34 @@ using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands.AdminCommands
 {
-    public class ChangeSelectedUserRoleCommand : CommandOn<IUser>
+    public class SelectRoleAndUserRoleCommand : CommandOn<Roles>
     {
-
-        public ChangeSelectedUserRoleCommand()
+        IUser user;
+        public SelectRoleAndUserRoleCommand(IUser _user)
     {
+            this.user = _user;
     }
 
     public override object Clone()
     {
-        return new ChangeSelectedUserRoleCommand(); ;
+        return new SelectRoleAndUserRoleCommand(user); ;
     }
 
 
     public override ICollection<IMenuElement>? Execute()
         {
             var menuElements = new List<IMenuElement>();
-             var chosenPerson = commandTarget;
-            if (chosenPerson == null)
+            Roles newRole = commandTarget;
+            if (newRole == null)
             {
-                menuElements.Add(new InfoElement($"There is no selected user!"));
+                menuElements.Add(new InfoElement($"Role is no selected!"));
             }
             else
             {
-                var chosenRole = input.Read("Enter role for this user: ", drawer);
-                if (!Enum.TryParse(chosenRole, true, out Roles role))
-                {
-                    menuElements.Add(new InfoElement($"There is no role {chosenRole}!"));
-                }
-                else
-                {
-                    menuElements.Add(new InfoElement($"Role of the user with nickname {chosenPerson.Name} has been changed to \"{chosenRole}\"!"));
-                    chosenPerson.Role = role;
-                }
-
+                menuElements.Add(new InfoElement($"Role of the user with nickname {user.Name} has been changed to \"{newRole}\"!"));
+                user.Role = newRole;
             }
+
             menuElements.Add(new SelectableElement("continue", "0", new BackToHome()));
             return menuElements;
         }

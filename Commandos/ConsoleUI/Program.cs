@@ -16,13 +16,18 @@ internal static class Program
 {
     public static void Main()
     {
-        Console.OutputEncoding = System.Text.Encoding.Unicode;
-        Console.InputEncoding = System.Text.Encoding.Unicode;
+        //Console.OutputEncoding = System.Text.Encoding.Unicode;
+        //Console.InputEncoding = System.Text.Encoding.Unicode;
         try
         {
+<<<<<<< Updated upstream
 
             Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json")));
             IOSettings.GetInstance(new ConsoleDrawer(), new ConsoleInputByArrows());
+=======
+            Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"../../../../Commandos/Files/config.json")));            
+            IOSettings.GetInstance(new ConsoleDrawer(), new ConsoleInput());
+>>>>>>> Stashed changes
 
             ProductStorage<IProduct>
                 .GetInstance(DownloaderProcessor.GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>())
@@ -36,12 +41,25 @@ internal static class Program
                 .GetInstance(DownloaderProcessor.GetCartsDataSerializer(new XmlStreamSerialization<CartsRepository>())
                 .Load());
 
+<<<<<<< Updated upstream
 
             MenuProcess menu = new(new AuthorizationElements().GetMenuElements());
             LoadingMenu decoratedMenu = new(menu);
             decoratedMenu.SetMusic(new MarioMusic());
             decoratedMenu.Start();
 
+=======
+            MenuProcess menu = new(new List<IMenuElement>()
+            {
+                new InfoElement("Welcome to the mega storage!"),
+                new SelectableElement("Login", "1", new AuthorizationCommand()),
+                new SelectableElement("Exit", "0", new ExitCommand())
+            });
+           // menu.SetMusic(new MarioMusic());
+            menu.Start();
+
+            //Console.WriteLine(new Check(CartsRepository.GetInstance().GetCart(UserAccount.GetInstance().User)));
+>>>>>>> Stashed changes
         }
         catch (Exception ex)
         {

@@ -16,5 +16,13 @@ Actual value was 0.>;
 <Log Type: Exception>;<Log Body: Object reference not set to an instance of an object.>;
 <Log Type: Exception>;<Log Body: Object reference not set to an instance of an object.>;
 <Log Type: Exception>;<Log Body: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')>;
+<<<<<<< Updated upstream
 <Log Type: Exception>;<Log Body: Value cannot be null. (Parameter 'source')>;
 <Log Type: Exception>;<Log Body: Value cannot be null. (Parameter 'source')>;
+=======
+<Log Type: Exception>;<Log Body: Operation is not supported on this platform.>;
+<Log Type: Exception>;<Log Body: Operation is not supported on this platform.>;
+<Log Type: Exception>;<Log Body: Operation is not supported on this platform.>;
+<Log Type: Exception>;<Log Body: Object reference not set to an instance of an object.>;
+<Log Type: Exception>;<Log Body: Object reference not set to an instance of an object.>;
+>>>>>>> Stashed changes
