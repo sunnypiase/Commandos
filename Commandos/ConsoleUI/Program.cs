@@ -42,10 +42,6 @@ internal static class Program
             decoratedMenu.SetMusic(new MarioMusic());
             decoratedMenu.Start();
 
-
-            menu.Start();
-
-
         }
         catch (Exception ex)
         {
