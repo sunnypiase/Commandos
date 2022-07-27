@@ -22,7 +22,7 @@ internal static class Program
         {
             Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(Path.GetFullPath(@"..\..\..\..\Commandos\Files\config.json")));
             IOSettings.GetInstance(new ConsoleDrawer(), new ConsoleInputByArrows());
-           
+
 
             ProductStorage<IProduct>
                 .GetInstance(DownloaderProcessor.GetStorageDataSerializer(new XmlStreamSerialization<ProductStorage<IProduct>>())

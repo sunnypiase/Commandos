@@ -19,8 +19,8 @@ namespace ConsoleUI.Commands.AdminCommands
 
         public override ICollection<IMenuElement>? Execute()
         {
-            var menuElements = new List<IMenuElement>();
-            var chosenPerson = commandTarget;
+            List<IMenuElement>? menuElements = new List<IMenuElement>();
+            IUser? chosenPerson = commandTarget;
             if (chosenPerson == null)
             {
                 menuElements.Add(new InfoElement("There is no selected user!"));
@@ -28,7 +28,7 @@ namespace ConsoleUI.Commands.AdminCommands
             else
             {
                 UsersRepository.GetInstance().RemoveUser(chosenPerson);
-                var carts = CartsRepository.GetInstance();
+                CartsRepository? carts = CartsRepository.GetInstance();
                 carts.Remove(carts.GetCart(chosenPerson));
                 menuElements.Add(new InfoElement($"Successfully deleted user with nickname {chosenPerson.Name}"));
             }

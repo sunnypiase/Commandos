@@ -1,5 +1,4 @@
-﻿using Commandos.Models.Users;
-using Commandos.Role;
+﻿using Commandos.Role;
 using Commandos.User;
 using ConsoleUI.Menu.MenuTypes;
 
@@ -7,21 +6,21 @@ namespace ConsoleUI.Commands.AdminCommands
 {
     public class SelectRoleAndUserRoleCommand : CommandOn<Roles>
     {
-        IUser user;
+        private IUser user;
         public SelectRoleAndUserRoleCommand(IUser _user)
-    {
-            this.user = _user;
-    }
-
-    public override object Clone()
-    {
-        return new SelectRoleAndUserRoleCommand(user); ;
-    }
-
-
-    public override ICollection<IMenuElement>? Execute()
         {
-            var menuElements = new List<IMenuElement>();
+            this.user = _user;
+        }
+
+        public override object Clone()
+        {
+            return new SelectRoleAndUserRoleCommand(user); ;
+        }
+
+
+        public override ICollection<IMenuElement>? Execute()
+        {
+            List<IMenuElement>? menuElements = new List<IMenuElement>();
             Roles newRole = commandTarget;
             if (newRole == null)
             {
