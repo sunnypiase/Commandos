@@ -60,23 +60,31 @@ namespace ConsoleUI.Downloader
         }
         public void Initialize()
         {
+            NullCheck();
+
             Configuration.GetInstance(new ConfigurationBuilder().AddJsonFile(configPath));
-
             IOSettings.GetInstance(drawer, input);
-
             ProductStorage<IProduct>.GetInstance(DownloaderProcessor.GetStorageDataSerializer(storageSerializer).Load());
-
             UsersRepository.GetInstance(DownloaderProcessor.GetUserDataSerializer(usersSerializer).Load());
-
             CartsRepository.GetInstance(DownloaderProcessor.GetCartsDataSerializer(cartsSerializer).Load());
         }
         public void Save()
         {
+            NullCheck();
 
             DownloaderProcessor.GetStorageDataSerializer(storageSerializer).Save(ProductStorage<IProduct>.GetInstance());
             DownloaderProcessor.GetUserDataSerializer(usersSerializer).Save(UsersRepository.GetInstance());
             DownloaderProcessor.GetCartsDataSerializer(cartsSerializer).Save(CartsRepository.GetInstance());
             LogDistributor.GetInstance().SaveAndClear();
+        }
+        private void NullCheck()
+        {
+            ArgumentNullException.ThrowIfNull(storageSerializer);
+            ArgumentNullException.ThrowIfNull(usersSerializer);
+            ArgumentNullException.ThrowIfNull(cartsSerializer);
+            ArgumentNullException.ThrowIfNull(drawer);
+            ArgumentNullException.ThrowIfNull(input);
+            ArgumentNullException.ThrowIfNull(configPath);
         }
     }
 }
