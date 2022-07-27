@@ -13,7 +13,7 @@ namespace Commandos.Models.Carts
     [KnownType(typeof(DairyProductModel))]
     [KnownType(typeof(MeatProductModel))]
     [DataContract]
-    public class Cart : IEnumerable<KeyValuePair<IProduct, int>>
+    public class Cart : ICart
     {
         #region Props
         private Guid id;
