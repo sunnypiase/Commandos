@@ -49,8 +49,6 @@ namespace Commandos.Models.Users
             {
                 users.Add(user);
             }
-
-            SaveUsersToFile();
         }
 
         public void RemoveUser(IUser? user)

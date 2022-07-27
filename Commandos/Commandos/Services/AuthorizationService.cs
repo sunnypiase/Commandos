@@ -36,6 +36,22 @@ namespace Commandos.Services
             user.EncryptedPassword = EncryptOrDecryptPassword(password);
         }
 
+        public bool CheckPasswordStrength(string? pass)
+        {
+            bool containsDigit = false;
+            bool containsLetter = false;
+            if (pass is null ||
+                pass.Length < 8) return false;
+            for (int i = 0; i < pass.Length; i++)
+                if (pass[i] >= '0' && pass[i] <= '9')
+                    containsDigit = true;
+            for (int i = 0; i < pass.Length; i++)
+                if (pass[i] >= 'A' && pass[i] <= 'Z' ||
+                    pass[i] >= 'a' && pass[i] <= 'z')
+                    containsLetter = true;
+            return containsDigit && containsLetter;
+        }
+
         public IUser RegisterUser(string name, string password, Roles role = Roles.Customer)
         // add new user to repository if he has just registered
         {
