@@ -81,6 +81,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
                     {
                         output += $"{++index} > if you want create [{item}]\n";
                     }
+                    index = 0;
 
                     string inputedEnum = "";
                     bool operation = false;
@@ -102,6 +103,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
                             tmpInputResults.Add((item, prop.PropertyType));
                         }
                     }
+                    i = 0;
                     output = "";
                     continue;
                 }
