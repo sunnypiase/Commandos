@@ -59,6 +59,8 @@ namespace Commandos.Models.Users
             }
         }      
                 
+        }
+
         public IEnumerator<IUser> GetEnumerator()
         {
             return this.users.GetEnumerator();
