@@ -1,4 +1,5 @@
 ﻿using Commandos.Models.Users;
+using Commandos.Role;
 using Commandos.User;
 using ConsoleUI.Commands;
 using ConsoleUI.Commands.AdminCommands;
