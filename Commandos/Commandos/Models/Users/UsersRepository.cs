@@ -44,19 +44,6 @@ namespace Commandos.Models.Users
             return users.Find(u => u.Name.Equals(nickname));
         }
 
-        /*public void RemovePerson(Guid id)
-        {
-            IUser? user = GetPersonByID(id);
-            if (user is null) // (could not find user)
-            {
-                ; // TODO: here we should define what to do. Probably, throw an exception
-            }
-            else
-            {
-                RemoveUser(user);
-            }
-        }*/
-
         public void AddUser(IUser? user)
         {
             if (user is not null)
