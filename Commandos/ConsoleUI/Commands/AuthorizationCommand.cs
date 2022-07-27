@@ -10,20 +10,18 @@ namespace ConsoleUI.Commands
     internal class AuthorizationCommand : CommandBase  // used for user's login
 
     {
-        private string? currentLogin;
         private AuthorizationService authorizationService;
 
         public AuthorizationCommand()
         {
-            currentLogin = "";
             authorizationService = new();
         }
 
         private UserAccount? LoginRoutine()
         {
             // Enter login (nickname)
-            currentLogin = input.Read("Enter nickname:", drawer);
-            if (currentLogin == null || currentLogin == "")
+            string? currentLogin = input.Read("Enter nickname:", drawer);
+            if (string.IsNullOrEmpty(currentLogin))
             {
                 return null;
             }
@@ -32,11 +30,11 @@ namespace ConsoleUI.Commands
             if (foundUser is not null) // found the user with such login, enter and check password
             {
                 string? currentPassword = input.Read("Enter password:", drawer);
-                if (currentPassword == null || currentPassword == "" ||
+                if (string.IsNullOrEmpty(currentPassword) ||
                     !authorizationService.CheckPassword(foundUser, currentPassword))
                 {
                     currentPassword = input.Read("Wrong password. Try again:", drawer);
-                    if (currentPassword == null || currentPassword == "" ||
+                    if (string.IsNullOrEmpty(currentPassword) ||
                         !authorizationService.CheckPassword(foundUser, currentPassword))
                     {
                         drawer.Write("Wrong password. Exiting.");
@@ -58,10 +56,10 @@ namespace ConsoleUI.Commands
                 if (userReply?.ToUpper() == "Y") // yes, ask the password 
                 {
                     string? currentPassword = input.Read("Enter password:", drawer);
-                    if (currentPassword == null || currentPassword == "") // register new user and create the user account
+                    if (string.IsNullOrEmpty(currentPassword)) // register new user and create the user account
                     {
                         currentPassword = input.Read("Password can not be empty. Try again:", drawer);
-                        if (currentPassword == null || currentPassword == "")
+                        if (string.IsNullOrEmpty(currentPassword))
                         {
                             drawer.Write("Wrong password. Exiting.");
                             return null;

@@ -8,6 +8,7 @@ namespace ConsoleUI.Menu.MenuTypes
         public DrawPriority Priority { get; }
         public string SignToCommand { get; }
         public string Title { get; }
+        public bool isOnCursor { get; set; }
 
         public SelectableElement(string title, string sign, ICommand _command,
             DrawPriority priority = DrawPriority.Second)
@@ -16,6 +17,7 @@ namespace ConsoleUI.Menu.MenuTypes
             SignToCommand = sign;
             Title = title;
             Priority = priority;
+            isOnCursor = false;
         }
 
         public ICollection<IMenuElement>? Run()

@@ -104,6 +104,17 @@ namespace Commandos.Models.Carts
             Add(tmpCart);
             return tmpCart;
         }
+        public Cart GetCart(Guid userId)
+        {
+            if (carts.Any(c => c.Id == userId))
+            {
+                return carts.Find(c => c.Id == userId);
+            }
+
+            Cart? tmpCart = new Cart(userId);
+            Add(tmpCart);
+            return tmpCart;
+        }
         #endregion
         #region ObjectOverrides
         IEnumerator IEnumerable.GetEnumerator()
