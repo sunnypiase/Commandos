@@ -14,7 +14,7 @@ namespace ConsoleUI.CommandsFactory
             return new List<IMenuElement>
             {
                 new InfoElement($"Hello {UserAccount.GetInstance()?.User?.Name}!"),
-                new SelectableElement("Add product", $"{++elemsCount}", new AddProductToStorage()),
+               // new SelectableElement("Add product", $"{++elemsCount}", new AddProductToStorage()),
                 new SelectableElement("Change user role",$"{++elemsCount}",new ChangeUserRoleCommand("Enter user nickname: ", "Enter role for this user: ")),
                 new SelectableElement("Delete user", $"{++elemsCount}", new RemoveUserFromRepositoryCommand("Enter user nickname: ")),
                 new SelectableElement("Exit", $"{default(int)}", new ExitCommand())

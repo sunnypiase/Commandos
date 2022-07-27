@@ -1,6 +1,6 @@
 ﻿namespace Commandos.Enums
 {
-    internal enum CementBrand
+    public enum CementBrand
     {
         NONE,
         M100,

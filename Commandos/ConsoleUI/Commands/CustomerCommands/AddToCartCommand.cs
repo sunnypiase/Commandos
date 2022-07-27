@@ -10,12 +10,9 @@ namespace ConsoleUI.Commands.CustomerCommands
     {
         private string title;
 
-
-
         public AddToCartCommand(string title)
         {
             this.title = title;
-
         }
 
         public override object Clone()

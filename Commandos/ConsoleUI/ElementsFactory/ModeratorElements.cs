@@ -19,7 +19,7 @@ namespace ConsoleUI.CommandsFactory
 
                 new InfoElement($"Hello {UserAccount.GetInstance()?.User?.Name}!"),
 
-                new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
+                //new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
 
                 new SelectableElement("Change product price", $"{++elmCount}", new CommandOnIEnumerable<ProductStorage<IProduct>,(IProduct,int)>(ProductStorage<IProduct>.GetInstance(),changePrice, "Whitch product price you want to change")),
                 

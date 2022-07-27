@@ -16,13 +16,16 @@ namespace ConsoleUI.CommandsFactory
         {
             DeleteFromStorage deleteFromStorage = new();
             SortStorageBy sortStorageByPrice = new SortStorageBy(Comparer<(IProduct, int)>.Create(new Comparison<(IProduct, int)>((x, y) => x.Item1.CompareTo(y.Item1))));
+            AddProductToStorage addProduct = new("Input correct points");
             AddToCartCommand addToCart = new("Input product amount");
 
             return new List<IMenuElement>()
             {
                 new InfoElement($"Hello {UserAccount.GetInstance()?.User?.Name}!"),
 
-                new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
+                //new SelectableElement("Add product", $"{++elmCount}", new AddProductToStorage()),
+
+                new SelectableElement("Add product", $"{++elmCount}", new CommandOnChoiseFabric<Type>(addProduct,"Add some product to storage")),
 
                 new SelectableElement("Reveal products", $"{++elmCount}", new CommandOnIEnumerable<ProductStorage<IProduct>,(IProduct,int)>(ProductStorage<IProduct>.GetInstance(),deleteFromStorage,"Delete some product from storage")),
 

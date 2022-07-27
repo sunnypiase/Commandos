@@ -31,7 +31,7 @@ namespace ConsoleUI.Commands
             foreach (G item in commandTarget)
             {
                 CommandOn<G> tmpAction = command.Clone() as CommandOn<G>;
-                tmpAction.SerTarget(item);
+                tmpAction.SetTarget(item);
                 elements.Add(new SelectableElement($"{item}", $"{++i}", tmpAction));
             }
             elements.Add(new SelectableElement("back to home", "0", new BackToHome()));
