@@ -17,7 +17,7 @@ namespace ConsoleUI.Commands.CustomerCommands
             List<IMenuElement> elements = new();
 
             BuyService? service = new BuyService();
-            service.OnInfo += (msg) => drawer.Write(msg);
+            service.OnInfo += (msg) => elements.Add(new InfoElement(msg));
 
             elements.Add(new InfoElement(service.Buy().ToString()));
 

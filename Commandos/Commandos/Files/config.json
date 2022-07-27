@@ -1,10 +1,10 @@
 {
-  "UsersPath": "../../../../Commandos/Files/XMLFiles/UsersData.xml",
-  "StoragePath": "../../../../Commandos/Files/XMLFiles/StorageData.xml",
-  "CartsPath": "../../../../Commandos/Files/XMLFiles/CartsData.xml",
+  "UsersPath": "..\\..\\..\\..\\Commandos\\Files\\XMLFiles\\UsersData.xml",
+  "StoragePath": "..\\..\\..\\..\\Commandos\\Files\\XMLFiles\\StorageData.xml",
+  "CartsPath": "..\\..\\..\\..\\Commandos\\Files\\XMLFiles\\CartsData.xml",
 
 
-  "ResultLog": "../../../../Commandos/Files/LogFiles/ResultLog.txt",
-  "ExceptionLog": "../../../../Commandos/Files/LogFiles/ExceptionLog.txt",
-  "SystemLog": "../../../../Commandos/Files/LogFiles/SystemLog.txt"
+  "ResultLog": "..\\..\\..\\..\\Commandos\\Files\\LogFiles\\ResultLog.txt",
+  "ExceptionLog": "..\\..\\..\\..\\Commandos\\Files\\LogFiles\\ExceptionLog.txt",
+  "SystemLog": "..\\..\\..\\..\\Commandos\\Files\\LogFiles\\SystemLog.txt"
 }

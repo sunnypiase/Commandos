@@ -26,3 +26,4 @@ Actual value was 0.>;
 <Log Type: Exception>;<Log Body: Object reference not set to an instance of an object.>;
 <Log Type: Exception>;<Log Body: Object reference not set to an instance of an object.>;
 >>>>>>> Stashed changes
+<Log Type: Exception>;<Log Body: There was an error deserializing the object of type Commandos.Models.Users.UsersRepository. Name cannot begin with the '<' character, hexadecimal value 0x3C. Line 1, position 2.>;
