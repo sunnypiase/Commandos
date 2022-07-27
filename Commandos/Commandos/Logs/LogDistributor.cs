@@ -4,7 +4,7 @@ using Commandos.Serialize;
 
 namespace Commandos.Logs
 {
-    public class LogDistributor : ILogger
+    public class LogDistributor
     {
         #region Fields
         private Dictionary<LogType, LoggerBase> _loggers;
@@ -54,14 +54,14 @@ namespace Commandos.Logs
             Save();
             Clear();
         }
-        public void Save()
+        private void Save()
         {
             foreach (KeyValuePair<LogType, LoggerBase> item in _loggers)
             {
                 item.Value.Save();
             }
         }
-        public void Clear()
+        private void Clear()
         {
             foreach (KeyValuePair<LogType, LoggerBase> item in _loggers)
             {
