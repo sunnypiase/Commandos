@@ -1,23 +1,18 @@
 ﻿using ConsoleUI.Drawers;
-using ConsoleUI.Inputs;
 using ConsoleUI.Menu.MenuTypes;
 using ConsoleUI.Menu.Music;
 
 namespace ConsoleUI.Menu
 {
-    public class DecoratedMenu : IMenuProcess
+    public class DecoratedMenu : MenuDecorator
     {
-        private IMenuProcess menuProcess;
-        public IInput Input { get => menuProcess.Input; }
-        public IDrawer Drawer { get => menuProcess.Drawer; }
         private IConsoleMusic? music;
 
-        public DecoratedMenu(IMenuProcess menuProcess)
+        public DecoratedMenu(IMenuProcess menuProcess) : base(menuProcess)
         {
-            this.menuProcess = menuProcess;
         }
 
-        public void Start()
+        public override void Start()
         {
             LoadingScene();
             menuProcess.Start();
