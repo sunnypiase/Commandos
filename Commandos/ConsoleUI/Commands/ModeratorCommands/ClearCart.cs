@@ -4,7 +4,7 @@ using ConsoleUI.Menu.MenuTypes;
 
 namespace ConsoleUI.Commands.ModeratorCommands
 {
-    internal class ClearCart : CommandOn<Cart>
+    internal class ClearCart : CommandOn<ICart>
     {
         private string title;
         public ClearCart(string title)

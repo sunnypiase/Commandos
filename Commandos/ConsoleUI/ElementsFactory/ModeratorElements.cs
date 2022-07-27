@@ -34,7 +34,7 @@ namespace ConsoleUI.CommandsFactory
 
                 new SelectableElement("Change product price", $"{++elmCount}", new CommandOnIEnumerable<ProductStorage<IProduct>, (IProduct, int)>(ProductStorage<IProduct>.GetInstance(), changePrice, "Whitch product price you want to change")),
 
-                new SelectableElement("Clear customer cart", $"{++elmCount}", new CommandOnIEnumerable<CartsRepository, Cart>(CartsRepository.GetInstance(), clearCart, "Whitch cart do you want to clear")),
+                new SelectableElement("Clear customer cart", $"{++elmCount}", new CommandOnIEnumerable<CartsRepository, ICart>(CartsRepository.GetInstance(), clearCart, "Whitch cart do you want to clear")),
 
                 new SelectableElement("Change your password", $"{++elmCount}", new ChangePasswordCommand()),
 
