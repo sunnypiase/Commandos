@@ -11,7 +11,7 @@ namespace ConsoleUI.Menu
         private List<IMenuElement> menuElements;
         private IInput input = IOSettings.GetInstance().Input;
         private IDrawer drawer = IOSettings.GetInstance().Drawer;
-        private IConsoleMusic music;
+        private IConsoleMusic? music;
         public MenuProcess(ICollection<IMenuElement> _menuElements)
         {
             menuElements = new(_menuElements.ToList());
