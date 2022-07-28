@@ -1,6 +1,5 @@
-﻿using Commandos.AbstractMethod;
+﻿using Commandos.Services;
 using ConsoleUI.Menu.MenuTypes;
-using System.Reflection;
 
 namespace ConsoleUI.Commands
 {
@@ -8,10 +7,12 @@ namespace ConsoleUI.Commands
     {
         protected readonly CommandOn<T> command;
         protected readonly string title;
+        private AddProductService addProduct;
 
         public CommandOnChoiseFabric(CommandOn<T> _command, string _title = "Select element")
         {
             command = _command;
+            addProduct = new ();
             title = _title;
         }
 
@@ -23,13 +24,10 @@ namespace ConsoleUI.Commands
         public override ICollection<IMenuElement>? Execute()
         {
             List<IMenuElement> elements = new();
-
             elements.Add(new InfoElement(title));
 
-            IEnumerable<Type>? typeList = GetTypeFactories();
             int i = default;
-
-            foreach (Type? type in typeList)
+            foreach (Type? type in addProduct.GetTypeFactories())
             {
                 CommandOn<T> tmpChoiseType = command.Clone() as CommandOn<T>;
                 tmpChoiseType.SetTargetType(type); ;
@@ -39,12 +37,5 @@ namespace ConsoleUI.Commands
             elements.Add(new SelectableElement("back to home", "0", new BackToHome()));
             return elements;
         }
-
-        protected IEnumerable<Type> GetTypeFactories()
-        {
-            Type? typeList = typeof(AbstractFactoryMethod);
-            return Assembly.GetAssembly(typeList).GetTypes().Where(type => type.IsSubclassOf(typeList));
-        }
-
     }
 }
