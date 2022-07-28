@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Commandos.Models.Carts
+namespace Commandos.Models.Pay
 {
     public interface ICheck
     {

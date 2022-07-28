@@ -1,11 +1,12 @@
-﻿using Commandos.Models.Products.General;
+﻿using Commandos.Models.Carts;
+using Commandos.Models.Products.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Commandos.Models.Carts
+namespace Commandos.Models.Pay
 {
     internal class SmallCheckCreator : ICheckCreator
     {
@@ -18,13 +19,13 @@ namespace Commandos.Models.Carts
             }
             stringBuilder.AppendLine($"Усього : \t{cart.Sum()}");
             stringBuilder.AppendLine("ДЯКУЄМО ЗА ПОКУПКУ!");
-            return new Check(Guid.NewGuid(), cart.Sum(), stringBuilder.ToString());
+            return new Check(cart.Sum(), stringBuilder.ToString());
         }
 
-        public ICheck CreateCheckFail(Guid id, string message)
+        public ICheck CreateCheckFail(string message)
         {
             string res = $"Операцiю вiдхилено\n{message}";
-            return new CheckFail(id, res);
+            return new CheckFail(res);
         }
     }
 }

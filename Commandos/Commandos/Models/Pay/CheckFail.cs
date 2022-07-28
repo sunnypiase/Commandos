@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Commandos.Models.Carts
+namespace Commandos.Models.Pay
 {
     internal class CheckFail : ICheck
     {
@@ -29,12 +29,15 @@ namespace Commandos.Models.Carts
         public DateTime CreatingTime { get => creatingTime; private set => creatingTime = value; }
         #endregion
         #region Ctors
-        public CheckFail(Guid id, string message)
+        private CheckFail()
         {
-            Id = id;
-            Sum = 0;
-            CheckString = message;
+            Id = Guid.NewGuid();
             CreatingTime = DateTime.Now;
+            Sum = 0;
+        }
+        public CheckFail(string message):this()
+        {
+            CheckString = message;
         }
         #endregion
         #region Ovverrides
