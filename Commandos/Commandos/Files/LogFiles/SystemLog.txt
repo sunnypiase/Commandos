@@ -23,3 +23,6 @@
 <Log Type: System>;<Log Body: User novakoleg) entered the system>;
 <Log Type: System>;<Log Body: User novakoleg) performed exit>;
 <Log Type: System>;<Log Body: New user qq) just registered and entered the system>;
+<Log Type: System>;<Log Body: User novakoleg) entered the system>;
+<Log Type: System>;<Log Body: succesful product has been added>;
+<Log Type: System>;<Log Body: User novakoleg) performed exit>;

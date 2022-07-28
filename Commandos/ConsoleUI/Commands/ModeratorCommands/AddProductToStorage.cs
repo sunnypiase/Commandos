@@ -11,8 +11,8 @@ namespace ConsoleUI.Commands.ModeratorCommands
 {
     public class AddProductToStorage : CommandOn<Type>
     {
-
         private string _title;
+        private const int exitPoint = 0;
         private HashSet<PropertyInfo> tmpProps;
         private List<(object, Type)> tmpInputResults;
         private List<IMenuElement> elements;
@@ -69,61 +69,28 @@ namespace ConsoleUI.Commands.ModeratorCommands
             {
                 if (prop.PropertyType.IsEnum)
                 {
-                    output += $"choose needed type: \n";
-                    foreach (object? item in Enum.GetValues(prop.PropertyType))
-                    {
-                        output += $"{++index} > if you want create [{item}]\n";
-                    }
-                    index = 0;
-
-                    string inputedEnum = "";
-                    bool operation = false;
-                    while (!operation)
-                    {
-                        inputedEnum = input.Read($"{output}input number - [{prop.PropertyType.Name}]", drawer) ?? string.Empty;
-
-                        if ((int.TryParse(inputedEnum, out int result)) && result > 0 && result <= Enum.GetValues(prop.PropertyType).Length)
-                        {
-                            operation = true;
-                        }
-                    }
-
-                    int i = 0;
-                    foreach (object? item in Enum.GetValues(prop.PropertyType))
-                    {
-                        if (int.Parse(inputedEnum) == (++i))
-                        {
-                            tmpInputResults.Add((item, prop.PropertyType));
-                        }
-                    }
-                    i = 0;
-                    output = "";
+                    ChooseEnumType(ref output, ref index, prop);
+                    string inputedEnum = ValidationChooseEnum(output, prop);
+                    output = SaveChooseEnum(prop, inputedEnum);
                     continue;
                 }
                 if (prop.PropertyType == typeof(DateTime))
                 {
+     
                     string inputed = input.Read($"input >1< if you want date now\ninput >2< if you want enother date", drawer) ?? string.Empty;
-                    int.TryParse(inputed, out int exit);
-                    if (exit == 0)
+                    int.TryParse(inputed, out int isExitInput);
+                    int pointer = default;
+                    if (isExitInput == pointer)
                     {
                         return false;
                     }
-                    else if (exit == 1)
+                    else if (isExitInput == ++pointer)
                     {
                         tmpInputResults.Add((DateTime.Now, prop.PropertyType));
                     }
                     else
                     {
-                        bool operation = false;
-                        while (!operation)
-                        {
-                            DateTime example = new DateTime(
-                                CheckDateParams(prop.PropertyType, DateTime.MinValue.Year, DateTime.MaxValue.Year),
-                                CheckDateParams(prop.PropertyType, DateTime.MinValue.Month, DateTime.MaxValue.Month),
-                                CheckDateParams(prop.PropertyType, DateTime.MinValue.Day, DateTime.MaxValue.Day));
-                            tmpInputResults.Add((example, prop.PropertyType));
-                            operation = true;
-                        }
+                        SaveChooseDateTime(prop);
                     }
                 }
                 else
@@ -133,33 +100,94 @@ namespace ConsoleUI.Commands.ModeratorCommands
                     {
                         try
                         {
-                            string inputed = input.Read($"input {prop.Name} - [{prop.PropertyType.Name}]", drawer) ?? string.Empty;
+                            string inputed = input.Read($"input {prop.Name} - [{prop.PropertyType.Name}]", drawer) ?? string.Empty;                           
                             if (int.TryParse(inputed, out int exit))
                             {
-                                if (exit == 0)
+                                if (exit == exitPoint)
                                 {
                                     return false;
                                 }
                             }
-
-                            object? example = Convert.ChangeType(inputed, (prop.PropertyType), CultureInfo.InvariantCulture);
-                            if (Convert.ChangeType(inputed, (prop.PropertyType), CultureInfo.InvariantCulture) != null)
-                            {
-                                tmpInputResults.Add((example, prop.PropertyType));
-                                operation = true;
-                            }
-
+                            operation = ValidateChooseBaseTypes(prop, operation, inputed);
                         }
                         catch
                         {
                             operation = false;
                         }
-
                     }
                 }
             }
 
             return true;
+        }
+
+        private bool ValidateChooseBaseTypes(PropertyInfo prop, bool operation, string inputed)
+        {
+            object? example = Convert.ChangeType(inputed, (prop.PropertyType), CultureInfo.InvariantCulture);
+            if (Convert.ChangeType(inputed, (prop.PropertyType), CultureInfo.InvariantCulture) != null)
+            {
+                tmpInputResults.Add((example, prop.PropertyType));
+                operation = true;
+            }
+
+            return operation;
+        }
+
+        private void SaveChooseDateTime(PropertyInfo prop)
+        {
+            bool operation = false;
+            while (!operation)
+            {
+                DateTime example = new DateTime(
+                    CheckDateParams(prop.PropertyType, DateTime.MinValue.Year, DateTime.MaxValue.Year),
+                    CheckDateParams(prop.PropertyType, DateTime.MinValue.Month, DateTime.MaxValue.Month),
+                    CheckDateParams(prop.PropertyType, DateTime.MinValue.Day, DateTime.MaxValue.Day));
+                tmpInputResults.Add((example, prop.PropertyType));
+                operation = true;
+            }
+        }
+
+        private string SaveChooseEnum(PropertyInfo prop, string inputedEnum)
+        {
+            string output;
+            int i = 0;
+            foreach (object? item in Enum.GetValues(prop.PropertyType))
+            {
+                if (int.Parse(inputedEnum) == (++i))
+                {
+                    tmpInputResults.Add((item, prop.PropertyType));
+                }
+            }
+            i = 0;
+            output = "";
+            return output;
+        }
+
+        private string ValidationChooseEnum(string output, PropertyInfo prop)
+        {
+            string inputedEnum = "";
+            bool operation = false;
+            while (!operation)
+            {
+                inputedEnum = input.Read($"{output}input number - [{prop.PropertyType.Name}]", drawer) ?? string.Empty;
+
+                if ((int.TryParse(inputedEnum, out int result)) && result > 0 && result <= Enum.GetValues(prop.PropertyType).Length)
+                {
+                    operation = true;
+                }
+            }
+
+            return inputedEnum;
+        }
+
+        private static void ChooseEnumType(ref string output, ref int index, PropertyInfo prop)
+        {
+            output += $"choose needed type: \n";
+            foreach (object? item in Enum.GetValues(prop.PropertyType))
+            {
+                output += $"{++index} > if you want create [{item}]\n";
+            }
+            index = 0;
         }
 
         private int CheckDateParams(Type typeDate, int DiapasonMin, int DiapasonMax)
