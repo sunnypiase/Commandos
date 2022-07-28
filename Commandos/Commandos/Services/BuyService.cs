@@ -11,7 +11,7 @@ namespace Commandos.Services
 
         public ICheck Buy()
         {
-            Buy buy = new Buy(new CheckCreator());
+            Buy buy = new Buy(new CheckCreator(), new PayTest());
             bool result = buy.TryBuy(CartsRepository.GetInstance().GetCart((UserAccount.GetInstance().User)));
             OnInfo("Successfullly buyed!");
             OnInfo("Your check:");
