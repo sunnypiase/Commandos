@@ -4,7 +4,7 @@ using Commandos.Models.Products.General;
 
 namespace Commandos.AbstractMethod.Factories
 {
-    public class DairyProductFactory : AbstractMethod
+    public class DairyProductFactory : AbstractFactoryMethod
     {
         private DateTime _expirationTime;
 

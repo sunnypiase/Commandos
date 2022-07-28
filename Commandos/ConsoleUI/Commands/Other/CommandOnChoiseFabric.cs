@@ -42,7 +42,7 @@ namespace ConsoleUI.Commands
 
         protected IEnumerable<Type> GetTypeFactories()
         {
-            Type? typeList = typeof(AbstractMethod);
+            Type? typeList = typeof(AbstractFactoryMethod);
             return Assembly.GetAssembly(typeList).GetTypes().Where(type => type.IsSubclassOf(typeList));
         }
 

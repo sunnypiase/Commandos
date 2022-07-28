@@ -4,7 +4,7 @@ using Commandos.Models.Products.General;
 
 namespace Commandos.AbstractMethod.Factories
 {
-    internal class CementFactory : AbstractMethod
+    internal class CementFactory : AbstractFactoryMethod
     {
         private CementBrand _cementBrand;
 

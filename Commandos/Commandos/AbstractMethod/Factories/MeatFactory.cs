@@ -4,7 +4,7 @@ using Commandos.Models.Products.MeatProduct;
 
 namespace Commandos.AbstractMethod.Factories
 {
-    internal class MeatFactory : AbstractMethod
+    internal class MeatFactory : AbstractFactoryMethod
     {
         private DateTime _expirationTime;
         private MeatSpecies _meatSpecies;

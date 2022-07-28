@@ -18,3 +18,7 @@
 <Log Type: System>;<Log Body: User SunnyPiase) has logged out>;
 <Log Type: System>;<Log Body: User novakoleg) entered the system>;
 <Log Type: System>;<Log Body: User novakoleg) performed exit>;
+<Log Type: System>;<Log Body: User novakoleg) entered the system>;
+<Log Type: System>;<Log Body: User novakoleg) performed exit>;
+<Log Type: System>;<Log Body: User novakoleg) entered the system>;
+<Log Type: System>;<Log Body: User novakoleg) performed exit>;

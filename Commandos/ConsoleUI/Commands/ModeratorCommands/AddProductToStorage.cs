@@ -1,5 +1,5 @@
-﻿using Commandos.AbstractMethod;
-using Commandos.Models.Products.General;
+﻿using Commandos.Models.Products.General;
+using Commandos.Services;
 using Commandos.Storage;
 using ConsoleUI.Menu.MenuTypes;
 using System.Globalization;
@@ -14,12 +14,14 @@ namespace ConsoleUI.Commands.ModeratorCommands
         private HashSet<PropertyInfo> tmpProps;
         private List<(object, Type)> tmpInputResults;
         private List<IMenuElement> elements;
+        private AddProductService addProductService;
 
         public AddProductToStorage(string title)
         {
             _title = title;
             tmpProps = new();
             tmpInputResults = new();
+            addProductService = new();
         }
 
         public override object Clone()
@@ -30,42 +32,42 @@ namespace ConsoleUI.Commands.ModeratorCommands
         public override ICollection<IMenuElement>? Execute()
         {
             List<IMenuElement> elements = new();
+            IProduct buildProduct;
 
-            if (!FactoryChoiser())
+            if (!ReadFactoryProperties())
             {
-                elements.Add(new InfoElement("abbort adding"));
-                elements.Add(new SelectableElement("continue", "0", new BackToHome()));
-                return elements;
+                return EndingAddCommand(elements);
             }
-            if (!CheckParams(out string? checkingResult))
+            if (!addProductService.CheckFactoryProperties(out string? checkingResult, tmpInputResults))
             {
-                elements.Add(new InfoElement($"abbort product has not been added:\nincorrect input parameter {checkingResult}"));
-                return elements;
+                return EndingAddCommand(elements, $"abbort product has not been added:\nincorrect input parameter {checkingResult}");
             }
-            if (!FactorySaver())
+            if (!addProductService.BuildProduct(commandType, tmpInputResults, out buildProduct))
             {
-                elements.Add(new InfoElement($"abbort product has not been added:\nincorrect saving input parameters {checkingResult}"));
-                return elements;
+                return EndingAddCommand(elements, $"abbort product has not been added:\nincorrect saving input parameters {checkingResult}");
+            }
+            if (buildProduct == null)
+            {
+                return EndingAddCommand(elements, $"abbort buildind product: System error creating {checkingResult}");
             }
 
-            elements.Add(new InfoElement("succesful product has been added"));
-            elements.Add(new SelectableElement("continue", "0", new BackToHome()));
-            return elements;
+            ProductStorage<IProduct>.GetInstance().Add(buildProduct, GetCountProduct(buildProduct)); 
+
+            return EndingAddCommand(elements, "succesful product has been added");
         }
 
-        private bool FactoryChoiser()
+
+        private bool ReadFactoryProperties()
         {
-            object res = GetInstance();
+            object res = addProductService.GetConcreteFactoryInstance(commandType);
             string output = "";
             int index = default;
 
-            /// изменить порядок добавления пропов
             List<PropertyInfo> tmpPropss = new();
             tmpPropss.AddRange(res.GetType().BaseType.GetProperties());
             tmpPropss.AddRange(res.GetType().GetProperties(BindingFlags.Public
                                                             | BindingFlags.Instance
-                                                            | BindingFlags.DeclaredOnly)
-                                                        );
+                                                            | BindingFlags.DeclaredOnly));
 
             foreach (PropertyInfo? item in tmpPropss)
             {
@@ -109,23 +111,15 @@ namespace ConsoleUI.Commands.ModeratorCommands
                 }
                 if (prop.PropertyType == typeof(DateTime))
                 {
-                    string inputed = input.Read($"input >1< if you want date now]\ninput >2< if you want enother date", drawer);
+                    string inputed = input.Read($"input >1< if you want date now\ninput >2< if you want enother date", drawer);
                     int.TryParse(inputed, out int exit);
-                    if (exit == 0)
-                    {
-                        return false;
-                    }
-                    else if (exit == 1)
-                    {
-                        tmpInputResults.Add((DateTime.Now, prop.PropertyType));
-                    }
+                    if (exit == 0) return false;
+                    else if (exit == 1) tmpInputResults.Add((DateTime.Now, prop.PropertyType));
                     else
                     {
-                        //do stuff like prop.SetValue(t, DateTime.Now, null);
                         bool operation = false;
                         while (!operation)
                         {
-                            int def = default;
                             DateTime example = new DateTime(
                                 CheckDateParams(prop.PropertyType, DateTime.MinValue.Year, DateTime.MaxValue.Year),
                                 CheckDateParams(prop.PropertyType, DateTime.MinValue.Month, DateTime.MaxValue.Month),
@@ -142,7 +136,6 @@ namespace ConsoleUI.Commands.ModeratorCommands
                     {
                         try
                         {
-
                             string inputed = input.Read($"input {prop.Name} - [{prop.PropertyType.Name}]", drawer);
                             if (int.TryParse(inputed, out int exit))
                             {
@@ -153,7 +146,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
                             }
 
                             object? example = Convert.ChangeType(inputed, (prop.PropertyType), CultureInfo.InvariantCulture);
-                            if (example != null)
+                            if (Convert.ChangeType(inputed, (prop.PropertyType), CultureInfo.InvariantCulture) != null)
                             {
                                 tmpInputResults.Add((example, prop.PropertyType));
                                 operation = true;
@@ -191,81 +184,28 @@ namespace ConsoleUI.Commands.ModeratorCommands
             return DiapasonMin;
         }
 
-        private bool FactorySaver()
+        public int GetCountProduct(IProduct product, string InfoText = "input number count this product", int defaultCount = 1)
         {
-            ConstructorInfo[]? ctorList = commandType.GetConstructors();
-            object[]? parameters = new object[tmpInputResults.Count];
-            for (int i = 0; i < tmpInputResults.Count; i++)
+            while (true)
             {
-                parameters[i] = tmpInputResults[i].Item1;
-            }
+                string inputed = input.Read(InfoText, drawer);
 
-            foreach (ConstructorInfo? item in ctorList)
-            {
-                if (item.GetParameters().Length == commandType.GetProperties().Length)
+                if (int.TryParse(inputed, out int inputCountResult) && inputCountResult > 0)
                 {
-                    object? tempFactory = item.Invoke(parameters);
-                    AbstractMethod FactoryDeveloper = (AbstractMethod)tempFactory;
-                    IProduct? resultProduct = FactoryDeveloper.CreateProduct();
-                    string inputed = "";
-                    bool operation = false;
-                    while (!operation)
-                    {
-                        inputed = input.Read($"input number count this product", drawer);
-
-                        if ((int.TryParse(inputed, out int inputCountResult)) && inputCountResult > 0)
-                        {
-                            operation = true;
-                            ProductStorage<IProduct>.GetInstance().Add(resultProduct, inputCountResult);
-                        }
-                    }
-
-                }
-            }
-            return true;
-        }
-
-        private bool CheckParams(out string? checkingResult)
-        {
-            object example = null;
-            foreach ((object, Type) item in tmpInputResults)
-            {
-                example = null;
-                // example = Convert.ChangeType(item.Item1, item.Item2);
-                example = Convert.ChangeType(item.Item1, (item.Item2), CultureInfo.InvariantCulture);
-
-                if ((example is null))
-                {
-                    tmpInputResults = new();
-                    checkingResult = item.Item1.ToString();
-                    return false;
-                }
-            }
-            checkingResult = "ok";
-            return true;
-        }
-
-        protected object GetInstance()
-        {
-            IEnumerable<Type>? list = GetTypeFactories();
-
-            foreach (Type? item in list)
-            {
-                if (item.Name.Equals(commandType.Name))
-                {
-                    return Activator.CreateInstance(item);
+                    return inputCountResult;
                 }
             }
 
-            throw new ArgumentNullException();
+            return defaultCount;
         }
 
-        protected IEnumerable<Type> GetTypeFactories()
+        private static ICollection<IMenuElement> EndingAddCommand(List<IMenuElement> elements, string msg = "abbort adding")
         {
-            Type? typeList = typeof(AbstractMethod);
-            return Assembly.GetAssembly(typeList).GetTypes().Where(type => type.IsSubclassOf(typeList));
+            elements.Add(new InfoElement(msg));
+            elements.Add(new SelectableElement("continue", "0", new BackToHome()));
+            return elements;
         }
 
-    }//TODO do
+    }
 }
 

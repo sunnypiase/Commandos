@@ -1,8 +1,9 @@
 ﻿using Commandos.Models.Products.General;
+using System.Reflection;
 
 namespace Commandos.AbstractMethod
 {
-    public abstract class AbstractMethod
+    public abstract class AbstractFactoryMethod
     {
         protected string _name;
         protected double _price;
@@ -12,9 +13,9 @@ namespace Commandos.AbstractMethod
         public double Price { get; set; }
         public double Weight { get; set; }
 
-        public AbstractMethod() : this("NaN", default, default) { }
+        public AbstractFactoryMethod() : this("NaN", default, default) { }
 
-        protected AbstractMethod(string name, double price, double weight)
+        protected AbstractFactoryMethod(string name, double price, double weight)
         {
             _name = (name != null && name.Length > 0) ? name : "NaN";
             _price = (price > 0) ? price : 0;
@@ -22,5 +23,6 @@ namespace Commandos.AbstractMethod
         }
 
         public abstract IProduct CreateProduct();
+
     }
 }
