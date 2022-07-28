@@ -18,13 +18,13 @@ namespace Commandos.Models.Carts
             }
             stringBuilder.AppendLine($"Усього : \t{cart.Sum()}");
             stringBuilder.AppendLine("ДЯКУЄМО ЗА ПОКУПКУ!");
-            return new Check(Guid.NewGuid(), cart.Sum(), stringBuilder.ToString());
+            return new Check(cart.Sum(), stringBuilder.ToString());
         }
 
-        public ICheck CreateCheckFail(Guid id, string message)
+        public ICheck CreateCheckFail(string message)
         {
             string res = $"Операцiю вiдхилено\n{message}";
-            return new CheckFail(id, res);
+            return new CheckFail(res);
         }
     }
 }

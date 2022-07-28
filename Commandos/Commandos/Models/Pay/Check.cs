@@ -23,7 +23,12 @@
         public DateTime CreatingTime { get => creatingTime; private set => creatingTime = value; }
         #endregion
         #region Ctors
-        public Check(ICart cart)
+        private Check()
+        {
+            CreatingTime = DateTime.Now;
+            Id = Guid.NewGuid();
+        }
+        public Check(ICart cart):this()
         {
             if (cart == null)
             {
@@ -31,16 +36,12 @@
             }
 
             Sum = cart.Sum();
-            CreatingTime = DateTime.Now;
-            Id = Guid.NewGuid();
-            check = $"\tЧЕК N {Id} вiд {CreatingTime.ToShortDateString()} {CreatingTime.ToShortTimeString()} \n{cart}\n\tДЯКУЄМО ЗА ПОКУПКУ!\n";
+            check = $"\tЧЕК N {Id} вiд { DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")} \n{cart}\n\tДЯКУЄМО ЗА ПОКУПКУ!\n";
         }
-        public Check(Guid id, double sum, string checkStr)
+        public Check(double sum, string checkStr):this()
         {
-            Id = id;
             Sum = sum;
             CheckString = checkStr;
-            CreatingTime = DateTime.Now;
         }
         #endregion
         #region Ovverrides

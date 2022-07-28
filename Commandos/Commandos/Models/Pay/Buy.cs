@@ -1,4 +1,5 @@
-﻿using Commandos.Models.Products.General;
+﻿using Commandos.Models.Pay;
+using Commandos.Models.Products.General;
 using Commandos.Storage;
 
 namespace Commandos.Models.Carts
@@ -8,11 +9,13 @@ namespace Commandos.Models.Carts
         #region Props
         private ICheckCreator checkCreator;
         private ICheck check;
+        private IPay payment;
         #endregion
         #region Ctors
-        public Buy(ICheckCreator creator)
+        public Buy(ICheckCreator creator, IPay payment)
         {
             checkCreator = creator;
+            this.payment = payment;
         }
         #endregion
         #region Methods
@@ -38,14 +41,13 @@ namespace Commandos.Models.Carts
                 int resCount = storage.Buy(product.Key, product.Value);
                 cart.DeleteProduct(product.Key, product.Value - resCount);
             }
-            if (!true /*TODO add Payment*/)
+            if (payment.TryPay(cart.Sum(), out string mess))
             {   //Returt Products to storage
                 foreach (KeyValuePair<IProduct, int> product in cart.CartProducts)
                 {
                     storage.Add(product.Key, product.Value);
                 }
-                string mess = "Operation failed";
-                check = checkCreator.CreateCheckFail(Guid.NewGuid(), mess);
+                check = checkCreator.CreateCheckFail(mess);
                 return false;
             }
             check = checkCreator.CreateCheck(cart);

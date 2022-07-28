@@ -12,10 +12,10 @@ namespace Commandos.Models.Carts
         {
             return new Check(cart);
         }
-        public ICheck CreateCheckFail(Guid id, string message)
+        public ICheck CreateCheckFail(string message)
         {
-            string mes = $"ЧЕК N {id} вiд { DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")} Операцiю вiдхилено\n{message}";
-           return new CheckFail(id, mes);
+            string mes = $"Операцiю вiдхилено. { DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")} \n{message}";
+           return new CheckFail(mes);
         }
     }
 }
