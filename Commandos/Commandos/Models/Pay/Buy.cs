@@ -41,7 +41,7 @@ namespace Commandos.Models.Carts
                 int resCount = storage.Buy(product.Key, product.Value);
                 cart.DeleteProduct(product.Key, product.Value - resCount);
             }
-            if (payment.TryPay(cart.Sum(), out string mess))
+            if (!payment.TryPay(cart.Sum(), out string mess))
             {   //Returt Products to storage
                 foreach (KeyValuePair<IProduct, int> product in cart.CartProducts)
                 {
