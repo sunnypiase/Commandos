@@ -9,5 +9,6 @@ namespace Commandos.Models.Carts
     public interface ICheckCreator
     {
         ICheck CreateCheck(ICart cart);
+        ICheck CreateCheckFail(Guid id, string message);
     }
 }
