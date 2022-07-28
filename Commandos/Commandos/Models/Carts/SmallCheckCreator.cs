@@ -20,5 +20,11 @@ namespace Commandos.Models.Carts
             stringBuilder.AppendLine("ДЯКУЄМО ЗА ПОКУПКУ!");
             return new Check(Guid.NewGuid(), cart.Sum(), stringBuilder.ToString());
         }
+
+        public ICheck CreateCheckFail(Guid id, string message)
+        {
+            string res = $"Операцiю вiдхилено\n{message}";
+            return new CheckFail(id, res);
+        }
     }
 }

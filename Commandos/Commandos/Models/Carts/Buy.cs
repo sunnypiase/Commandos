@@ -14,11 +14,6 @@ namespace Commandos.Models.Carts
         {
             checkCreator = creator;
         }
-
-        internal ICheck BuyCart(ICart cart)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
         #region Methods
         public ICheck GetCheck()
@@ -49,6 +44,8 @@ namespace Commandos.Models.Carts
                 {
                     storage.Add(product.Key, product.Value);
                 }
+                string mess = "Operation failed";
+                check = checkCreator.CreateCheckFail(Guid.NewGuid(), mess);
                 return false;
             }
             check = checkCreator.CreateCheck(cart);
