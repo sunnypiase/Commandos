@@ -8,8 +8,7 @@ using Commandos.Services;
 namespace Commandos.Services
 {
     public class AddProductService
-    {
-        
+    {      
 
         public bool CheckFactoryProperties(out string? checkingResult, List<(object, Type)> tmpInputResults)
         {
