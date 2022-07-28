@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Commandos.Models.Carts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Commandos.Models.Carts
+namespace Commandos.Models.Pay
 {
     internal interface IBuy
     {

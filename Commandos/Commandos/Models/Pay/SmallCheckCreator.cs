@@ -1,11 +1,12 @@
-﻿using Commandos.Models.Products.General;
+﻿using Commandos.Models.Carts;
+using Commandos.Models.Products.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Commandos.Models.Carts
+namespace Commandos.Models.Pay
 {
     internal class SmallCheckCreator : ICheckCreator
     {

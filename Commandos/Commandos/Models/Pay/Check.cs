@@ -1,4 +1,6 @@
-﻿namespace Commandos.Models.Carts
+﻿using Commandos.Models.Carts;
+
+namespace Commandos.Models.Pay
 {
     public class Check : ICheck
     {

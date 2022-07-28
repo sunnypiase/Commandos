@@ -1,8 +1,9 @@
-﻿using Commandos.Models.Pay;
+﻿using Commandos.Models.Carts;
+using Commandos.Models.Pay;
 using Commandos.Models.Products.General;
 using Commandos.Storage;
 
-namespace Commandos.Models.Carts
+namespace Commandos.Models.Pay
 {
     public class Buy : IBuy
     {
