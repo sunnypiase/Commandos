@@ -58,23 +58,12 @@ namespace ConsoleUI.Commands.ModeratorCommands
             return EndingAddCommand(elements, "succesful product has been added", LogType.System);
         }
 
-
         private bool ReadFactoryProperties()
         {
-            object res = addProductService.GetConcreteFactoryInstance(commandType);
+            tmpProps = addProductService
+                .GetFactoryProperties(addProductService.GetConcreteFactoryInstance(commandType));
             string output = string.Empty;
-            int index = default;
-
-            List<PropertyInfo> tmpPropss = new();
-            tmpPropss.AddRange(res.GetType().BaseType.GetProperties());
-            tmpPropss.AddRange(res.GetType().GetProperties(BindingFlags.Public
-                                                            | BindingFlags.Instance
-                                                            | BindingFlags.DeclaredOnly));
-
-            foreach (PropertyInfo? item in tmpPropss)
-            {
-                tmpProps.Add(item);
-            }
+            int index = default;         
 
             foreach (PropertyInfo? prop in tmpProps)
             {
@@ -193,7 +182,8 @@ namespace ConsoleUI.Commands.ModeratorCommands
 
         public int GetCountProduct(IProduct product, string InfoText = "input number count this product", int defaultCount = 1)
         {
-            while (true)
+            bool operation = false;
+            while (!operation)
             {
                 string inputed = input.Read(InfoText, drawer) ?? string.Empty;
 
@@ -202,6 +192,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
                     return inputCountResult;
                 }
             }
+            return defaultCount;
         }
 
         private static ICollection<IMenuElement> EndingAddCommand(List<IMenuElement> elements, string msg = "abort adding", LogType logType = LogType.Exception)

@@ -44,6 +44,22 @@ namespace Commandos.Services
             throw new ArgumentNullException();
         }
 
+        public HashSet<PropertyInfo> GetFactoryProperties(object objectFactory)
+        {
+            List<PropertyInfo> result = new();
+            result.AddRange(objectFactory.GetType().BaseType.GetProperties());
+            result.AddRange(objectFactory.GetType().GetProperties(BindingFlags.Public
+                                                            | BindingFlags.Instance
+                                                            | BindingFlags.DeclaredOnly));
+
+            HashSet<PropertyInfo> tmpProps = new();
+            foreach (PropertyInfo? item in result)
+            {
+                tmpProps.Add(item);
+            }
+            return tmpProps;
+        }
+
         public IEnumerable<Type> GetTypeFactories()
         {
             Type? typeList = typeof(AbstractFactoryMethod);
