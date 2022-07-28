@@ -1,4 +1,6 @@
-﻿using Commandos.Models.Products.General;
+﻿using Commandos.Logs;
+using Commandos.Logs.InterfacesAndEnums;
+using Commandos.Models.Products.General;
 using Commandos.Services;
 using Commandos.Storage;
 using ConsoleUI.Menu.MenuTypes;
@@ -19,6 +21,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
         public AddProductToStorage(string title)
         {
             _title = title;
+            elements = new();
             tmpProps = new();
             tmpInputResults = new();
             addProductService = new();
@@ -33,34 +36,33 @@ namespace ConsoleUI.Commands.ModeratorCommands
         {
             List<IMenuElement> elements = new();
             IProduct buildProduct;
-
             if (!ReadFactoryProperties())
             {
                 return EndingAddCommand(elements);
             }
             if (!addProductService.CheckFactoryProperties(out string? checkingResult, tmpInputResults))
             {
-                return EndingAddCommand(elements, $"abbort product has not been added:\nincorrect input parameter {checkingResult}");
+                return EndingAddCommand(elements, $"abort product has not been added:\nincorrect input parameter {checkingResult}");
             }
             if (!addProductService.BuildProduct(commandType, tmpInputResults, out buildProduct))
             {
-                return EndingAddCommand(elements, $"abbort product has not been added:\nincorrect saving input parameters {checkingResult}");
+                return EndingAddCommand(elements, $"abort product has not been added:\nincorrect saving input parameters {checkingResult}");
             }
             if (buildProduct == null)
             {
-                return EndingAddCommand(elements, $"abbort buildind product: System error creating {checkingResult}");
+                return EndingAddCommand(elements, $"abort buildind product: System error creating {checkingResult}");
             }
 
-            ProductStorage<IProduct>.GetInstance().Add(buildProduct, GetCountProduct(buildProduct)); 
+            ProductStorage<IProduct>.GetInstance().Add(buildProduct, GetCountProduct(buildProduct));
 
-            return EndingAddCommand(elements, "succesful product has been added");
+            return EndingAddCommand(elements, "succesful product has been added", LogType.System);
         }
 
 
         private bool ReadFactoryProperties()
         {
             object res = addProductService.GetConcreteFactoryInstance(commandType);
-            string output = "";
+            string output = string.Empty;
             int index = default;
 
             List<PropertyInfo> tmpPropss = new();
@@ -78,7 +80,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
             {
                 if (prop.PropertyType.IsEnum)
                 {
-                    output += $"choise need type: \n";
+                    output += $"choose needed type: \n";
                     foreach (object? item in Enum.GetValues(prop.PropertyType))
                     {
                         output += $"{++index} > if you want create [{item}]\n";
@@ -89,7 +91,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
                     bool operation = false;
                     while (!operation)
                     {
-                        inputedEnum = input.Read($"{output}input number - [{prop.PropertyType.Name}]", drawer);
+                        inputedEnum = input.Read($"{output}input number - [{prop.PropertyType.Name}]", drawer) ?? string.Empty;
 
                         if ((int.TryParse(inputedEnum, out int result)) && result > 0 && result <= Enum.GetValues(prop.PropertyType).Length)
                         {
@@ -111,10 +113,16 @@ namespace ConsoleUI.Commands.ModeratorCommands
                 }
                 if (prop.PropertyType == typeof(DateTime))
                 {
-                    string inputed = input.Read($"input >1< if you want date now\ninput >2< if you want enother date", drawer);
+                    string inputed = input.Read($"input >1< if you want date now\ninput >2< if you want enother date", drawer) ?? string.Empty;
                     int.TryParse(inputed, out int exit);
-                    if (exit == 0) return false;
-                    else if (exit == 1) tmpInputResults.Add((DateTime.Now, prop.PropertyType));
+                    if (exit == 0)
+                    {
+                        return false;
+                    }
+                    else if (exit == 1)
+                    {
+                        tmpInputResults.Add((DateTime.Now, prop.PropertyType));
+                    }
                     else
                     {
                         bool operation = false;
@@ -136,7 +144,7 @@ namespace ConsoleUI.Commands.ModeratorCommands
                     {
                         try
                         {
-                            string inputed = input.Read($"input {prop.Name} - [{prop.PropertyType.Name}]", drawer);
+                            string inputed = input.Read($"input {prop.Name} - [{prop.PropertyType.Name}]", drawer) ?? string.Empty;
                             if (int.TryParse(inputed, out int exit))
                             {
                                 if (exit == 0)
@@ -168,11 +176,10 @@ namespace ConsoleUI.Commands.ModeratorCommands
         private int CheckDateParams(Type typeDate, int DiapasonMin, int DiapasonMax)
         {
             bool operation = false;
-            int resultDate = default;
 
             while (!operation)
             {
-                string inputed = input.Read($"input {typeDate} - [{DiapasonMin} - {DiapasonMax}]", drawer);
+                string inputed = input.Read($"input {typeDate} - [{DiapasonMin} - {DiapasonMax}]", drawer) ?? string.Empty;
 
                 if ((int.TryParse(inputed, out int result)) && DiapasonMin > 0 && result <= DiapasonMax)
                 {
@@ -188,19 +195,18 @@ namespace ConsoleUI.Commands.ModeratorCommands
         {
             while (true)
             {
-                string inputed = input.Read(InfoText, drawer);
+                string inputed = input.Read(InfoText, drawer) ?? string.Empty;
 
                 if (int.TryParse(inputed, out int inputCountResult) && inputCountResult > 0)
                 {
                     return inputCountResult;
                 }
             }
-
-            return defaultCount;
         }
 
-        private static ICollection<IMenuElement> EndingAddCommand(List<IMenuElement> elements, string msg = "abbort adding")
+        private static ICollection<IMenuElement> EndingAddCommand(List<IMenuElement> elements, string msg = "abort adding", LogType logType = LogType.Exception)
         {
+            LogDistributor.GetInstance().Add(new Log(logType, msg));
             elements.Add(new InfoElement(msg));
             elements.Add(new SelectableElement("continue", "0", new BackToHome()));
             return elements;
